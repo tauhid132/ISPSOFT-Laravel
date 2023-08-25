@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\Ticket;
+use App\Models\Employee;
+use App\Models\TicketType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use RahulHaque\AdnSms\Facades\AdnSms;
+
+class TicketController extends Controller
+{
+    public function viewAllTickets(){
+        return view('admin.tickets.all-tickets',[
+            'ticket_types' => TicketType::all(),
+            'employees' => Employee::all()
+        ]);
+    }
+    public function getTickets(Request $request){
+        $year = request('year',date('Y'));
+        $month = request('month',date('F'));
+        
+        $data = Ticket::with('user','type');
+       
+        $data = $data->latest()->get();
+        return datatables($data)
+        ->addIndexColumn()
+        ->addColumn('action', function($row){
+            
+            $btn = '<a href="'.route('trackTicket',$row->id).'"><i class="fa fa-external-link text-info m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Track Ticket"></i></a>';
+            $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-edit text-success edit_ticket m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ticket"></i></a>';
+            $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-trash text-danger delete_ticket m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Ticket"></i></a>';
+            return $btn;
+        })
+        ->addColumn('status', function($row){
+            if($row->status == 0){
+                $btn = '<span class="badge bg-primary">Created</span>';
+            }else if($row->status == 1){
+                $btn = '<span class="badge bg-warning">Processing</span>';
+            }else if($row->status == 2){
+                $btn = '<span class="badge bg-success">Closed</span>';
+            }else if($row->status == 4){
+                $btn = '<span class="badge bg-danger">Aborted</span>';
+            }
+            return $btn;
+        })
+        ->addColumn('created_at', function($row){
+            return $row->created_at->format('l, j F, Y h:i A');
+        })
+       
+        ->rawColumns(['action' => 'action','status' => 'status'])
+        ->make(true);
+    }
+
+    public function addUpdateTicket(Request $request){
+        $user = User::where('username', $request->username)->first();
+        if(empty($request->id)){
+            $ticket = Ticket::create([
+                'user_id' => $user->id,
+                'ticket_type_id' => $request->ticket_type,
+                'ticket_description' => $request->ticket_description,
+                'created_by_id' => Auth::guard('admin')->user()->id,
+                
+            ]);
+            $ticket->assigned_executives()->attach($request->assigned_executives);
+            if($request->sendConfirmationSms){
+                $response = AdnSms::to($ticket->user->mobile_no)
+                ->message("Dear user, Your ticket has been created. Ticket No-$ticket->id - ATS Technology ")
+                ->send();
+            }
+            return 'Ticket Added Successfully!';
+        }else{
+            $ticket = Ticket::where('id', $request->id)->first();
+            $ticket->update([
+                'user_id' => $user->id,
+                'ticket_type_id' => $request->ticket_type,
+                'ticket_description' => $request->ticket_description,
+                'created_by_id' => Auth::guard('admin')->user()->id,
+            ]);
+            $ticket->assigned_executives()->sync($request->assigned_executives);
+            return 'Ticket updated Successfully!';
+        }
+    }
+    public function fetchTicketSingle(Request $request){
+        $ticket = Ticket::with('type','user','assigned_executives')->where('id', $request->id)->first();
+        return response()->json($ticket);
+    }
+    public function deleteTicketSingle(Request $request){
+        Ticket::destroy($request->id);
+    }
+    public function trackTicket($id){
+        return view('admin.tickets.track-ticket',[
+            'ticket' => Ticket::find($id),
+        ]);
+    }
+}
