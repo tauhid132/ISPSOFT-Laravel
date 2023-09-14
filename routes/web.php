@@ -25,12 +25,19 @@ Route::post('bkash/get-token', [App\Http\Controllers\BkashController::class, 'ge
 
 
 Route::middleware('guest')->domain('admin.' . env('APP_URL'))->group(function(){
+    Route::get('/',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage']);
     Route::get('login',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage'])->name('login');
     Route::post('login',[App\Http\Controllers\AdminAuthController::class, 'adminLoginValidate']);
+    
+
 });
 Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function(){
     Route::get('logout',[App\Http\Controllers\AdminAuthController::class, 'logout'])->name('logout');
     Route::get('dashboard',[App\Http\Controllers\AdminController::class, 'viewDashboard'])->name('viewAdminDashboard');
+    Route::get('my-profile',[App\Http\Controllers\AdminAuthController::class, 'viewMyProfile'])->name('viewMyProfileAdmin');
+    Route::post('my-profile/change-profile-info',[App\Http\Controllers\AdminAuthController::class, 'changeProfileInfo'])->name('changeProfileInfoAdmin');
+    Route::post('my-profile/change-password',[App\Http\Controllers\AdminAuthController::class, 'changePassword'])->name('changePasswordAdmin');
+    Route::post('my-profile/change-profile-picture',[App\Http\Controllers\AdminAuthController::class, 'changeProfilePicture'])->name('changeProfilePictureAdmin');
     //CRM Module
     Route::prefix('accounts')->group(function(){
        // Route::get('bill',[App\Http\Controllers\MonthlyBillController::class, 'viewMontghlyBill'])->name('viewMonthlyBills');
