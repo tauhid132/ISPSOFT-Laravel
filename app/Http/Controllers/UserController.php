@@ -51,7 +51,7 @@ class UserController extends Controller
         })
         
         ->addColumn('action', function($row){
-            $btn = '<a href="'.route('editUser',$row->id).'"><i id="'.$row->id.'" class="fa fa-eye text-dark m-1"></i></a>';
+            $btn = '<a href="'.route('viewUser',$row->id).'"><i id="'.$row->id.'" class="fa fa-eye text-dark m-1"></i></a>';
             $btn = $btn.'<a href="'.route('editUser',$row->id).'"><i id="'.$row->id.'" class="fa fa-edit text-primary m-1"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-trash text-danger delete m-1"></i></a>';
             return $btn;
@@ -163,6 +163,14 @@ class UserController extends Controller
         return redirect()->route('viewUsersPage');
     }
 
+    public function viewViewUser($id){
+        return view('admin.crm.view-user',[
+            'service_areas' => ServiceArea::all(),
+            'packages' => Package::all(),
+            'employees' => Employee::all(),
+            'user' => User::find($id)
+        ]);
+    }
     public function viewLeftUsers(){
         return view('admin.crm.left-users');
     }

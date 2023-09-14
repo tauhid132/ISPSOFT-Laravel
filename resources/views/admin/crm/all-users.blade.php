@@ -1,9 +1,7 @@
 @extends('master')
 @section('title','View Users | ATS Technology')
-
 @section('main-body')
 @include('admin.includes.header')
-
 @include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
@@ -33,9 +31,7 @@
                             </div>
                             <div class="col-sm-auto">
                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    <a href="{{ route('viewAddNewUserPage') }}"><button type="button" class="btn btn-success"><i class="ri-add-line align-bottom me-1"></i> Add Customer</button></a>
-                                    {{-- <button type="button" class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
+                                    <a href="{{ route('viewAddNewUserPage') }}"><button type="button" class="btn btn-success"><i class="fa fa-plus me-1"></i> Add New User</button></a>
                                 </div>
                             </div>
                         </div>
@@ -46,10 +42,9 @@
                                 <div class="col-xl-6">
                                     <div class="search-box">
                                         <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something...">
-                                        <i class="ri-search-line search-icon"></i>
+                                        <i class="fa fa-search search-icon"></i>
                                     </div>
                                 </div>
-                                <!--end col-->
                                 <div class="col-xl-6">
                                     <div class="row g-3">
                                         <div class="col-sm-4">
@@ -62,7 +57,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                         <div class="col-sm-4">
                                             <div>
                                                 <select class="form-control" onchange="onStatusChange(this)">
@@ -73,25 +67,21 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--end col-->
-                                        
                                         <div class="col-sm-4">
                                             <div>
                                                 <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                     </div>
                                 </div>
                             </div>
-                            <!--end row-->
                         </form>
                     </div>
-                    
                 </div>
+                
                 <div class="card mt-0">
                     <div class="card-body table-responsive mt-xl-0">
-                        <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
+                        <table id="users-table" class="table nowrap align-middle" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -107,30 +97,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
             </div>
-            
-            
-            
-            
-            
-            
         </div>
-        <!-- container-fluid -->
     </div>
-    <!-- End Page-content -->
-    
     @include('footer')
 </div>
-
-
 @endsection
-
 
 @section('page-script')
 <script type="text/javascript">
@@ -144,38 +120,34 @@
     let selectedStatus = '';
     let selectedArea = '';
     
-        var dataTable = $('#scroll-horizontal').DataTable({
-            
-            "processing" : true,
-            "serverSide": true,
-            
-            "ajax":{
-                "url": "{{ route('getUsersAll') }}",
-                "dataType": "json",
-                "type": "POST",
-                "data": function(d){
-                    d.status = selectedStatus
-                    d.area = selectedArea
-                }
-            },
-            "columns" : [
-            {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": false, "searchable": false},
-            {"data": "username"},
-            {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
-            {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
-            {"data": "customer_name"},
-            {"data": "service_area"},
-            {"data": "connection_address"},
-            {"data": "mobile_no"},
-            {"data": "monthly_bill"},
-            {"data": "current_due"},
-            ]
-        });
+    var dataTable = $('#users-table').DataTable({
         
+        "processing" : true,
+        "serverSide": true,
         
-        
-        
-    
+        "ajax":{
+            "url": "{{ route('getUsersAll') }}",
+            "dataType": "json",
+            "type": "POST",
+            "data": function(d){
+                d.status = selectedStatus
+                d.area = selectedArea
+            }
+        },
+        "columns" : [
+        {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": false, "searchable": false},
+        {"data": "username"},
+        {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
+        {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
+        {"data": "customer_name"},
+        {"data": "service_area"},
+        {"data": "connection_address"},
+        {"data": "mobile_no"},
+        {"data": "monthly_bill"},
+        {"data": "current_due"},
+        ]
+    });
+
     function onStatusChange(sel){
         selectedStatus = sel.value
         dataTable.ajax.reload();

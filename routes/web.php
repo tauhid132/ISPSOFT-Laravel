@@ -38,13 +38,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
     Route::post('my-profile/change-profile-info',[App\Http\Controllers\AdminAuthController::class, 'changeProfileInfo'])->name('changeProfileInfoAdmin');
     Route::post('my-profile/change-password',[App\Http\Controllers\AdminAuthController::class, 'changePassword'])->name('changePasswordAdmin');
     Route::post('my-profile/change-profile-picture',[App\Http\Controllers\AdminAuthController::class, 'changeProfilePicture'])->name('changeProfilePictureAdmin');
-    //CRM Module
-    Route::prefix('accounts')->group(function(){
-       // Route::get('bill',[App\Http\Controllers\MonthlyBillController::class, 'viewMontghlyBill'])->name('viewMonthlyBills');
-       
-
-
-    });
+    
+    //CRM Module Routes
     Route::prefix('crm')->group(function(){
         Route::get('view-users',[App\Http\Controllers\UserController::class, 'viewUsersPage'])->name('viewUsersPage');
         Route::post('view-users/get-users',[App\Http\Controllers\UserController::class, 'getUsersAll'])->name('getUsersAll');
@@ -52,6 +47,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('add-new-user',[App\Http\Controllers\UserController::class, 'addNewUser']);
         Route::get('edit-user/{id}',[App\Http\Controllers\UserController::class, 'viewEditUser'])->name('editUser');
         Route::post('edit-user/{id}',[App\Http\Controllers\UserController::class, 'editUserAction']);
+        Route::get('view-user/{id}',[App\Http\Controllers\UserController::class, 'viewViewUser'])->name('viewUser');
         Route::get('left-users',[App\Http\Controllers\UserController::class, 'viewLeftUsers'])->name('viewLeftUsers');
         Route::post('getLeftUsers',[App\Http\Controllers\UserController::class, 'getLeftUsers'])->name('getLeftUsers');
         Route::post('add-to-left-user',[App\Http\Controllers\UserController::class, 'addToLeftUser'])->name('addToLeftUser');
