@@ -57,6 +57,19 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('update-left-user',[App\Http\Controllers\UserController::class, 'updateLeftUser'])->name('updateLeftUser');
 
         Route::get('test',[App\Http\Controllers\UserController::class, 'testsms'])->name('updateLeftUser');
+        Route::prefix('reseller')->group(function(){
+            Route::get('resellers',[App\Http\Controllers\ResellerController::class, 'viewResellers'])->name('viewResellers');
+            Route::post('resellers/get-resellers',[App\Http\Controllers\ResellerController::class, 'getResellers'])->name('getResellers');
+            Route::get('add-new-reseller',[App\Http\Controllers\ResellerController::class, 'viewAddNewReseller'])->name('addNewReseller');
+            Route::post('add-new-reseller',[App\Http\Controllers\ResellerController::class, 'addNewReseller']);
+            Route::post('delete-reseller',[App\Http\Controllers\ResellerController::class, 'deleteReseller'])->name('deleteReseller');
+            Route::get('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewEditReseller'])->name('editReseller');
+            Route::post('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'editReseller']);
+            Route::get('view-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewReseller'])->name('viewReseller');
+           
+    
+        });
+
 
     });
     Route::prefix('tickets')->group(function(){

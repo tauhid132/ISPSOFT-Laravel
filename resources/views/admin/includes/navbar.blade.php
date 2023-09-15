@@ -39,12 +39,12 @@
                                 <div class="collapse menu-dropdown" id="sidebarResetPass">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="auth-pass-reset-basic.html" class="nav-link" data-key="t-basic">
-                                                Basic </a>
+                                            <a href="{{ route('viewResellers') }}" class="nav-link" data-key="t-basic">
+                                                Resellers List </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="auth-pass-reset-cover.html" class="nav-link" data-key="t-cover">
-                                                Cover </a>
+                                                Reseller Mac </a>
                                         </li>
                                     </ul>
                                 </div>
