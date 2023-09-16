@@ -16,6 +16,10 @@ class Ticket extends Model
         'created_by_id',
         'comment',
         'status',
+        'start_processing_at',
+        'start_processing_by_id',
+        'closed_at',
+        'closed_by_id',
     ];
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');

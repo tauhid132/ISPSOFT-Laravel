@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Models\Employee;
@@ -19,10 +20,15 @@ class TicketController extends Controller
         ]);
     }
     public function getTickets(Request $request){
-        $year = request('year',date('Y'));
-        $month = request('month',date('F'));
-        
+        $ticket_type = request('ticket_type');
+        $status = request('status');
         $data = Ticket::with('user','type');
+        if($ticket_type != 'all'){
+            $data = $data->where('ticket_type_id', $ticket_type);
+        }
+        if($status != 'all'){
+            $data = $data->where('status', $status);
+        }
        
         $data = $data->latest()->get();
         return datatables($data)
@@ -94,5 +100,23 @@ class TicketController extends Controller
         return view('admin.tickets.track-ticket',[
             'ticket' => Ticket::find($id),
         ]);
+    }
+    public function startProcessingTicket($id){
+        $ticket = Ticket::find($id);
+        $ticket->update([
+            'status' => 1,
+            'start_processing_at' => Carbon::now(),
+            'start_processing_by_id' => Auth::guard('admin')->user()->id,
+        ]);
+        return back();
+    }
+    public function closeTicket($id){
+        $ticket = Ticket::find($id);
+        $ticket->update([
+            'status' => 2,
+            'closed_at' => Carbon::now(),
+            'closed_by_id' => Auth::guard('admin')->user()->id,
+        ]);
+        return back();
     }
 }

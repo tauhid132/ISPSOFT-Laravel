@@ -11,10 +11,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Track Ticket</h4>
+                        <h4 class="mb-sm-0"><i class="fa fa-map-marker me-1"></i>Track Ticket</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Tickets</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('viewAllTickets') }}">Tickets</a></li>
                                 <li class="breadcrumb-item active">Track Ticket</li>
                             </ol>
                         </div>
@@ -24,13 +24,69 @@
             
             <div class="row">
                 <div class="col-md-8">
-
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-sm-flex align-items-center">
+                                    <h5 class="card-title flex-grow-1 mb-0"><i class="fa fa-ticket me-1"></i>Ticket Info</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label>Ticket ID</label>
+                                            <input type="text" class="form-control" name="joining_date" value="{{ $ticket->id }}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label>Username</label>
+                                            <input type="text" class="form-control" name="joining_date" value="{{ $ticket->user->username }}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label>Customer Name</label>
+                                            <input type="text" class="form-control" name="joining_date" value="{{ $ticket->user->customer_name }}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label>Ticket Type</label>
+                                            <input type="text" class="form-control" name="joining_date" value="{{ $ticket->type->ticket_type_name }}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <label>Ticket Details</label>
+                                            <textarea class="form-control" placeholder="Enter Ticket Details" rows="1" name="ticket_description" id="ticket_description" disabled>{{ $ticket->ticket_description }}</textarea>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-sm-flex align-items-center">
+                                    <h5 class="card-title flex-grow-1 mb-0"><i class="fa fa-cog me-1"></i>Action</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                    <a href="{{ route('startProcessingTicket', $ticket->id) }}" class="btn btn-warning"><i class="fa fa-spinner"></i> Start Processing</a>
+                                    <a href="{{ route('closeTicket', $ticket->id) }}" class="btn btn-success"><i class="fa fa-check"></i> Close Ticket</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
                             <div class="d-sm-flex align-items-center">
-                                <h5 class="card-title flex-grow-1 mb-0">Ticket Timeline</h5>
+                                <h5 class="card-title flex-grow-1 mb-0"><i class="fa fa-timeline me-1"></i>Ticket Timeline</h5>
                             </div>
                         </div>
                         <div class="card-body">
@@ -106,183 +162,18 @@
                                         </div>
                                     </div>
                                     @endif
-                                    
                                 </div>
-                                <!--end accordion-->
                             </div>
                         </div>
                     </div>
-                    <!--end card-->
                 </div>
-                </div>
-            </div>
-                
-                
-                
-                
-                
-                
             </div>
         </div>
-        @include('footer')
     </div>
-    
-    
-    
-    
-    @endsection
-    
-    
-    @section('page-script')
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    </script>
-    <script>
-        let selectedStatus = '';
-        let selectedArea = '';
-        
-        var dataTable = $('#scroll-horizontal').DataTable({
-            
-            "processing" : true,
-            "serverSide": true,
-            
-            "ajax":{
-                "url": "{{ route('getTickets') }}",
-                "dataType": "json",
-                "type": "POST",
-                "data": function(d){
-                    d.status = selectedStatus
-                    d.area = selectedArea
-                }
-            },
-            "columns" : [
-            {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": false, "searchable": false},
-            {"data": "id"},
-            {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
-            {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
-            {"data": "user.username"},
-            {"data": "type.ticket_type_name"},
-            {"data": "ticket_description"},
-            {"data": "created_at"},
-            ]
-        });
-        
-        
-        
-        
-        $(document).on('click', '.get_user_data', function(){
-            var username = $('#username').val();  
-            $.ajax({
-                
-                url:"{{ route('fetchUserData') }}",  
-                method:"post",  
-                data:{username:username},  
-                beforeSend:function(){  
-                    $('.get_user_data').html("..Fetching");  
-                },  
-                success:function(data, statusCode){
-                    if(data.status == 1){
-                        $('#customer_name').val(data.user.customer_name);
-                    }else{
-                        toastr["error"]("User Not Found!")
-                        $('#customer_name').val("");
-                    }
-                    $('.get_user_data').html('<i class="fa fa-refresh"></i> Fetch');
-                }
-            });  
-        });
-        $('#ticket_form').on("submit", function(event){  
-            event.preventDefault();  
-            $.ajax({  
-                url:"{{ route('addUpdateTicket') }}",  
-                method:"POST",  
-                data:$('#ticket_form').serialize(),  
-                beforeSend:function(){  
-                    $('#submitBtn').html("..Submiting");  
-                },  
-                success:function(data){  
-                    $('#ticket_form')[0].reset();  
-                    $('#addTicketModal').modal('hide');  
-                    dataTable.ajax.reload();
-                    toastr["success"](data)
-                },
-                error: function(xhr, status, error) 
-                {
-                    $.each(xhr.responseJSON.errors, function (key, item) 
-                    {
-                        toastr["error"](item)
-                    });
-                } 
-            });  
-        });
-        $('#add-ticket').click(function(){  
-            $('#submitBtn').html("Add");  
-            $('#ticket_form')[0].reset();
-            $('#modalHeader').html("Add Ticket"); 
-            $('#id').val(""); 
-        }); 
-        $(document).on('click', '.edit_ticket', function(){
-            var id = $(this).attr("id");  
-            $.ajax({  
-                url:"{{ route('fetchTicketSingle') }}",  
-                method:"post",  
-                data:{id:id},  
-                success:function(data){ 
-                    $('#id').val(data.id);
-                    $('#ticket_type').val(data.ticket_type_id);
-                    $('#ticket_description').val(data.ticket_description);
-                    $('#username').val(data.user.username);
-                    $('#customer_name').val(data.user.customer_name);
-                    $.each(data.assigned_executives, function(key, value) { 
-                        $('#assigned_executives').empty()  
-                        $('#assigned_executives')
-                        .append($("<option selected></option>")
-                        .attr("value",value.id)
-                        .text(value.full_name)); 
-                    });
-                    
-                    $('#modalHeader').html("Update Ticket");
-                    $('#submitBtn').html("Update"); 
-                    $('#addTicketModal').modal("show");  
-                }  
-            });  
-        }); 
-        $(document).on('click', '.delete_ticket', function(){
-        var id = $(this).attr("id");
-        Swal.fire({
-            title: 'Are you sure?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url:"{{ route('deleteTicketSingle') }}",
-                    method:"POST",
-                    data:{id:id},
-                    success:function(data){
-                        toastr["success"]("Ticket Deleted Successfully")
-                        dataTable.ajax.reload();
-                    }
-                })
-                
-                
-            }
-        })
-    });
-        function onStatusChange(sel){
-            selectedStatus = sel.value
-            dataTable.ajax.reload();
-        }
-        function onAreaChange(sel){
-            selectedArea = sel.value
-            dataTable.ajax.reload();
-        }
-    </script>
-    @endsection
+    @include('footer')
+</div>
+
+
+
+
+@endsection

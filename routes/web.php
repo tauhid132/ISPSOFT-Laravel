@@ -72,13 +72,15 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
 
     });
-    Route::prefix('tickets')->group(function(){
-        Route::get('all-tickets',[App\Http\Controllers\TicketController::class, 'viewAllTickets'])->name('viewAllTickets');
-        Route::post('get-tickets',[App\Http\Controllers\TicketController::class, 'getTickets'])->name('getTickets');
-        Route::post('add-update-ticket',[App\Http\Controllers\TicketController::class, 'addUpdateTicket'])->name('addUpdateTicket');
-        Route::post('fetch-ticket-single',[App\Http\Controllers\TicketController::class, 'fetchTicketSingle'])->name('fetchTicketSingle');
-        Route::post('delete-ticket-single',[App\Http\Controllers\TicketController::class, 'deleteTicketSingle'])->name('deleteTicketSingle');
-        Route::get('track-ticket/{id}',[App\Http\Controllers\TicketController::class, 'trackTicket'])->name('trackTicket');
+    Route::prefix('ticketing')->group(function(){
+        Route::get('tickets',[App\Http\Controllers\TicketController::class, 'viewAllTickets'])->name('viewAllTickets');
+        Route::post('tickets/get-tickets',[App\Http\Controllers\TicketController::class, 'getTickets'])->name('getTickets');
+        Route::post('tickets/add-update-ticket',[App\Http\Controllers\TicketController::class, 'addUpdateTicket'])->name('addUpdateTicket');
+        Route::post('tickets/fetch-ticket-single',[App\Http\Controllers\TicketController::class, 'fetchTicketSingle'])->name('fetchTicketSingle');
+        Route::post('tickets/delete-ticket-single',[App\Http\Controllers\TicketController::class, 'deleteTicketSingle'])->name('deleteTicketSingle');
+        Route::get('tickets/track-ticket/{id}',[App\Http\Controllers\TicketController::class, 'trackTicket'])->name('trackTicket');
+        Route::get('tickets/track-ticket/{id}/start-processing',[App\Http\Controllers\TicketController::class, 'startProcessingTicket'])->name('startProcessingTicket');
+        Route::get('tickets/track-ticket/{id}/close-ticket',[App\Http\Controllers\TicketController::class, 'closeTicket'])->name('closeTicket');
        
 
     });
@@ -141,6 +143,14 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
     });
     Route::prefix('settings')->group(function(){
+        Route::get('admins',[App\Http\Controllers\AdminController::class, 'viewAdmins'])->name('viewAdmins');
+        Route::get('admins/get-admins',[App\Http\Controllers\AdminController::class, 'getAdmins'])->name('getAdmins');
+        Route::post('admins/add-new-admin',[App\Http\Controllers\AdminController::class, 'addNewAdmin'])->name('addNewAdmin');
+        Route::post('admins/delete-admin',[App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('deleteAdmin');
+        Route::post('admins/change-password',[App\Http\Controllers\AdminController::class, 'changeAdminPassword'])->name('changeAdminPassword');
+
+
+
         Route::get('generate-monthly-bill',[App\Http\Controllers\MonthlyBillController::class, 'generateMonthlyBill'])->name('generateMonthlyBill');
         
         
