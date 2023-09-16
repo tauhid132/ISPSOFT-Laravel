@@ -147,10 +147,7 @@
                     <div class="collapse menu-dropdown" id="hrm">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="layouts-horizontal.html" target="_blank" class="nav-link" data-key="t-horizontal">Employee List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-detached.html" target="_blank" class="nav-link" data-key="t-detached">Leave Management</a>
+                                <a href="{{ route('viewEmployees') }}" class="nav-link" data-key="t-horizontal">Employee List</a>
                             </li>
                         </ul>
                     </div>

@@ -146,6 +146,17 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         
 
     });
+
+    Route::prefix('hrm')->group(function(){
+        Route::get('employees',[App\Http\Controllers\EmployeeController::class, 'viewEmployees'])->name('viewEmployees');
+        Route::get('employees/get-employees',[App\Http\Controllers\EmployeeController::class, 'getEmployees'])->name('getEmployees');
+        Route::get('employees/add-new-employee',[App\Http\Controllers\EmployeeController::class, 'viewAddNewEmployee'])->name('addNewEmployee');
+        Route::post('employees/add-new-employee',[App\Http\Controllers\EmployeeController::class, 'addNewEmployee']);
+        Route::post('employees/delete-employee',[App\Http\Controllers\EmployeeController::class, 'deleteEmployee'])->name('deleteEmployee');
+        Route::get('employees/edit-employee/{id}',[App\Http\Controllers\EmployeeController::class, 'viewEditEmployee'])->name('editEmployee');
+        Route::post('employees/edit-employee/{id}',[App\Http\Controllers\EmployeeController::class, 'editEmployee']);
+        Route::get('employees/view-employee/{id}',[App\Http\Controllers\EmployeeController::class, 'viewEmployee'])->name('viewEmployee');
+    });
     
     
 });
