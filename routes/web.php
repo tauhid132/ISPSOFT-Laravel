@@ -108,19 +108,14 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('pay-salary',[App\Http\Controllers\MonthlySalaryController::class, 'paySalary'])->name('paySalary');
         Route::post('delete-salary',[App\Http\Controllers\MonthlySalaryController::class, 'deleteSalary'])->name('deleteSalary');
 
-        Route::get('monthly-upstream-bills',[App\Http\Controllers\MonthlyUpstreamBillController::class, 'viewMonthlyUpstreamBill'])->name('viewMonthlyUpstreamBill');
-        Route::post('get-monthly-upstream-bills',[App\Http\Controllers\MonthlyUpstreamBillController::class, 'getMonthlyUpstreamBills'])->name('getMonthlyUpstreamBills');
-        Route::post('fetch-monthly-upstream-bill-single',[App\Http\Controllers\MonthlyUpstreamBillController::class, 'fetchMonthlyUpstreamBillSingle'])->name('fetchMonthlyUpstreamBillSingle');
-        Route::post('update-upstream-bill',[App\Http\Controllers\MonthlyUpstreamBillController::class, 'updateUpstreamBill'])->name('updateUpstreamBill');
-        Route::post('pay-upstream-bill',[App\Http\Controllers\MonthlyUpstreamBillController::class, 'payUpstreamBill'])->name('payUpstreamBill');
-        Route::post('delete-upstream-bill',[App\Http\Controllers\MonthlyUpstreamBillController::class, 'deleteUpstreamBill'])->name('deleteUpstreamBill');
+        Route::get('monthly-upstream-downstream-bills',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'viewMonthlyUpstreamDownstreamBill'])->name('viewMonthlyUpstreamDownstreamBill');
+        Route::post('monthly-upstream-downstream-bills/get-monthly-upstream-downstream-bills',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'getMonthlyUpstreamDownstreamBills'])->name('getMonthlyUpstreamDownstreamBills');
+        Route::post('fetch-monthly-upstream-downstream-bill-single',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'fetchMonthlyUpstreamDownstreamBillSingle'])->name('fetchMonthlyUpstreamDownstreamBillSingle');
+        Route::post('update-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'updateUpstreamBill'])->name('updateUpstreamBill');
+        Route::post('pay-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'payUpstreamBill'])->name('payUpstreamBill');
+        Route::post('delete-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'deleteUpstreamBill'])->name('deleteUpstreamBill');
 
-        Route::get('monthly-downstream-bills',[App\Http\Controllers\MonthlyDownstreamBillController::class, 'viewMonthlyDownstreamBill'])->name('viewMonthlyDownstreamBill');
-        Route::post('get-monthly-downstream-bills',[App\Http\Controllers\MonthlyDownstreamBillController::class, 'getMonthlyDownstreamBills'])->name('getMonthlyDownstreamBills');
-        Route::post('fetch-monthly-downstream-bill-single',[App\Http\Controllers\MonthlyDownstreamBillController::class, 'fetchMonthlyDownstreamBillSingle'])->name('fetchMonthlyDownstreamBillSingle');
-        Route::post('update-downstream-bill',[App\Http\Controllers\MonthlyDownstreamBillController::class, 'updateDownstreamBill'])->name('updateDownstreamBill');
-        Route::post('pay-downstream-bill',[App\Http\Controllers\MonthlyDownstreamBillController::class, 'payDownstreamBill'])->name('payDownstreamBill');
-        Route::post('delete-downstream-bill',[App\Http\Controllers\MonthlyDownstreamBillController::class, 'deleteDownstreamBill'])->name('deleteDownstreamBill');
+        
 
 
         Route::get('monthly-service-charges',[App\Http\Controllers\ServiceChargeController::class, 'viewServiceCharges'])->name('viewServiceCharges');
@@ -150,9 +145,10 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('admins/change-password',[App\Http\Controllers\AdminController::class, 'changeAdminPassword'])->name('changeAdminPassword');
 
 
-
-        Route::get('generate-monthly-bill',[App\Http\Controllers\MonthlyBillController::class, 'generateMonthlyBill'])->name('generateMonthlyBill');
-        
+        Route::get('manual-generator',[App\Http\Controllers\SettingsController::class, 'viewManualGenerator'])->name('viewManualGenerator');
+        Route::post('manual-generator/generate-monthly-bill-invoices',[App\Http\Controllers\SettingsController::class, 'generateMonthlyBillInvoices'])->name('generateMonthlyBillInvoices');
+        Route::post('manual-generator/generate-monthly-salary',[App\Http\Controllers\SettingsController::class, 'generateMonthlySalary'])->name('generateMonthlySalary');
+        Route::post('manual-generator/generate-upstream-downstream-bills',[App\Http\Controllers\SettingsController::class, 'generateMonthlyUpstreamDownstreamBills'])->name('generateMonthlyUpstreamDownstreamBills');
         
 
     });

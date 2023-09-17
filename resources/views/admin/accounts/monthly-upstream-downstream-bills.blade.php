@@ -1,9 +1,7 @@
 @extends('master')
-@section('title','Monthly Downstream Bills | ATS Technology')
-
+@section('title','Monthly Up/Downstream Bills | ATS Technology')
 @section('main-body')
 @include('admin.includes.header')
-
 @include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
@@ -11,11 +9,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Monthly Downstream Bills</h4>
+                        <h4 class="mb-sm-0">Monthly Up/Downstream Bills</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Accounts</a></li>
-                                <li class="breadcrumb-item active">Monthly Downstream Bills</li>
+                                <li class="breadcrumb-item active">Monthly Up/Downstream Bills</li>
                             </ol>
                         </div>
                     </div>
@@ -31,63 +29,43 @@
                                     <h5 class="card-title mb-0"><i class="fa fa-filter"></i>  Filter </h5>
                                 </div>
                             </div>
-                            <div class="col-sm-auto">
-                                <div class="d-flex flex-wrap align-items-start gap-2">
-                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    {{-- <button type="button" class="btn btn-success" id="add-expense" data-bs-toggle="modal" data-bs-target="#addExpenseModal"><i class="ri-add-line align-bottom me-1"></i> Add Expense</button> --}}
-                                    {{-- <button type="button" class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="card-body border-bottom">
-                        <form>
-                            <div class="row g-3">
-                                {{-- <div class="col-lg-3">
-                                    <div class="search-box">
-                                        <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something...">
-                                        <i class="ri-search-line search-icon"></i>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <div class="row g-3">
+                                    <div class="col-sm-5">
+                                        <div>
+                                            <select class="form-control" onchange="onMonthChange(this)">
+                                                <?php
+                                                for($j=0; $j<12; $j++){
+                                                    echo '<option value="'.date('F', strtotime("-$j Months")).'"><h1>'.date('F', strtotime("-$j Months")).'</h1></option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div> --}}
-                                <!--end col-->
-                                <div class="col-md-12">
-                                    <div class="row g-3">
-                                        <div class="col-sm-5">
-                                            <div>
-                                                <select class="form-control" onchange="onMonthChange(this)">
-                                                    <?php
-                                                    for($j=0; $j<12; $j++){
-                                                        echo '<option value="'.date('F', strtotime("-$j Months")).'"><h1>'.date('F', strtotime("-$j Months")).'</h1></option>';
-                                                    }
-                                                    ?>
-                                                    
-                                                </select>
-                                            </div>
+                                    <div class="col-sm-5">
+                                        <div>
+                                            <select class="form-control" onchange="onYearChange(this)">
+                                                <?php
+                                                for($j=0; $j<5; $j++){
+                                                    echo '<option value="'.date('Y', strtotime("-$j Years")).'"><h1>'.date('Y', strtotime("-$j Years")).'</h1></option>';
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
-                                        <div class="col-sm-5">
-                                            <div>
-                                                <select class="form-control" onchange="onYearChange(this)">
-                                                    <?php
-                                                    for($j=0; $j<5; $j++){
-                                                        echo '<option value="'.date('Y', strtotime("-$j Years")).'"><h1>'.date('Y', strtotime("-$j Years")).'</h1></option>';
-                                                    }
-                                                    ?>
-                                                    
-                                                </select>
-                                            </div>
+                                    </div>
+                                    
+                                    <div class="col-sm-2">
+                                        <div>
+                                            <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                         </div>
-                                        
-                                        <div class="col-sm-2">
-                                            <div>
-                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
-                                            </div>
-                                        </div>
-                                        <!--end col-->
                                     </div>
                                 </div>
                             </div>
-                            <!--end row-->
-                        </form>
+                        </div>
                     </div>
                     
                 </div>
@@ -97,7 +75,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Downstream Name</th>
+                                    <th>Upstream Name</th>
                                     <th>Bill</th>
                                     <th>Pre.Due</th>
                                     <th>Paid Bill</th>
@@ -115,10 +93,7 @@
                 
             </div>
         </div>
-        <!-- container-fluid -->
     </div>
-    <!-- End Page-content -->
-    
     @include('footer')
 </div>
 
@@ -128,7 +103,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="modalHeader">Edit Downstream Bill</h5>
+                <h5 class="modal-title" id="modalHeader">Edit Up/Downstream Bill</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <form id="update_bill_form">
@@ -137,8 +112,8 @@
                     <div class="row g-3">
                         <div class="col-lg-12">
                             <div>
-                                <label for="first_name" class="form-label">Downstream Name</label>
-                                <input type="text" name="downstream_name" id="downstream_name" class="form-control" disabled />
+                                <label for="first_name" class="form-label">Name Name</label>
+                                <input type="text" name="upstream_name" id="upstream_name" class="form-control" disabled />
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -171,7 +146,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="modalHeader">Pay Downstream Bill</h5>
+                <h5 class="modal-title" id="modalHeader">Pay Up/Downstream Bill</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <form id="pay_bill_form">
@@ -180,8 +155,8 @@
                     <div class="row g-3">
                         <div class="col-lg-6">
                             <div>
-                                <label for="first_name" class="form-label">Downstream Name</label>
-                                <input type="text" name="downstream_name" id="downstream_name2" class="form-control" disabled />
+                                <label for="first_name" class="form-label">Upstream Name</label>
+                                <input type="text" name="upstream_name" id="upstream_name2" class="form-control" disabled />
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -242,14 +217,11 @@
 <script>
     let current_month;
     let current_year;
-    
     var dataTable = $('#scroll-horizontal').DataTable({
-        
         "processing" : true,
         "serverSide": true,
-        
         "ajax":{
-            "url": "{{ route('getMonthlyDownstreamBills') }}",
+            "url": "{{ route('getMonthlyUpstreamDownstreamBills') }}",
             "dataType": "json",
             "type": "POST",
             "data": function(d){
@@ -259,13 +231,11 @@
         },
         "columns" : [
         {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": true, "searchable": false},
-        {"data": "downstream.downstream_name"},
+        {"data": "upstream_downstream.name"},
         {"data": "bill"},
         {"data": "due_bill"},
         {"data": "paid_bill"},
         {"data": "payment_date"},
-        // {"data" : 'total_payable', "name" : 'total_payable' , "orderable": false, "searchable": false},
-        // {"data": "paid_salary"},
         {"data": "remaining"},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
         ]
@@ -279,16 +249,16 @@
         current_month = sel.value
         dataTable.ajax.reload();
     }
-
+    
     $(document).on('click', '.edit_bill', function(){
         var id = $(this).attr("id");  
         $.ajax({  
-            url:"{{ route('fetchMonthlyDownstreamBillSingle') }}",  
+            url:"{{ route('fetchMonthlyUpstreamDownstreamBillSingle') }}",  
             method:"post",  
             data:{id:id},  
             success:function(data){ 
                 $('#id').val(data.id);
-                $('#downstream_name').val(data.downstream.downstream_name);
+                $('#upstream_name').val(data.upstream_downstream.name);
                 $('#bill').val(data.bill);
                 $('#due_bill').val(data.due_bill);
                 $('#submitBtn').html("Update"); 
@@ -300,7 +270,7 @@
     $('#update_bill_form').on("submit", function(event){  
         event.preventDefault();  
         $.ajax({  
-            url:"{{ route('updateDownstreamBill') }}",  
+            url:"{{ route('updateUpstreamBill') }}",  
             method:"POST",  
             data:$('#update_bill_form').serialize(),  
             beforeSend:function(){  
@@ -321,16 +291,16 @@
             } 
         });  
     });
-
+    
     $(document).on('click', '.pay_bill', function(){
         var id = $(this).attr("id");  
         $.ajax({  
-            url:"{{ route('fetchMonthlyDownstreamBillSingle') }}",  
+            url:"{{ route('fetchMonthlyUpstreamDownstreamBillSingle') }}",  
             method:"post",  
             data:{id:id},  
             success:function(data){ 
                 $('#id2').val(data.id);
-                $('#downstream_name2').val(data.downstream.downstream_name);
+                $('#upstream_name2').val(data.upstream_downstream.name);
                 $('#payable_bill').val(data.bill + data.due_bill);
                 $('#payment_date').val(data.payment_date);
                 $('#paid_bill').val(data.paid_bill);
@@ -343,7 +313,7 @@
     $('#pay_bill_form').on("submit", function(event){  
         event.preventDefault();  
         $.ajax({  
-            url:"{{ route('payDownstreamBill') }}",  
+            url:"{{ route('payUpstreamBill') }}",  
             method:"POST",  
             data:$('#pay_bill_form').serialize(),  
             beforeSend:function(){  

@@ -9,6 +9,7 @@ class MonthlySalary extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'employee_id',
         'monthly_salary',
         'pre_advance',
         'commission',

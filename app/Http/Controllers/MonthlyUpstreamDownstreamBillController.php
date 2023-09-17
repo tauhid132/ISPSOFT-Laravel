@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Models\MonthlyUpstreamBill;
+use App\Models\MonthlyUpstreamDownstreamBill;
 use Illuminate\Http\Request;
 
-class MonthlyUpstreamBillController extends Controller
+class MonthlyUpstreamDownstreamBillController extends Controller
 {
-    public function viewMonthlyUpstreamBill(){
-        return view('admin.accounts.monthly-upstream-bills',[
+    public function viewMonthlyUpstreamDownstreamBill(){
+        return view('admin.accounts.monthly-upstream-downstream-bills',[
             'employees' => Employee::all()
         ]);
     }
-    public function getMonthlyUpstreamBills(Request $request){
+    public function getMonthlyUpstreamDownstreamBills(Request $request){
         $year = request('year',date('Y'));
         $month = request('month',date('F'));
         
-        $data = MonthlyUpstreamBill::with('payment_by','upstream')->where('year', $year)
+        $data = MonthlyUpstreamDownstreamBill::with('payment_by','upstream_downstream')->where('year', $year)
         ->where('month',$month);
        
         $data = $data->get();
@@ -39,34 +39,34 @@ class MonthlyUpstreamBillController extends Controller
         ->rawColumns(['action' => 'action','remaining' => 'remaining'])
         ->make(true);
     }
-    public function fetchMonthlyUpstreamBillSingle(Request $request){
-        $bill = MonthlyUpstreamBill::with('payment_by','upstream')->where('id', $request->id)->first();
+    public function fetchMonthlyUpstreamDownstreamBillSingle(Request $request){
+        $bill = MonthlyUpstreamDownstreamBill::with('payment_by','upstream_downstream')->where('id', $request->id)->first();
         return response()->json($bill);
     }
     public function updateUpstreamBill(Request $request){
-        $bill = MonthlyUpstreamBill::find($request->id);
+        $bill = MonthlyUpstreamDownstreamBill::find($request->id);
         $bill->update([
             'bill' => $request->bill,
             'due_bill' => $request->due_bill,
         ]);
         $new_current_advance = ($bill->bill + $bill->due_bill - $bill->paid_bill);
-        $bill->upstream()->update([
+        $bill->upstream_downstream()->update([
             'current_account' => $new_current_advance
         ]);
     }
     public function payUpstreamBill(Request $request){
-        $bill = MonthlyUpstreamBill::find($request->id);
+        $bill = MonthlyUpstreamDownstreamBill::find($request->id);
         $bill->update([
             'paid_bill' => $request->paid_bill,
             'payment_date' => $request->payment_date,
             'payment_by_id' => $request->payment_by,
         ]);
         $new_current_advance = ($bill->bill + $bill->due_bill - $bill->paid_bill);
-        $bill->upstream()->update([
+        $bill->upstream_downstream()->update([
             'current_account' => $new_current_advance
         ]);
     }
     public function deleteUpstreamBill(Request $request){
-        MonthlyUpstreamBill::find($request->id)->delete();
+        MonthlyUpstreamDownstreamBill::find($request->id)->delete();
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DownstreamController extends Controller
+class UpstreamDownstreamController extends Controller
 {
     //
 }

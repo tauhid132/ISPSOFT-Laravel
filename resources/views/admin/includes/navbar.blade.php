@@ -128,10 +128,7 @@
                                 <a href="{{ route('viewMonthlySalary') }}" class="nav-link" data-key="t-hovered">Monthly Salary</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('viewMonthlyUpstreamBill') }}"  class="nav-link" data-key="t-hovered">Upstream Bill</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('viewMonthlyDownstreamBill') }}"  class="nav-link" data-key="t-hovered">Downstream Bill</a>
+                                <a href="{{ route('viewMonthlyUpstreamDownstreamBill') }}"  class="nav-link" data-key="t-hovered">Up/Downstream Bill</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewMonthlyIncomeStatement') }}?month={{ date('F') }}&year={{ date('Y') }}"  class="nav-link" data-key="t-hovered">Income Statement</a>
@@ -198,7 +195,7 @@
                                 <a href="{{ route('viewAdmins') }}" class="nav-link" data-key="t-horizontal">Admins</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-detached.html" target="_blank" class="nav-link" data-key="t-detached">Manual Generator</a>
+                                <a href="{{ route('viewManualGenerator') }}" class="nav-link" data-key="t-detached">Manual Generator</a>
                             </li>
                             <li class="nav-item">
                                 <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">System Logs</a>

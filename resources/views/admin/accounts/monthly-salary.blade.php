@@ -1,9 +1,7 @@
 @extends('master')
 @section('title','Monthly Salary Sheet | ATS Technology')
-
 @section('main-body')
 @include('admin.includes.header')
-
 @include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
@@ -34,8 +32,6 @@
                             <div class="col-sm-auto">
                                 <div class="d-flex flex-wrap align-items-start gap-2">
                                     <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    {{-- <button type="button" class="btn btn-success" id="add-expense" data-bs-toggle="modal" data-bs-target="#addExpenseModal"><i class="ri-add-line align-bottom me-1"></i> Add Expense</button> --}}
-                                    {{-- <button type="button" class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -43,13 +39,6 @@
                     <div class="card-body border-bottom">
                         <form>
                             <div class="row g-3">
-                                {{-- <div class="col-lg-3">
-                                    <div class="search-box">
-                                        <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something...">
-                                        <i class="ri-search-line search-icon"></i>
-                                    </div>
-                                </div> --}}
-                                <!--end col-->
                                 <div class="col-md-12">
                                     <div class="row g-3">
                                         <div class="col-sm-5">
@@ -60,7 +49,6 @@
                                                         echo '<option value="'.date('F', strtotime("-$j Months")).'"><h1>'.date('F', strtotime("-$j Months")).'</h1></option>';
                                                     }
                                                     ?>
-                                                    
                                                 </select>
                                             </div>
                                         </div>
@@ -72,24 +60,19 @@
                                                         echo '<option value="'.date('Y', strtotime("-$j Years")).'"><h1>'.date('Y', strtotime("-$j Years")).'</h1></option>';
                                                     }
                                                     ?>
-                                                    
                                                 </select>
                                             </div>
                                         </div>
-                                        
                                         <div class="col-sm-2">
                                             <div>
                                                 <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                     </div>
                                 </div>
                             </div>
-                            <!--end row-->
                         </form>
                     </div>
-                    
                 </div>
                 <div class="card mt-0">
                     <div class="card-body table-responsive mt-xl-0">
@@ -117,10 +100,7 @@
                 
             </div>
         </div>
-        <!-- container-fluid -->
     </div>
-    <!-- End Page-content -->
-    
     @include('footer')
 </div>
 
@@ -221,7 +201,7 @@
                                 <select class="custom-select form-control" name="payment_by" id="payment_by">
                                     <option value="">None</option>
                                     @foreach ($employees as $employee )
-                                    <option value="{{ $employee->id }}">{{ $employee->full_name }}</option>
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -255,12 +235,9 @@
 <script>
     let current_month;
     let current_year;
-    
     var dataTable = $('#scroll-horizontal').DataTable({
-        
         "processing" : true,
         "serverSide": true,
-        
         "ajax":{
             "url": "{{ route('getMonthlySalaries') }}",
             "dataType": "json",
@@ -272,11 +249,11 @@
         },
         "columns" : [
         {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": true, "searchable": false},
-        {"data": "employee.full_name"},
+        {"data": "employee.name"},
         {"data": "monthly_salary"},
         {"data": "pre_advance"},
-        {"data": "commission"},
         {"data": "meal"},
+        {"data": "commission"},
         {"data" : 'total_payable', "name" : 'total_payable' , "orderable": false, "searchable": false},
         {"data": "paid_salary"},
         {"data": "remaining"},
@@ -292,7 +269,7 @@
         current_month = sel.value
         dataTable.ajax.reload();
     }
-
+    
     $(document).on('click', '.edit_salary', function(){
         var id = $(this).attr("id");  
         $.ajax({  
@@ -337,7 +314,7 @@
             } 
         });  
     });
-
+    
     $(document).on('click', '.pay_salary', function(){
         var id = $(this).attr("id");  
         $.ajax({  

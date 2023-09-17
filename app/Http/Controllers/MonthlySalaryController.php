@@ -53,7 +53,7 @@ class MonthlySalaryController extends Controller
         ]);
         $new_pre_advance = ($salary->monthly_salary + $salary->pre_advance + $salary->commission - $salary->meal);
         $salary->employee()->update([
-            'current_account' => $new_pre_advance
+            'current_balance' => $new_pre_advance
         ]);
     }
     public function paySalary(Request $request){
@@ -65,7 +65,7 @@ class MonthlySalaryController extends Controller
         ]);
         $new_pre_advance = ($salary->monthly_salary + $salary->pre_advance + $salary->commission - $salary->meal);
         $salary->employee()->update([
-            'current_account' => $new_pre_advance
+            'current_balance' => $new_pre_advance
         ]);
     }
     public function deleteSalary(Request $request){
