@@ -7,7 +7,7 @@ use App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ServiceCharge extends Model
+class OtherInvoice extends Model
 {
     use HasFactory;
     protected $fillable = [

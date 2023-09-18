@@ -210,13 +210,13 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Monthly Bill</label>
-                                                        <input type="text" value="0" class="form-control" name="monthly_bill" value="{{ $user->monthly_bill }}">
+                                                        <input type="text" class="form-control" name="monthly_bill" value="{{ $user->monthly_bill }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Current Due</label>
-                                                        <input type="text" value="0" class="form-control" name="current_due" value="{{ $user->current_due }}" >
+                                                        <input type="text" class="form-control" name="current_due" value="{{ $user->current_due }}" >
                                                     </div>
                                                 </div>
                                             </div>

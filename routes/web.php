@@ -118,13 +118,13 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         
 
 
-        Route::get('monthly-service-charges',[App\Http\Controllers\ServiceChargeController::class, 'viewServiceCharges'])->name('viewServiceCharges');
-        Route::post('get-service-charges',[App\Http\Controllers\ServiceChargeController::class, 'getServiceCharges'])->name('getServiceCharges');
-        Route::post('fetch-user-data',[App\Http\Controllers\ServiceChargeController::class, 'fetchUserData'])->name('fetchUserData');
-        Route::post('add-update-service-charge',[App\Http\Controllers\ServiceChargeController::class, 'addUpdateServiceCharge'])->name('addUpdateServiceCharge');
-        Route::post('fetch-service-charge-single',[App\Http\Controllers\ServiceChargeController::class, 'fetchServiceChargeSingle'])->name('fetchServiceChargeSingle');
-        Route::post('pay-service-charge',[App\Http\Controllers\ServiceChargeController::class, 'payServiceCharge'])->name('payServiceCharge');
-        Route::post('delete-service-charge',[App\Http\Controllers\ServiceChargeController::class, 'deleteServiceCharge'])->name('deleteServiceCharge');
+        Route::get('monthly-service-charges',[App\Http\Controllers\OtherInvoiceController::class, 'viewServiceCharges'])->name('viewServiceCharges');
+        Route::post('get-service-charges',[App\Http\Controllers\OtherInvoiceController::class, 'getServiceCharges'])->name('getServiceCharges');
+        Route::post('fetch-user-data',[App\Http\Controllers\OtherInvoiceController::class, 'fetchUserData'])->name('fetchUserData');
+        Route::post('add-update-service-charge',[App\Http\Controllers\OtherInvoiceController::class, 'addUpdateServiceCharge'])->name('addUpdateServiceCharge');
+        Route::post('fetch-service-charge-single',[App\Http\Controllers\OtherInvoiceController::class, 'fetchServiceChargeSingle'])->name('fetchServiceChargeSingle');
+        Route::post('pay-service-charge',[App\Http\Controllers\OtherInvoiceController::class, 'payServiceCharge'])->name('payServiceCharge');
+        Route::post('delete-service-charge',[App\Http\Controllers\OtherInvoiceController::class, 'deleteServiceCharge'])->name('deleteServiceCharge');
 
         Route::get('monthly-income-statement',[App\Http\Controllers\AccountsController::class, 'viewMonthlyIncomeStatement'])->name('viewMonthlyIncomeStatement');
     });
@@ -144,12 +144,14 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('admins/delete-admin',[App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('deleteAdmin');
         Route::post('admins/change-password',[App\Http\Controllers\AdminController::class, 'changeAdminPassword'])->name('changeAdminPassword');
 
-
         Route::get('manual-generator',[App\Http\Controllers\SettingsController::class, 'viewManualGenerator'])->name('viewManualGenerator');
         Route::post('manual-generator/generate-monthly-bill-invoices',[App\Http\Controllers\SettingsController::class, 'generateMonthlyBillInvoices'])->name('generateMonthlyBillInvoices');
         Route::post('manual-generator/generate-monthly-salary',[App\Http\Controllers\SettingsController::class, 'generateMonthlySalary'])->name('generateMonthlySalary');
         Route::post('manual-generator/generate-upstream-downstream-bills',[App\Http\Controllers\SettingsController::class, 'generateMonthlyUpstreamDownstreamBills'])->name('generateMonthlyUpstreamDownstreamBills');
         
+        Route::get('system-logs',[App\Http\Controllers\SystemLogController::class, 'viewSystemLogs'])->name('viewSystemLogs');
+        Route::get('system-logs/get-system-logs',[App\Http\Controllers\SystemLogController::class, 'getSystemLogs'])->name('getSystemLogs');
+
 
     });
 

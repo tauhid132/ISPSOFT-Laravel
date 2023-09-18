@@ -11,6 +11,9 @@ use App\Models\MonthlyExpense;
 use Illuminate\Support\Facades\DB;
 use App\Models\MonthlyUpstreamBill;
 use App\Models\MonthlyDownstreamBill;
+use App\Models\MonthlyUpstreamDownstreamBill;
+use App\Models\OtherInvoice;
+use App\Models\PaymentGatewayWithdraw;
 
 class AccountsController extends Controller
 {
@@ -22,11 +25,11 @@ class AccountsController extends Controller
         //Users Revenue
         $users_monthly_bill = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('monthly_bill');
         $users_due_bill = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('due_bill');
-        $service_charges = ServiceCharge::where('month', $month)->where('year', $year)->sum('amount');
+        $service_charges = OtherInvoice::where('month', $month)->where('year', $year)->sum('amount');
         $users_total_generated_bill = $users_monthly_bill + $users_due_bill + $service_charges;
         $users_collected_monthly_bill =  MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('paid_monthly_bill');
         $users_collected_due_bill =  MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('paid_due_bill');
-        $collected_service_charge =  ServiceCharge::where('month', $month)->where('year', $year)->sum('paid_amount');
+        $collected_service_charge =  OtherInvoice::where('month', $month)->where('year', $year)->sum('paid_amount');
         $user_total_collected_bill = $users_collected_monthly_bill + $users_collected_due_bill + $collected_service_charge;
 
         $collected_bill_percentage = $users_total_generated_bill == 0 ? 0 : round(($user_total_collected_bill / $users_total_generated_bill) * 100,2);
@@ -41,10 +44,9 @@ class AccountsController extends Controller
         $expense_types = ExpenseType::all();
         $expenses = MonthlyExpense::where('expense_month',$month)->where('expense_year',$year)->sum('amount');
         $salary_expense = MonthlySalary::where('month',$month)->where('year',$year)->sum('paid_salary');
-        $upstream_bill = MonthlyUpstreamBill::where('month',$month)->where('year',$year)->sum('paid_bill');
-        $downstream_bill = MonthlyDownstreamBill::where('month',$month)->where('year',$year)->sum('paid_bill');
+        $upstream_downstream_bill = MonthlyUpstreamDownstreamBill::where('month',$month)->where('year',$year)->sum('paid_bill');
         
-        $total_expenses = $expenses + $salary_expense + $upstream_bill + $downstream_bill;
+        $total_expenses = $expenses + $salary_expense + $upstream_downstream_bill;
 
 
         $total_profit = $user_total_collected_bill - $total_expenses; 
@@ -52,21 +54,19 @@ class AccountsController extends Controller
         //Online Payment
         $reveived_bkash_monthly = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->where('payment_method','Bkash')->sum('paid_monthly_bill');
         $received_bkash_due = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->where('payment_method','Bkash')->sum('paid_due_bill');
-        $received_bkash_service_charge = ServiceCharge::where('month', $month)->where('year', $year)->where('payment_method','Bkash')->sum('paid_amount');
+        $received_bkash_service_charge = OtherInvoice::where('month', $month)->where('year', $year)->where('payment_method','Bkash')->sum('paid_amount');
         $received_bkash = $reveived_bkash_monthly + $received_bkash_due + $received_bkash_service_charge;
 
         $reveived_nagad_monthly = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->where('payment_method','Nagad')->sum('paid_monthly_bill');
         $received_nagad_due = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->where('payment_method','Nagad')->sum('paid_due_bill');
-        $received_nagad_service_charge = ServiceCharge::where('month', $month)->where('year', $year)->where('payment_method','Nagad')->sum('paid_amount');
+        $received_nagad_service_charge = OtherInvoice::where('month', $month)->where('year', $year)->where('payment_method','Nagad')->sum('paid_amount');
         $received_nagad = $reveived_nagad_monthly + $received_nagad_due + $received_nagad_service_charge;
 
         $reveived_bank_monthly = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->where('payment_method','Bank')->sum('paid_monthly_bill');
         $received_bank_due = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->where('payment_method','Bank')->sum('paid_due_bill');
         $received_bank = $reveived_bank_monthly + $received_bank_due;
 
-        $withdrawn = DB::table('payment_gateway_withdraws')
-                        ->select('*')
-                        ->where('month',$month)
+        $withdrawn = PaymentGatewayWithdraw::where('month',$month)
                         ->where('year',$year)
                         ->first();
         $bkash_balance = $received_bkash - $withdrawn->bkash_withdraw;
@@ -90,8 +90,7 @@ class AccountsController extends Controller
             'users_total_remaining_bill' => $users_total_remaining_bill,
             'expense_types'=> ExpenseType::all(),
             'salary_expense' => $salary_expense,
-            'upstream_bill' => $upstream_bill,
-            'downstream_bill' => $downstream_bill,
+            'upstream_downstream_bill' => $upstream_downstream_bill,
             'total_expenses' => $total_expenses,
             'total_profit' => $total_profit,
             'received_bkash' => $received_bkash,

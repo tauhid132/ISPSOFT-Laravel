@@ -116,16 +116,16 @@
                     <div class="collapse menu-dropdown" id="accounts">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('viewMonthlyBill') }}"  class="nav-link" data-key="t-horizontal">Monthly Bill</a>
+                                <a href="{{ route('viewMonthlyBill') }}"  class="nav-link" data-key="t-horizontal">Bill Invoices</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('viewServiceCharges') }}"  class="nav-link" data-key="t-horizontal">Service Charges</a>
+                                <a href="{{ route('viewServiceCharges') }}"  class="nav-link" data-key="t-horizontal">Other Invoices</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('viewMonthlyExpenses') }}"  class="nav-link" data-key="t-two-column">Monthly Expenses</a>
+                                <a href="{{ route('viewMonthlyExpenses') }}"  class="nav-link" data-key="t-two-column">Expenses</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('viewMonthlySalary') }}" class="nav-link" data-key="t-hovered">Monthly Salary</a>
+                                <a href="{{ route('viewMonthlySalary') }}" class="nav-link" data-key="t-hovered">Salary Sheet</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewMonthlyUpstreamDownstreamBill') }}"  class="nav-link" data-key="t-hovered">Up/Downstream Bill</a>
@@ -198,7 +198,7 @@
                                 <a href="{{ route('viewManualGenerator') }}" class="nav-link" data-key="t-detached">Manual Generator</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">System Logs</a>
+                                <a href="{{ route('viewSystemLogs') }}" class="nav-link" data-key="t-two-column">System Logs</a>
                             </li>
                         </ul>
                     </div>

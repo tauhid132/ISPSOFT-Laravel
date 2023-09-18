@@ -114,7 +114,7 @@
                                         
                                         <div class="col-sm-2">
                                             <div>
-                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Reset Filters</button>
                                             </div>
                                         </div>
                                         <!--end col-->

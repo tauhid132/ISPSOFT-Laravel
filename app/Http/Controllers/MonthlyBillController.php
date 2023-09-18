@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\SystemLog;
 use App\Models\MonthlyBill;
 use App\Models\ServiceArea;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RahulHaque\AdnSms\Facades\AdnSms;
 
 class MonthlyBillController extends Controller
@@ -104,6 +106,11 @@ class MonthlyBillController extends Controller
         $bill->user()->update([
             'current_due' => $current_due
         ]);
+        SystemLog::create([
+            'module' => 'Accounts',
+            'action_by' => Auth::guard('admin')->user()->id,
+            'description' => "Monthly Bill Invoice No: $bill->id Updated."
+        ]);
     }
     
     public function payBill(Request $request){
@@ -152,6 +159,11 @@ class MonthlyBillController extends Controller
     }
     public function deleteBillSingle(Request $request){
         MonthlyBill::destroy($request->id);
+        SystemLog::create([
+            'module' => 'Accounts',
+            'action_by' => Auth::guard('admin')->user()->id,
+            'description' => "Monthly Bill Invoice No: $request->id Deleted."
+        ]);
     }
         
 }  

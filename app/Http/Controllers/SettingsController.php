@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\MonthlyBill;
 use App\Models\MonthlySalary;
 use App\Models\MonthlyUpstreamDownstreamBill;
+use App\Models\PaymentGatewayWithdraw;
 use App\Models\UpstreamDownstream;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,10 @@ class SettingsController extends Controller
                 'current_due' => $user->monthly_bill + $user->current_due,
             ]);
         }
+        PaymentGatewayWithdraw::create([
+            'month' => date('F'),
+            'year' => date('Y')
+        ]);
     }
     public function generateMonthlySalary(){
         $active_employees = Employee::where('status',1)->get();

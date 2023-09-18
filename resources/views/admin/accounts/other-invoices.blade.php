@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','Service Charges | ATS Technology')
+@section('title','Other Invoices | ATS Technology')
 
 @section('main-body')
 @include('admin.includes.header')
@@ -11,11 +11,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Monthly Service Charges</h4>
+                        <h4 class="mb-sm-0"><i class="fa fa-file me-1"></i>Other Invoices</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Accounts</a></li>
-                                <li class="breadcrumb-item active">Monthly Service Charges</li>
+                                <li class="breadcrumb-item active">Other Invoices</li>
                             </ol>
                         </div>
                     </div>
@@ -33,9 +33,7 @@
                             </div>
                             <div class="col-sm-auto">
                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    <button type="button" class="btn btn-success" id="add-service-charge" data-bs-toggle="modal" data-bs-target="#addServiceChargeModal"><i class="ri-add-line align-bottom me-1"></i> Add New Service Charge</button>
-                                    {{-- <button type="button" class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
+                                    <button type="button" class="btn btn-success" id="add-service-charge" data-bs-toggle="modal" data-bs-target="#addServiceChargeModal"><i class="ri-add-line align-bottom me-1"></i> Add New Invoice</button>
                                 </div>
                             </div>
                         </div>
@@ -43,13 +41,6 @@
                     <div class="card-body border-bottom">
                         <form>
                             <div class="row g-3">
-                                {{-- <div class="col-lg-3">
-                                    <div class="search-box">
-                                        <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something...">
-                                        <i class="ri-search-line search-icon"></i>
-                                    </div>
-                                </div> --}}
-                                <!--end col-->
                                 <div class="col-md-12">
                                     <div class="row g-3">
                                         <div class="col-sm-5">
@@ -60,7 +51,6 @@
                                                         echo '<option value="'.date('F', strtotime("-$j Months")).'"><h1>'.date('F', strtotime("-$j Months")).'</h1></option>';
                                                     }
                                                     ?>
-                                                    
                                                 </select>
                                             </div>
                                         </div>
@@ -72,24 +62,20 @@
                                                         echo '<option value="'.date('Y', strtotime("-$j Years")).'"><h1>'.date('Y', strtotime("-$j Years")).'</h1></option>';
                                                     }
                                                     ?>
-                                                    
                                                 </select>
                                             </div>
                                         </div>
                                         
                                         <div class="col-sm-2">
                                             <div>
-                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Reset Filters</button>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                     </div>
                                 </div>
                             </div>
-                            <!--end row-->
                         </form>
                     </div>
-                    
                 </div>
                 <div class="card mt-0">
                     <div class="card-body table-responsive mt-xl-0">
@@ -116,10 +102,7 @@
                 
             </div>
         </div>
-        <!-- container-fluid -->
     </div>
-    <!-- End Page-content -->
-    
     @include('footer')
 </div>
 
@@ -129,7 +112,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="modalHeader">Add Service Charge</h5>
+                <h5 class="modal-title" id="modalHeader">Add New Invoice</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <form id="add_service_charge_form">
@@ -185,7 +168,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="modalHeader">Pay Service Charge</h5>
+                <h5 class="modal-title" id="modalHeader">Pay Invoice</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             <form id="pay_service_charge_form">
@@ -222,7 +205,7 @@
                                 <select class="custom-select form-control" name="received_by_id" id="received_by_id2">
                                     <option value="">None</option>
                                     @foreach ($employees as $employee )
-                                    <option value="{{ $employee->id }}">{{ $employee->full_name }}</option>
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -230,8 +213,8 @@
                         <div class="col-lg-3">
                             <div>
                                 <label for="first_name" class="form-label">Payment Method</label>
-                                <select class="custom-select form-control" name="payment_method" id="payment_method2">
-                                    <option value="">None</option>
+                                <select class="custom-select form-control" name="payment_method" id="payment_method2" required>
+                                    <option value="{{ null }}">None</option>
                                     <option value="Cash">Cash</option>
                                     <option value="Bkash">Bkash</option>
                                     <option value="Nagad">Nagad</option>
@@ -331,7 +314,7 @@
     $(document).on('click', '.get_user_data', function(){
         var username = $('#username').val();  
         $.ajax({
-              
+            
             url:"{{ route('fetchUserData') }}",  
             method:"post",  
             data:{username:username},  

@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\OtherInvoice;
 use Illuminate\Http\Request;
-use App\Models\ServiceCharge;
 use PhpParser\Node\Expr\Empty_;
 use Illuminate\Support\Facades\Auth;
 
-class ServiceChargeController extends Controller
+class OtherInvoiceController extends Controller
 {
     public function viewServiceCharges(){
-        return view('admin.accounts.monthly-service-charges',[
+        return view('admin.accounts.other-invoices',[
             'employees' => Employee::all()
         ]);
     }
@@ -20,7 +20,7 @@ class ServiceChargeController extends Controller
         $year = request('year',date('Y'));
         $month = request('month',date('F'));
         
-        $data = ServiceCharge::with('user','generated_by')->where('year', $year)
+        $data = OtherInvoice::with('user','generated_by')->where('year', $year)
         ->where('month',$month);
         
         $data = $data->get();
@@ -51,7 +51,7 @@ class ServiceChargeController extends Controller
     public function addUpdateServiceCharge(Request $request){
         $user = User::where('username', $request->username)->first();
         if(empty($request->id)){
-            ServiceCharge::create([
+            OtherInvoice::create([
                 'user_id' => $user->id,
                 'on_account' => $request->on_account,
                 'amount' => $request->amount,
@@ -61,7 +61,7 @@ class ServiceChargeController extends Controller
             ]);
             return 'Service Charge Added Successfully!';
         }else{
-            $service_charge = ServiceCharge::with('user','generated_by')->where('id', $request->id)->first();
+            $service_charge = OtherInvoice::with('user','generated_by')->where('id', $request->id)->first();
             $service_charge->update([
                 'user_id' => $user->id,
                 'on_account' => $request->on_account,
@@ -75,12 +75,12 @@ class ServiceChargeController extends Controller
     }
     
     public function fetchServiceChargeSingle(Request $request){
-        $service_charge = ServiceCharge::with('user','generated_by')->where('id', $request->id)->first();
+        $service_charge = OtherInvoice::with('user','generated_by')->where('id', $request->id)->first();
         return response()->json($service_charge);
     }
 
     public function payServiceCharge(Request $request){
-        $service_charge = ServiceCharge::where('id', $request->id)->first();
+        $service_charge = OtherInvoice::where('id', $request->id)->first();
             $service_charge->update([
                 'paid_amount' => $request->paid_amount,
                 'payment_date' => $request->payment_date,
@@ -89,6 +89,6 @@ class ServiceChargeController extends Controller
             ]);
     }
     public function deleteServiceCharge(Request $request){
-        ServiceCharge::find($request->id)->delete();
+        OtherInvoice::find($request->id)->delete();
     }
 }
