@@ -186,6 +186,21 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#stakeholders" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                        <i class="fa fa-sitemap"></i> <span>Stakeholders</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="stakeholders">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('viewUpDownstreams') }}" class="nav-link">Up/Downstreams</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('viewManualGenerator') }}" class="nav-link">Product Vendors</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#setting" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="fa fa-cog"></i> <span data-key="t-authentication">Settings</span>
                     </a>

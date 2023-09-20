@@ -14,5 +14,6 @@ class UpstreamDownstream extends Model
         'usage_description',
         'bill',
         'current_account',
+        'status'
     ];
 }

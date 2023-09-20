@@ -154,6 +154,14 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
 
     });
+    Route::prefix('stakeholders')->group(function(){
+        Route::get('up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'viewUpDownstreams'])->name('viewUpDownstreams');
+        Route::get('up-downstreams/get-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'getUpDownstreams'])->name('getUpDownstreams');
+        Route::post('up-downstreams/add-new-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'addNewUpDownstream'])->name('addNewUpDownstream');
+        Route::post('up-downstreams/fetch-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'fetchUpDownstream'])->name('fetchUpDownstream');
+        Route::post('up-downstreams/delete-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'deleteUpDownstream'])->name('deleteUpDownstream');
+
+    });
 
     Route::prefix('hrm')->group(function(){
         Route::get('employees',[App\Http\Controllers\EmployeeController::class, 'viewEmployees'])->name('viewEmployees');
