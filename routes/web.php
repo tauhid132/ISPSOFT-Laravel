@@ -161,6 +161,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('up-downstreams/fetch-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'fetchUpDownstream'])->name('fetchUpDownstream');
         Route::post('up-downstreams/delete-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'deleteUpDownstream'])->name('deleteUpDownstream');
 
+        Route::get('products-vendors',[App\Http\Controllers\ProductsVendorController::class, 'viewProductVendors'])->name('viewProductVendors');
+        Route::get('products-vendors/get-products-vendors',[App\Http\Controllers\ProductsVendorController::class, 'getProductsVendors'])->name('getProductsVendors');
+        Route::post('products-vendors/fetch-vendor',[App\Http\Controllers\ProductsVendorController::class, 'fetchVendor'])->name('fetchVendor');
+        Route::post('products-vendors/add-edit-products-vendor',[App\Http\Controllers\ProductsVendorController::class, 'addEditProductsVendor'])->name('addEditProductsVendor');
+        Route::post('products-vendors/delete-products-vendor',[App\Http\Controllers\ProductsVendorController::class, 'deleteProductsVendor'])->name('deleteProductsVendor');
     });
 
     Route::prefix('hrm')->group(function(){

@@ -195,7 +195,7 @@
                                 <a href="{{ route('viewUpDownstreams') }}" class="nav-link">Up/Downstreams</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('viewManualGenerator') }}" class="nav-link">Product Vendors</a>
+                                <a href="{{ route('viewProductVendors') }}" class="nav-link">Product Vendors</a>
                             </li>
                         </ul>
                     </div>
