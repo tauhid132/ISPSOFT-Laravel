@@ -15,64 +15,7 @@
         g = 7,
         b = "en",
         y = localStorage.getItem("language");
-    function p() {
-        E(null === y ? b : y);
-        var e = document.getElementsByClassName("language");
-        e &&
-            Array.from(e).forEach(function (t) {
-                t.addEventListener("click", function (e) {
-                    E(t.getAttribute("data-lang"));
-                });
-            });
-    }
-    function E(e) {
-        document.getElementById("header-lang-img") &&
-            ("en" == e
-                ? (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/us.svg")
-                : "sp" == e
-                ? (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/spain.svg")
-                : "gr" == e
-                ? (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/germany.svg")
-                : "it" == e
-                ? (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/italy.svg")
-                : "ru" == e
-                ? (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/russia.svg")
-                : "ch" == e
-                ? (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/china.svg")
-                : "fr" == e
-                ? (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/french.svg")
-                : "ar" == e &&
-                  (document.getElementById("header-lang-img").src =
-                      "assets/images/flags/ae.svg"),
-            localStorage.setItem("language", e),
-            null == (y = localStorage.getItem("language")) && E(b),
-            (e = new XMLHttpRequest()).open(
-                "GET",
-                "assets/lang/" + y + ".json"
-            ),
-            (e.onreadystatechange = function () {
-                var a;
-                4 === this.readyState &&
-                    200 === this.status &&
-                    ((a = JSON.parse(this.responseText)),
-                    Object.keys(a).forEach(function (t) {
-                        var e = document.querySelectorAll(
-                            "[data-key='" + t + "']"
-                        );
-                        Array.from(e).forEach(function (e) {
-                            e.textContent = a[t];
-                        });
-                    }));
-            }),
-            e.send());
-    }
+    
     function f() {
         var e;
         document.querySelectorAll(".navbar-nav .collapse") &&

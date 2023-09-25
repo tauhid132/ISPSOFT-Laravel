@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UpstreamDownstreamController extends Controller
 {
     public function viewUpDownstreams(){
-        return view('admin.stakeholders.up-downstreams');
+        return view('admin.vendors.up-downstreams');
     }
     public function getUpDownstreams(){
         $data = UpstreamDownstream::all();

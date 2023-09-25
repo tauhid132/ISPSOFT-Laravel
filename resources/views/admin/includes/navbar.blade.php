@@ -14,23 +14,20 @@
                 <center><li class="menu-title"><span data-key="t-menu">ISP Management System</span></li></center>
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Request::is('dashboard') ? 'active':''  }}" href="{{ route('viewAdminDashboard') }}" >
-                        <i class="fa fa-tachometer"></i> <span data-key="t-dashboards">Dashboard</span>
+                        <i class="fa fa-tachometer"></i> <span>Dashboard</span>
                     </a>
                 </li> <!-- end Dashboard Menu -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ Request::is('crm/*') ? 'active':''  }}" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="fa fa-user"></i> <span data-key="t-apps">CRM</span>
+                    <a class="nav-link menu-link {{ Request::is('crm/*') ? 'active':''  }}" href="#crm" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="fa fa-user"></i> <span>CRM</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarApps">
+                    <div class="collapse menu-dropdown" id="crm">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('viewUsersPage') }}" class="nav-link" data-key="t-calendar"> All Users </a>
+                                <a href="{{ route('viewUsersPage') }}" class="nav-link"> All Users </a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link" data-key="t-chat"> User's Setting </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('viewLeftUsers') }}" class="nav-link" data-key="t-chat"> Left Users </a>
+                                <a href="{{ route('viewLeftUsers') }}" class="nav-link"> Left Users </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#sidebarResetPass" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarResetPass" data-key="t-password-reset">
@@ -73,16 +70,13 @@
                     <div class="collapse menu-dropdown" id="inventory">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="layouts-horizontal.html" target="_blank" class="nav-link" data-key="t-horizontal">Horizontal</a>
+                                <a href="{{ route('viewProducts') }}" class="nav-link" data-key="t-horizontal">Products</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-detached.html" target="_blank" class="nav-link" data-key="t-detached">Detached</a>
+                                <a href="layouts-detached.html" class="nav-link" data-key="t-detached">Cable Stock</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">Two Column</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-vertical-hovered.html" target="_blank" class="nav-link" data-key="t-hovered">Hovered</a>
+                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">Packages</a>
                             </li>
                         </ul>
                     </div>
@@ -187,12 +181,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#stakeholders" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
-                        <i class="fa fa-sitemap"></i> <span>Stakeholders</span>
+                        <i class="fa fa-sitemap"></i> <span>Vendors</span>
                     </a>
                     <div class="collapse menu-dropdown" id="stakeholders">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('viewUpDownstreams') }}" class="nav-link">Up/Downstreams</a>
+                                <a href="{{ route('viewUpDownstreams') }}" class="nav-link">Upstreams & Downstreams</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewProductVendors') }}" class="nav-link">Product Vendors</a>

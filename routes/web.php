@@ -154,7 +154,18 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
 
     });
-    Route::prefix('stakeholders')->group(function(){
+
+    Route::prefix('inventory')->group(function(){
+        Route::get('products',[App\Http\Controllers\ProductController::class, 'viewProducts'])->name('viewProducts');
+        Route::get('products/get-products',[App\Http\Controllers\ProductController::class, 'getProducts'])->name('getProducts');
+        Route::post('products/add-edit-product',[App\Http\Controllers\ProductController::class, 'addEditProduct'])->name('addEditProduct');
+        Route::post('products/fetch-product',[App\Http\Controllers\ProductController::class, 'fetchProduct'])->name('fetchProduct');
+        Route::post('products/delete-product',[App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('deleteProduct');
+        
+
+
+    });
+    Route::prefix('vendors')->group(function(){
         Route::get('up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'viewUpDownstreams'])->name('viewUpDownstreams');
         Route::get('up-downstreams/get-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'getUpDownstreams'])->name('getUpDownstreams');
         Route::post('up-downstreams/add-new-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'addNewUpDownstream'])->name('addNewUpDownstream');

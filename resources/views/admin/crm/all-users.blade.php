@@ -41,7 +41,7 @@
                             <div class="row g-3">
                                 <div class="col-xl-6">
                                     <div class="search-box">
-                                        <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something...">
+                                        <input type="text" class="form-control search" onkeyup="search(this)" placeholder="Search for customer, email, phone, status or something...">
                                         <i class="fa fa-search search-icon"></i>
                                     </div>
                                 </div>
@@ -119,6 +119,7 @@
 <script>
     let selectedStatus = '';
     let selectedArea = '';
+    let search_keyword = '';
     
     var dataTable = $('#users-table').DataTable({
         
@@ -132,6 +133,7 @@
             "data": function(d){
                 d.status = selectedStatus
                 d.area = selectedArea
+                d.search_keyword = search_keyword
             }
         },
         "columns" : [
@@ -147,6 +149,11 @@
         {"data": "current_due"},
         ]
     });
+
+    function search(event){
+        search_keyword = event.value
+        dataTable.ajax.reload();
+    }
 
     function onStatusChange(sel){
         selectedStatus = sel.value

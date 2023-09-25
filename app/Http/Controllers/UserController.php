@@ -38,6 +38,10 @@ class UserController extends Controller
         if($selected_area != ''){
             $data = $data->where('service_area_id','=',$selected_area);
         }
+        if($request->search_keyword != ''){
+            $data = $data->where('username','LIKE', '%'.$request->search_keyword.'%')
+                        ->orWhere('customer_name','LIKE', '%'.$request->search_keyword.'%');
+        }
 
         $data = $data->get();
         

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductsVendorController extends Controller
 {
     public function viewProductVendors(){
-        return view('admin.stakeholders.products-vendors');
+        return view('admin.vendors.products-vendors');
     }
     public function getProductsVendors(){
         $data = ProductsVendor::all();
