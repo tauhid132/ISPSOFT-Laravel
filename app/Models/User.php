@@ -33,7 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'service_area_id',
         'installation_date',
         'customer_type',
-        'package',
+        'package_id',
         'physical_connectivity_type',
         'logical_connectivity_type',
         'ip_address',
@@ -82,6 +82,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function tickets(){
         return $this->hasMany(Ticket::class,'user_id','id');
+    }
+    public function package(){
+        return $this->belongsTo(Package::class,'package_id','id');
     }
 
    

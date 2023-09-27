@@ -140,10 +140,10 @@
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
                                                         <label for="intType1">Package :</label>
-                                                        <select class="custom-select form-control" name="package" >
+                                                        <select class="custom-select form-control" name="package_id" >
                                                             <option value="{{ null }}">Select One</option>
                                                             @foreach ($packages as $package )
-                                                            <option {{ $user->package == $package->package_name ? 'selected' : '' }} value="{{ $package->package_name  }}">{{ $package->package_name }}</option>
+                                                            <option {{ $user->package->id == $package->id ? 'selected' : '' }} value="{{ $package->id  }}">{{ $package->package_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -380,8 +380,10 @@
                         <div class="col-lg-6">
                             <div>
                                 <label for="last_name" class="form-label">Left Reason</label>
-                                <select class="custom-select form-control" name="left_reason">
+                                <select class="custom-select form-control" id="left_reason" name="left_reason">
                                     <option value="Left Place">Left Place</option>
+                                    <option value="Out of Coverage">Out of Coverage</option>
+                                    <option value="User Not Satisfied">User Not Satisfied</option>
                                     <option value="Service Issue">Service Issue</option>
                                     <option value="Terminated">Terminated</option>
                                 </select>

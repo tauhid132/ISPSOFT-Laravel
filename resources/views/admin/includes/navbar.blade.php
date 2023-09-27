@@ -76,7 +76,7 @@
                                 <a href="layouts-detached.html" class="nav-link" data-key="t-detached">Cable Stock</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">Packages</a>
+                                <a href="{{ route('viewPackages') }}" class="nav-link" data-key="t-two-column">Packages</a>
                             </li>
                         </ul>
                     </div>
@@ -159,7 +159,7 @@
                                 <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">Single SMS</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-vertical-hovered.html" target="_blank" class="nav-link" data-key="t-hovered">SMS Templates</a>
+                                <a href="{{ route('viewSmsTemplates') }}" class="nav-link" data-key="t-hovered">SMS Templates</a>
                             </li>
                         </ul>
                     </div>

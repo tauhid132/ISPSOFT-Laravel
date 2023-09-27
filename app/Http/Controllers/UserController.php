@@ -15,7 +15,7 @@ use RahulHaque\AdnSms\Facades\AdnSms;
 class UserController extends Controller
 {
     public function testsms(){
-        $response = AdnSms::to('01751968954')
+        $response = AdnSms::to('017513968954')
             ->message('Send SMS Test.')
             ->send();
         
@@ -96,7 +96,7 @@ class UserController extends Controller
             'service_area_id' => $request->service_area_id,
             'installation_date' => $request->installation_date,
             'customer_type' => $request->customer_type,
-            'package' => $request->package,
+            'package_id' => $request->package_id,
             'physical_connectivity_type' => $request->physical_connectivity_type,
             'logical_connectivity_type' => $request->logical_connectivity_type,
             'ip_address' => $request->ip_address,
@@ -143,7 +143,7 @@ class UserController extends Controller
             'service_area_id' => $request->service_area_id,
             'installation_date' => $request->installation_date,
             'customer_type' => $request->customer_type,
-            'package' => $request->package,
+            'package_id' => $request->package_id,
             'physical_connectivity_type' => $request->physical_connectivity_type,
             'logical_connectivity_type' => $request->logical_connectivity_type,
             'ip_address' => $request->ip_address,
@@ -186,22 +186,11 @@ class UserController extends Controller
         return datatables($data)
         ->addIndexColumn()
         ->addColumn('action', function($row){
-            
-            $btn = '<a><i id="'.$row->l_id.'" class="fa fa-edit text-primary m-1 edit_left_user"></i></a>';
-            $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-trash text-danger delete m-1"></i></a>';
+            $btn ='<a><button id="'.$row->l_id.'" class="btn btn-sm btn-primary edit_left_user m-1"><i class="fa fa-edit"></i> Edit</button></a>';
+            $btn = $btn.'<a><button id="'.$row->l_id.'" class="btn btn-sm btn-danger delete m-1"><i class="fa fa-trash"></i> Delete</button></a>';
             return $btn;
         })
-        ->addColumn('status', function($row){
-            if($row->status == 1){
-                $btn = '<span class="badge bg-success"> Active</span>';
-            }else if($row->status == 0){
-                $btn = '<span class="badge bg-danger"> Inactive</span>';
-            }else if($row->status == 2){
-                $btn = '<span class="badge bg-warning">Expired</span>';
-            }
-            return $btn;
-        })
-        ->rawColumns(['action' => 'action', 'status' => 'status'])
+        ->rawColumns(['action' => 'action'])
         ->make(true);
     }
     public function addToLeftUser(Request $request){
@@ -224,6 +213,9 @@ class UserController extends Controller
             'left_reason' => $request->left_reason,
             'left_reason_details' => $request->left_reason_details,
         ]);
+    }
+    public function deleteLeftUser(Request $request){
+        return DB::table('left_users')->where('id',$request->id)->delete();
     }
 
     public function generateBill(Request $request){

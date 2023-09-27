@@ -55,8 +55,9 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('generate-invoice/{id}',[App\Http\Controllers\UserController::class, 'generateInvoice'])->name('generateInvoice');
         Route::post('fetch-single-left-user',[App\Http\Controllers\UserController::class, 'fetchSingleLeftUser'])->name('fetchSingleLeftUser');
         Route::post('update-left-user',[App\Http\Controllers\UserController::class, 'updateLeftUser'])->name('updateLeftUser');
+        Route::post('delete-left-user',[App\Http\Controllers\UserController::class, 'deleteLeftUser'])->name('deleteLeftUser');
 
-        Route::get('test',[App\Http\Controllers\UserController::class, 'testsms'])->name('updateLeftUser');
+        Route::get('test',[App\Http\Controllers\UserController::class, 'testsms']);
         Route::prefix('reseller')->group(function(){
             Route::get('resellers',[App\Http\Controllers\ResellerController::class, 'viewResellers'])->name('viewResellers');
             Route::post('resellers/get-resellers',[App\Http\Controllers\ResellerController::class, 'getResellers'])->name('getResellers');
@@ -134,8 +135,14 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('bill-reminder/fetch-users',[App\Http\Controllers\SMSController::class, 'fetchReminderSmsUsers'])->name('fetchReminderSmsUsers');
         Route::post('bill-reminder/send-sms',[App\Http\Controllers\SMSController::class, 'sendReminderSms'])->name('sendReminderSms');
        
-       
+        Route::get('single-sms',[App\Http\Controllers\SMSController::class, 'viewSingleSmsSender'])->name('viewSingleSmsSender');
 
+
+        Route::get('sms-templates',[App\Http\Controllers\SmsTemplateController::class, 'viewSmsTemplates'])->name('viewSmsTemplates');
+        Route::get('sms-templates/get-sms-templates',[App\Http\Controllers\SmsTemplateController::class, 'getSmsTemplates'])->name('getSmsTemplates');
+        Route::post('sms-templates/add-edit-template',[App\Http\Controllers\SmsTemplateController::class, 'addEditTemplate'])->name('addEditTemplate');
+        Route::post('sms-templates/fetch-template',[App\Http\Controllers\SmsTemplateController::class, 'fetchTemplate'])->name('fetchTemplate');
+        Route::post('sms-templates/delete-template',[App\Http\Controllers\SmsTemplateController::class, 'deleteTemplate'])->name('deleteTemplate');
     });
     Route::prefix('settings')->group(function(){
         Route::get('admins',[App\Http\Controllers\AdminController::class, 'viewAdmins'])->name('viewAdmins');
@@ -162,6 +169,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('products/fetch-product',[App\Http\Controllers\ProductController::class, 'fetchProduct'])->name('fetchProduct');
         Route::post('products/delete-product',[App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('deleteProduct');
         
+        Route::get('packages',[App\Http\Controllers\PackageController::class, 'viewPackages'])->name('viewPackages');
+        Route::get('packages/get-packages',[App\Http\Controllers\PackageController::class, 'getPackages'])->name('getPackages');
+        Route::post('packages/add-edit-package',[App\Http\Controllers\PackageController::class, 'addEditPackage'])->name('addEditPackage');
+        Route::post('packages/fetch-package',[App\Http\Controllers\PackageController::class, 'fetchPackage'])->name('fetchPackage');
+        Route::post('packages/delete-package',[App\Http\Controllers\PackageController::class, 'deletePackage'])->name('deletePackage');
 
 
     });

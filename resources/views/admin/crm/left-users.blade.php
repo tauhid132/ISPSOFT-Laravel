@@ -112,6 +112,8 @@
                                 <label for="last_name" class="form-label">Left Reason</label>
                                 <select class="custom-select form-control" id="left_reason" name="left_reason">
                                     <option value="Left Place">Left Place</option>
+                                    <option value="Out of Coverage">Out of Coverage</option>
+                                    <option value="User Not Satisfied">User Not Satisfied</option>
                                     <option value="Service Issue">Service Issue</option>
                                     <option value="Terminated">Terminated</option>
                                 </select>
@@ -209,6 +211,31 @@
                 });
             } 
         });  
+    });
+    $(document).on('click', '.delete', function(){
+        var id = $(this).attr("id");
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{ route('deleteLeftUser') }}",
+                    method:"POST",
+                    data:{id:id},
+                    success:function(data){
+                        toastr["success"]("User Deleted Successfully")
+                        dataTable.ajax.reload();
+                    }
+                })
+                
+                
+            }
+        })
     });
 </script>
 @endsection

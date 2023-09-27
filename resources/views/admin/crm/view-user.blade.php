@@ -142,7 +142,7 @@
                                                         <select class="custom-select form-control" name="package" disabled>
                                                             <option value="{{ null }}">Select One</option>
                                                             @foreach ($packages as $package )
-                                                            <option {{ $user->package == $package->package_name ? 'selected' : '' }} value="{{ $package->package_name  }}">{{ $package->package_name }}</option>
+                                                            <option {{ $user->package->id == $package->id ? 'selected' : '' }} value="{{ $package->package_name  }}">{{ $package->package_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

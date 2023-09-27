@@ -145,10 +145,10 @@
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
                                                         <label>Package :</label>
-                                                        <select class="custom-select form-control" name="package" >
+                                                        <select class="custom-select form-control" name="package_id" >
                                                             <option value="{{ null }}">Select One</option>
                                                             @foreach ($packages as $package )
-                                                            <option value="{{ $package->package_name  }}">{{ $package->package_name }}</option>
+                                                            <option value="{{ $package->id  }}">{{ $package->package_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

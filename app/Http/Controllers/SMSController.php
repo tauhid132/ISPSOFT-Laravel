@@ -34,9 +34,9 @@ class SMSController extends Controller
     }
     public function checkSmsBalance()
     {
-        $res = AdnSms::checkBalance();
-        $res = array($res);
-        return response()->json($res);
+        $response = AdnSms::checkBalance();
+        
+        return $response['balance']['sms'];
     }
     public function sendReminderSms(Request $request){
         if($request->reminderType == "reminder"){
