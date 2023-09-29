@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\MonthlyBill;
-use App\Models\MonthlySalary;
-use App\Models\MonthlyUpstreamDownstreamBill;
-use App\Models\PaymentGatewayWithdraw;
-use App\Models\UpstreamDownstream;
 use Illuminate\Http\Request;
+use App\Models\MonthlySalary;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\UpstreamDownstream;
+use App\Models\PaymentGatewayWithdraw;
+use App\Models\MonthlyUpstreamDownstreamBill;
 
 class SettingsController extends Controller
 {
@@ -64,6 +65,19 @@ class SettingsController extends Controller
                 'current_account' => $stream->bill + $stream->current_account,
             ]);
         }
+    }
+
+    public function generateBillingSheetPdf(){
+        $bills = MonthlyBill::where('billing_year', date('Y'))->where('billing_month', date('F'))->get();
+        $pdf = Pdf::loadView('admin.pdfs.billing-sheet', compact('bills') )->setPaper('a4', 'landscape');;
+        return $pdf->stream();
+    }
+    public function monthlyInvoicesPdf(){
+        $bills = MonthlyBill::whereHas('user', function($query2){
+            $query2->where('print_invoice', 1);
+        })->where('billing_year', date('Y'))->where('billing_month', date('F'))->get();
+        $pdf = Pdf::loadView('admin.pdfs.monthly-invoices', compact('bills') )->setPaper('a4');;
+        return $pdf->stream();
     }
     
 }

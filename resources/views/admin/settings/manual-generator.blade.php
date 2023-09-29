@@ -34,6 +34,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-12 mt-4">
+                <div class="card mt-0">
+                    <div class="card-header">
+                        <h5><i class="fa fa-file-pdf me-2"></i>PDF Generators</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                            <button type="button" class="btn btn-primary" onclick="generateMonthlyBillInvoices()"><i class="fa fa-file-pdf"></i> Billing Sheet</button>
+                            <button type="button" class="btn btn-secondary" onclick="generateMonthlySalary()"><i class="fa fa-file-pdf"></i> Monthly Invoices</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     @include('footer')

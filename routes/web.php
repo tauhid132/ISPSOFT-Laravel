@@ -155,7 +155,9 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('manual-generator/generate-monthly-bill-invoices',[App\Http\Controllers\SettingsController::class, 'generateMonthlyBillInvoices'])->name('generateMonthlyBillInvoices');
         Route::post('manual-generator/generate-monthly-salary',[App\Http\Controllers\SettingsController::class, 'generateMonthlySalary'])->name('generateMonthlySalary');
         Route::post('manual-generator/generate-upstream-downstream-bills',[App\Http\Controllers\SettingsController::class, 'generateMonthlyUpstreamDownstreamBills'])->name('generateMonthlyUpstreamDownstreamBills');
-        
+        Route::get('manual-generator/billing-sheet-pdf',[App\Http\Controllers\SettingsController::class, 'generateBillingSheetPdf'])->name('generateBillingSheet');
+        Route::get('manual-generator/monthly-invoices-pdf',[App\Http\Controllers\SettingsController::class, 'monthlyInvoicesPdf'])->name('monthlyInvoicesPdf');
+
         Route::get('system-logs',[App\Http\Controllers\SystemLogController::class, 'viewSystemLogs'])->name('viewSystemLogs');
         Route::get('system-logs/get-system-logs',[App\Http\Controllers\SystemLogController::class, 'getSystemLogs'])->name('getSystemLogs');
 
