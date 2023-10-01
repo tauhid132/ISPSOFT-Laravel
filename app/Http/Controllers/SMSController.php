@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\MonthlyBill;
 use App\Models\ServiceArea;
+use App\Models\SmsTemplate;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\ToArray;
 use RahulHaque\AdnSms\Facades\AdnSms;
@@ -60,4 +61,14 @@ class SMSController extends Controller
         return $request->reminderType;
     }
 
+    public function viewSingleSmsSender(){
+        return view('admin.sms.single-sms',[
+            'templates' => SmsTemplate::all()
+        ]);
+    }
+    public function sendSingleSms(Request $request){
+        return AdnSms::to($request->mobile_no)
+                ->message($request->sms_body)
+                ->send();
+    }
 }

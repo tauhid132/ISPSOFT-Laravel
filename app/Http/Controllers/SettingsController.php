@@ -11,11 +11,14 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\UpstreamDownstream;
 use App\Models\PaymentGatewayWithdraw;
 use App\Models\MonthlyUpstreamDownstreamBill;
+use App\Models\ServiceArea;
 
 class SettingsController extends Controller
 {
     public function viewManualGenerator(){
-        return view('admin.settings.manual-generator');
+        return view('admin.settings.manual-generator',[
+            'service_areas' => ServiceArea::all()
+        ]);
     }
     public function generateMonthlyBillInvoices(){
         $active_users = User::where('status',1)->get();
@@ -67,8 +70,16 @@ class SettingsController extends Controller
         }
     }
 
-    public function generateBillingSheetPdf(){
-        $bills = MonthlyBill::where('billing_year', date('Y'))->where('billing_month', date('F'))->get();
+    public function generateBillingSheetPdf(Request $request){
+        $area = $request->query('area');
+        if($area != 'all'){
+            $bills = MonthlyBill::whereHas('user', function($query2) use ($area){
+                $query2->where('service_area_id', $area);
+            })->where('billing_year', date('Y'))->where('billing_month', date('F'))->get();
+        }else{
+            $bills = MonthlyBill::where('billing_year', date('Y'))->where('billing_month', date('F'))->get();
+        }
+       
         $pdf = Pdf::loadView('admin.pdfs.billing-sheet', compact('bills') )->setPaper('a4', 'landscape');;
         return $pdf->stream();
     }

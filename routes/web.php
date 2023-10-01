@@ -136,6 +136,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('bill-reminder/send-sms',[App\Http\Controllers\SMSController::class, 'sendReminderSms'])->name('sendReminderSms');
        
         Route::get('single-sms',[App\Http\Controllers\SMSController::class, 'viewSingleSmsSender'])->name('viewSingleSmsSender');
+        Route::post('single-sms/send-single-sms',[App\Http\Controllers\SMSController::class, 'sendSingleSms'])->name('sendSingleSms');
 
 
         Route::get('sms-templates',[App\Http\Controllers\SmsTemplateController::class, 'viewSmsTemplates'])->name('viewSmsTemplates');

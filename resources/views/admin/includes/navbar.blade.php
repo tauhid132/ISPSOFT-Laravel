@@ -156,7 +156,7 @@
                                 <a href="layouts-detached.html" target="_blank" class="nav-link" data-key="t-detached">Group SMS</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">Single SMS</a>
+                                <a href="{{ route('viewSingleSmsSender') }}" class="nav-link" data-key="t-two-column">Single SMS</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewSmsTemplates') }}" class="nav-link" data-key="t-hovered">SMS Templates</a>
