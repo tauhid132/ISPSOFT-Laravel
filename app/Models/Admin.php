@@ -13,4 +13,7 @@ class Admin extends Authenticatable
     protected $fillable = [
         'name', 'username', 'password','profile_picture','email','role','status'
     ];
+    public function notes(){
+        return $this->hasMany(Note::class,'admin_id','id')->latest();
+    }
 }
