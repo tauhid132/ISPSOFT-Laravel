@@ -16,4 +16,7 @@ class Admin extends Authenticatable
     public function notes(){
         return $this->hasMany(Note::class,'admin_id','id')->latest();
     }
+    public function notifications(){
+        return $this->hasMany(Notification::class,'receiver_id','id')->latest();
+    }
 }

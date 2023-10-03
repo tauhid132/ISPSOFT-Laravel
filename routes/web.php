@@ -38,7 +38,10 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
     Route::post('my-profile/change-profile-info',[App\Http\Controllers\AdminAuthController::class, 'changeProfileInfo'])->name('changeProfileInfoAdmin');
     Route::post('my-profile/change-password',[App\Http\Controllers\AdminAuthController::class, 'changePassword'])->name('changePasswordAdmin');
     Route::post('my-profile/change-profile-picture',[App\Http\Controllers\AdminAuthController::class, 'changeProfilePicture'])->name('changeProfilePictureAdmin');
-    
+    Route::post('dashboard/add-edit-note',[App\Http\Controllers\AdminController::class, 'addEditNote'])->name('addEditNote');
+    Route::post('dashboard/fetch-note',[App\Http\Controllers\AdminController::class, 'fetchNote'])->name('fetchNote');
+    Route::post('dashboard/delete-note',[App\Http\Controllers\AdminController::class, 'deleteNote'])->name('deleteNote');
+
     //CRM Module Routes
     Route::prefix('crm')->group(function(){
         Route::get('view-users',[App\Http\Controllers\UserController::class, 'viewUsersPage'])->name('viewUsersPage');

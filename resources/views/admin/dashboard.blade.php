@@ -15,11 +15,11 @@
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                             </ol>
                         </div>
-
+                        
                     </div>
                 </div>
             </div>
-
+            
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card crm-widget">
@@ -33,7 +33,7 @@
                                                 <i class="fa fa-users fs-24 text-primary"></i>
                                             </div>
                                             <div class="flex-grow-1 ms-3">
-                                                <h2 class="mb-0"><span class="counter-value" data-target="197">0</span></h2>
+                                                <h2 class="mb-0"><span class="counter-value" data-target="{{ $total_users }}">0</span></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
                                                 <i class="fa fa-user fs-24 text-success"></i>
                                             </div>
                                             <div class="flex-grow-1 ms-3">
-                                                <h2 class="mb-0"><span class="counter-value" data-target="489.4">0</span></h2>
+                                                <h2 class="mb-0"><span class="counter-value" data-target="{{ $active_users }}">0</span></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                                                 <i class="fa fa-user-times fs-24 text-warning"></i>
                                             </div>
                                             <div class="flex-grow-1 ms-3">
-                                                <h2 class="mb-0"><span class="counter-value" data-target="32.89">0</span></h2>
+                                                <h2 class="mb-0"><span class="counter-value" data-target="{{ $expired_users }}">0</span></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -72,19 +72,19 @@
                                                 <i class="fa fa-money-bill fs-24 text-success"></i>
                                             </div>
                                             <div class="flex-grow-1 ms-3">
-                                                <h2 class="mb-0"><span class="counter-value" data-target="1596.5">0</span></h2>
+                                                <h2 class="mb-0"><span class="counter-value" data-target="{{ $total_monthly_bill }}">0</span></h2>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                               
-                            </div><!-- end row -->
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-            </div><!-- end row -->
-
-
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
             <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="card card-animate">
@@ -92,7 +92,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">New Users</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="28.05">0</span>k</h2>
+                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="{{ $new_users->count() }}">0</span></h2>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
@@ -102,17 +102,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- end card body -->
-                    </div> <!-- end card-->
-                </div> <!-- end col-->
-
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="col-xl-3 col-md-6">
                     <div class="card card-animate">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Left Users</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="97.66">0</span>k</h2>
+                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="{{ $new_users->count() }}">0</span></h2>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
@@ -122,17 +122,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- end card body -->
-                    </div> <!-- end card-->
-                </div> <!-- end col-->
-
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="col-xl-3 col-md-6">
                     <div class="card card-animate">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Total Employees</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="97.66">0</span>k</h2>
+                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="{{ $total_employees }}">0</span></h2>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
@@ -142,17 +142,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- end card body -->
-                    </div> <!-- end card-->
-                </div> <!-- end col-->
-
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="col-xl-3 col-md-6">
                     <div class="card card-animate">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Monthly Salary</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="33.48">0</span></h2>
+                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="{{ $total_employees_salary }}">0</span></h2>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
@@ -162,12 +162,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- end card body -->
-                    </div> <!-- end card-->
-                </div> <!-- end col-->
-            </div> <!-- end row-->
-
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
             <div class="row">
                 <div class="col-xl-7">
                     <div class="card">
@@ -178,8 +178,8 @@
                                     <a class="btn btn-sm btn-primary"><i class="fa fa-eye me-1"></i>View All</a>
                                 </div>
                             </div>
-                        </div><!-- end card header -->
-
+                        </div>
+                        
                         <div class="card-body" style="height: 330px; overflow-x: hidden; overflow-y: scroll">
                             <div class="table-responsive table-card">
                                 <table class="table table-borderless table-hover table-nowrap align-middle mb-0">
@@ -192,71 +192,26 @@
                                             <th scope="col">Reference</th>
                                         </tr>
                                     </thead>
-
+                                    
                                     <tbody>
+                                        @forelse ($new_users as $new_user )
                                         <tr>
-                                            <td>Absternet LLC</td>
-                                            <td>Sep 20, 2021</td>
-                                            <td><img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-xs rounded-circle me-2">
-                                                <a href="#javascript: void(0);" class="text-body fw-medium">Donald Risher</a>
-                                            </td>
-                                            <td><span class="badge badge-soft-success p-2">Deal Won</span></td>
-                                            <td>
-                                                <div class="text-nowrap">$100.1K</div>
-                                            </td>
+                                            <td>{{ $new_user->username }}</td>
+                                            <td>{{ $new_user->customer_name }}</td>
+                                            <td>{{ $new_user->monthly_bill }}</td>
+                                            <td>{{ $new_user->installation_date }}</td>
+                                            <td>{{ $new_user->reference }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>Raitech Soft</td>
-                                            <td>Sep 23, 2021</td>
-                                            <td><img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-xs rounded-circle me-2">
-                                                <a href="#javascript: void(0);" class="text-body fw-medium">Sofia Cunha</a>
-                                            </td>
-                                            <td><span class="badge badge-soft-warning p-2">Intro Call</span></td>
-                                            <td>
-                                                <div class="text-nowrap">$150K</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>William PVT</td>
-                                            <td>Sep 27, 2021</td>
-                                            <td><img src="assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-circle me-2">
-                                                <a href="#javascript: void(0);" class="text-body fw-medium">Luis Rocha</a>
-                                            </td>
-                                            <td><span class="badge badge-soft-danger p-2">Stuck</span></td>
-                                            <td>
-                                                <div class="text-nowrap">$78.18K</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Loiusee LLP</td>
-                                            <td>Sep 30, 2021</td>
-                                            <td><img src="assets/images/users/avatar-4.jpg" alt="" class="avatar-xs rounded-circle me-2">
-                                                <a href="#javascript: void(0);" class="text-body fw-medium">Vitoria Rodrigues</a>
-                                            </td>
-                                            <td><span class="badge badge-soft-success p-2">Deal Won</span></td>
-                                            <td>
-                                                <div class="text-nowrap">$180K</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Apple Inc.</td>
-                                            <td>Sep 30, 2021</td>
-                                            <td><img src="assets/images/users/avatar-6.jpg" alt="" class="avatar-xs rounded-circle me-2">
-                                                <a href="#javascript: void(0);" class="text-body fw-medium">Vitoria Rodrigues</a>
-                                            </td>
-                                            <td><span class="badge badge-soft-info p-2">New Lead</span></td>
-                                            <td>
-                                                <div class="text-nowrap">$78.9K</div>
-                                            </td>
-                                        </tr>
+                                        @empty
                                         
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="col-xl-5">
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
@@ -264,14 +219,14 @@
                             <div class="flex-shrink-0">
                                 <div class="card-header-dropdown">
                                     <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <button class="btn btn-sm btn-success"><i class="fa fa-plus me-1"></i>Add New</button>
+                                        <button class="btn btn-sm btn-success" id="add-new-note" data-bs-toggle="modal" data-bs-target="#addEditNoteModal"><i class="fa fa-plus me-1"></i>Add New</button>
                                     </a>
                                     
                                 </div>
                             </div>
                         </div>
                         <div class="card-body" style="height: 330px; overflow-x: hidden; overflow-y: scroll">
-                            <ul class="list-group list-group-flush border-dashed">
+                            <ul class="list-group list-group-flush border-dashed" id="notes">
                                 @forelse (Auth::guard('admin')->user()->notes as $note)
                                 <li class="list-group-item ps-0">
                                     <div class="row align-items-center g-3">
@@ -279,32 +234,140 @@
                                             <h5 class="text-muted mt-0 mb-1 fs-13"><i class="fa fa-calendar me-1"></i> {{ $note->created_at->format('l, j F, Y h:i A') }}</h5>
                                             <a href="#" class="text-reset fs-14 mb-0">{{ $note->note }}</a>
                                         </div>
-                                        <div class="col-sm-auto">
-                                            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                        <div class="col-sm-auto d-flex gap-1">
+                                            <button class="btn btn-sm btn-primary edit_note" id="{{ $note->id }}" ><i class="fa fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger delete_note" id="{{ $note->id }}" ><i class="fa fa-trash"></i></button>
                                         </div>
                                     </div>
                                 </li>
                                 @empty
-                                    <center><h2>There is no notes!</h2></center>
+                                <center><h2 class="m-4">There is no notes!</h2></center>
                                 @endforelse
-                               
-                            </ul><!-- end -->
-                            
-                            
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-            </div><!-- end row -->
-
-            
-
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- container-fluid -->
     </div>
-    <!-- End Page-content -->
-
-   @include('footer')
+    
+    @include('footer')
 </div>
-    
-    
+
+
+<div class="modal fade zoomIn" id="addEditNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-soft-info">
+                <h5 class="modal-title" id="modalHeader">Modal Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form id="add-edit-note-form">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <input type="hidden" name="id" id="id">
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="name" class="form-label">Note</label>
+                                <input type="text" name="note" class="form-control" id="note" required />
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" id="submit-btn">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('page-script')
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#add-new-note').click(function(){  
+        $('#submit-btn').html("Add");  
+        $('#add-edit-note-form')[0].reset();
+        $('#modalHeader').html("Add New Note"); 
+        $('#id').val(""); 
+    }); 
+    $('#add-edit-note-form').on("submit", function(event){  
+        event.preventDefault();  
+        $.ajax({  
+            url:"{{ route('addEditNote') }}",  
+            method:"POST",  
+            data:$('#add-edit-note-form').serialize(),  
+            beforeSend:function(){  
+                $('#submit-btn').html("Updating");  
+            },  
+            success:function(data){  
+                $('#add-edit-note-form')[0].reset();  
+                $('#submit-btn').html("Create");
+                $('#addEditNoteModal').modal('hide');
+                $("#notes").load(location.href + " #notes");
+                toastr["success"]("Note Updated Successfully")
+                
+            },
+            error: function(xhr, status, error) 
+            {
+                $.each(xhr.responseJSON.errors, function (key, item) 
+                {
+                    toastr["error"](item)
+                });
+            } 
+        });     
+    });
+    $(document).on('click', '.edit_note', function(){
+        var id = $(this).attr("id");  
+        $.ajax({  
+            url:"{{ route('fetchNote') }}",  
+            method:"post",  
+            data:{id:id},  
+            success:function(data){ 
+                $('#id').val(data.id);
+                $('#note').val(data.note);
+                
+                $('#modalHeader').html("Edit Note");
+                $('#submit-btn').html("Update"); 
+                $('#addEditNoteModal').modal("show");  
+            }  
+        });  
+    }); 
+    $(document).on('click', '.delete_note', function(){
+        var id = $(this).attr("id");
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{ route('deleteNote') }}",
+                    method:"POST",
+                    data:{id:id},
+                    success:function(data){
+                        toastr["success"]("Note Deleted Successfully")
+                        $("#notes").load(location.href + " #notes");
+                    }
+                })
+                
+                
+            }
+        })
+    });
+</script>
 @endsection

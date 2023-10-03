@@ -2,15 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Note;
+use App\Models\User;
 use App\Models\Admin;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
     public function viewDashboard(){
-        return view('admin.dashboard');
+        $start_day = date('Y-m').'-01';
+        $end_day = date('Y-m').'-31';
+
+        $new_users = User::whereBetween('installation_date', [$start_day, $end_day])->get();
+        $left_users = DB::table('left_users')->whereBetween('created_at', [$start_day, $end_day])->get();
+        
+        return view('admin.dashboard',[
+            'total_users' => User::where('status', 1)->orWhere('status', 2)->count(),
+            'active_users' => User::where('status', 1)->count(),
+            'expired_users' => User::where('status', 2)->count(),
+            'total_monthly_bill' => User::where('status', 1)->orWhere('status', 2)->sum('monthly_bill'),
+            'new_users' => $new_users,
+            'left_users' => $left_users,
+            'total_employees' => Employee::count(),
+            'total_employees_salary' => Employee::sum('salary'),
+        ]);
     }
     public function viewAdmins(){
         return view('admin.settings.admins');
@@ -71,5 +92,25 @@ class AdminController extends Controller
         $admin->update([
             'password' => Hash::make($request->password),
         ]); 
+    }
+
+    public function addEditNote(Request $request){
+        if(empty($request->id)){
+            Note::create([
+                'note' => $request->note,
+                'admin_id' => Auth::guard('admin')->user()->id,
+            ]);
+        }else{
+            $note = Note::find($request->id);
+            $note->update([
+                'note' => $request->note,
+            ]);
+        }
+    }
+    public function fetchNote(Request $request){
+        return response()->json(Note::find($request->id));
+    }
+    public function deleteNote(Request $request){
+        Note::find($request->id)->delete();
     }
 }
