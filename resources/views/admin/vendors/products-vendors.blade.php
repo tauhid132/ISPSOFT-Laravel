@@ -151,7 +151,7 @@
         {"data": "mobile"},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
         
-    
+        
         ]
     });
     $('#add-new-vendor').click(function(){  
@@ -160,7 +160,7 @@
         $('#modalHeader').html("Add New Vendor"); 
         $('#id').val(""); 
     }); 
-
+    
     $(document).on('click', '.edit_vendor', function(){
         var id = $(this).attr("id");  
         $.ajax({  
@@ -206,34 +206,34 @@
             } 
         });     
     });
-
+    
     $(document).on('click', '.delete', function(){
-            var id = $(this).attr("id");
-            Swal.fire({
-                title: 'Are you sure?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url:"{{ route('deleteProductsVendor') }}",
-                        method:"POST",
-                        data:{id:id},
-                        success:function(data){
-                            toastr["success"]("Vendor Deleted Successfully")
-                            dataTable.ajax.reload();
-                        }
-                    })
-                    
-                    
-                }
-            })
-        });
-
-        $(document).on('click', '.change_password', function(){
+        var id = $(this).attr("id");
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{ route('deleteProductsVendor') }}",
+                    method:"POST",
+                    data:{id:id},
+                    success:function(data){
+                        toastr["success"]("Vendor Deleted Successfully")
+                        dataTable.ajax.reload();
+                    }
+                })
+                
+                
+            }
+        })
+    });
+    
+    $(document).on('click', '.change_password', function(){
         var id = $(this).attr("id");
         $('#id').val(id);
         $('#changePasswordModal').modal('show'); 

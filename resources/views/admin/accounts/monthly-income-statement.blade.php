@@ -334,7 +334,7 @@
                                 <tr>
                                     <td>Bkash</td>
                                     <td>{{ $received_bkash }}</td>
-                                    <td>{{ $withdraw->bkash_withdraw }}<span class="text-success" style="float:right"><i class="fa fa-edit"></i></span></td>
+                                    <td>{{ $withdraw->bkash_withdraw }}<span class="text-success" data-bs-toggle="modal" data-bs-target="#withdrawBkashBalance" style="float:right"><i class="fa fa-edit"></i></span></td>
                                     <td>{{ $received_bkash - $withdraw->bkash_withdraw }}</td>
                                 </tr>
                                 <tr>
@@ -400,45 +400,34 @@
 
 
 
-<div class="modal fade zoomIn" id="editSalaryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade zoomIn" id="withdrawBkashBalance" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="modalHeader">Edit Salary</h5>
+                <h5 class="modal-title" id="modalHeader">Withdraw Bkash Balance</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            <form id="update_salary_form">
-                <input type="hidden" value="" name="id" id="id">
+            <form action="{{ route('updateBkashWithdraw') }}" method="post">
+                @csrf
+                <input type="hidden" value="{{ $withdraw->id }}" name="id" id="id">
                 <div class="modal-body">
                     <div class="row g-3">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div>
-                                <label for="first_name" class="form-label">Employee Name</label>
-                                <input type="text" name="employee_name" id="employee_name" class="form-control" disabled />
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div>
-                                <label for="first_name" class="form-label">Monthly Salary</label>
-                                <input type="text" name="monthly_salary" id="monthly_salary" class="form-control" required />
+                                <label for="first_name" class="form-label">Total Bkash Balance</label>
+                                <input type="text" value="{{ $received_bkash }}" class="form-control" disabled />
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div>
-                                <label for="first_name" class="form-label">Pre Advance</label>
-                                <input type="text" name="pre_advance" id="pre_advance" class="form-control" required />
+                                <label for="first_name" class="form-label">Withdraw Amount</label>
+                                <input type="text" name="bkash_withdraw" value="{{ $withdraw->bkash_withdraw }}" class="form-control" required />
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div>
-                                <label for="first_name" class="form-label">Meal</label>
-                                <input type="text" name="meal" id="meal" class="form-control" required />
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div>
-                                <label for="first_name" class="form-label">Comission</label>
-                                <input type="text" name="commission" id="commission" class="form-control" required />
+                                <label for="first_name" class="form-label">New Bkash Balance</label>
+                                <input type="text" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -446,7 +435,7 @@
                 <div class="modal-footer">
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" id="submitBtn">Add</button>
+                        <button type="submit" class="btn btn-success" id="submitBtn">Update</button>
                     </div>
                 </div>
             </form>

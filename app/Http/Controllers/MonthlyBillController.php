@@ -58,7 +58,8 @@ class MonthlyBillController extends Controller
                 ->where('paid_due_bill', 0);
             }else if($payment_status == 'Due'){
                 $data = $data->whereRaw('paid_monthly_bill < monthly_bill')
-                ->orWhereRaw('paid_due_bill < due_bill');
+                ->orWhereRaw('paid_due_bill < due_bill')->where('billing_year', $year)
+                ->where('billing_month',$month);
             }
         }
         
@@ -128,10 +129,22 @@ class MonthlyBillController extends Controller
         $bill->user()->update([
             'current_due' => $current_due
         ]);
+        $username = $bill->user->username;
+        SystemLog::create([
+            'module' => 'Accounts',
+            'action_by' => Auth::guard('admin')->user()->id,
+            'description' => "Payment Added in $username. Invoice No: $bill->id. Monthly($bill->paid_monthly_bill)& Due($bill->paid_due_bill) by $bill->payment_method"
+        ]);
         if($request->sendConfirmationSms){
             $response = AdnSms::to($bill->user->mobile_no)
-            ->message("Dear user, your payment has been received. Your current due is $current_due - ATS Technology ")
+            ->message("Dear user, Your payment Tk.$bill->paid_monthly_bill + $bill->paid_due_bill has been received. Your current due is $current_due - ATS Technology ")
             ->send();
+
+            SystemLog::create([
+                'module' => 'SMS',
+                'action_by' => Auth::guard('admin')->user()->id,
+                'description' => "Payment Confirmation SMS Sent to $username for Invoice No: $bill->id"
+            ]);
         }
     }
     public function sendSingleReminderSms(Request $request){

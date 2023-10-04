@@ -47,9 +47,7 @@ class UserController extends Controller
         
         return datatables($data)
         ->addIndexColumn()
-        ->addColumn('created_at' , function($row){
-            return $row->created_at->format('d-M-Y');
-        })
+
         ->addColumn('service_area' , function($row){
             return $row->service_area->area_name;
         })
@@ -57,7 +55,7 @@ class UserController extends Controller
         ->addColumn('action', function($row){
             $btn = '<a href="'.route('viewUser',$row->id).'" class="btn btn-sm btn-info"><i id="'.$row->id.'" class="fa fa-eye m-1"></i>View</a>';
             $btn = $btn.'<a href="'.route('editUser',$row->id).'" class="btn btn-sm btn-primary m-1"><i id="'.$row->id.'" class="fa fa-edit m-1"></i>Edit</a>';
-            $btn = $btn.'<a><button id="'.$row->id.'" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i> Delete</button></a>';
+            //$btn = $btn.'<a><button id="'.$row->id.'" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i> Delete</button></a>';
             return $btn;
         })
         ->addColumn('status', function($row){

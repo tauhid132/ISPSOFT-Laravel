@@ -104,5 +104,11 @@ class AccountsController extends Controller
         ]);
     }
 
-    
+    public function updateBkashWithDraw(Request $request){
+        $payment_gateway_withdraw = PaymentGatewayWithdraw::find($request->id);
+        $payment_gateway_withdraw->update([
+            'bkash_withdraw' => $request->bkash_withdraw
+        ]);
+        return back();
+    }
 }

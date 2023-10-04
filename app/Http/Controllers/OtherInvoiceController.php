@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class OtherInvoiceController extends Controller
 {
-    public function viewServiceCharges(){
+    public function viewOtherInvoices(){
         return view('admin.accounts.other-invoices',[
             'employees' => Employee::all()
         ]);
     }
-    public function getServiceCharges(Request $request){
+    public function getOtherInvoices(Request $request){
         $year = request('year',date('Y'));
         $month = request('month',date('F'));
         
@@ -48,7 +48,7 @@ class OtherInvoiceController extends Controller
         
     }
     
-    public function addUpdateServiceCharge(Request $request){
+    public function addEditOtherInvoice(Request $request){
         $user = User::where('username', $request->username)->first();
         if(empty($request->id)){
             OtherInvoice::create([
@@ -74,12 +74,12 @@ class OtherInvoiceController extends Controller
         }
     }
     
-    public function fetchServiceChargeSingle(Request $request){
+    public function fetchOtherInvoice(Request $request){
         $service_charge = OtherInvoice::with('user','generated_by')->where('id', $request->id)->first();
         return response()->json($service_charge);
     }
 
-    public function payServiceCharge(Request $request){
+    public function payOtherInvoice(Request $request){
         $service_charge = OtherInvoice::where('id', $request->id)->first();
             $service_charge->update([
                 'paid_amount' => $request->paid_amount,
@@ -88,7 +88,7 @@ class OtherInvoiceController extends Controller
                 'received_by_id' => $request->received_by_id,
             ]);
     }
-    public function deleteServiceCharge(Request $request){
+    public function deleteOtherInvoice(Request $request){
         OtherInvoice::find($request->id)->delete();
     }
 }

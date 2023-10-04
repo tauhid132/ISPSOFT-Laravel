@@ -40,7 +40,7 @@
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
                                                         <label class="form-label">User ID</label>
-                                                        <input type="text" class="form-control" name="user_id" value="{{ $user->username }}">
+                                                        <input type="text" class="form-control" name="username" value="{{ $user->username }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
@@ -236,7 +236,7 @@
                                                     <div class="mb-3">
                                                         <label for="intType1">Expire Day</label>
                                                         <select class="custom-select form-control" name="expiry_day" >
-                                                            <option>Select One</option>
+                                                            <option value="{{ null }}">Select One</option>
                                                             @for ($i=1; $i<=31; $i++)
                                                             <option {{ $user->expiry_day == $i ? 'selected' : '' }} value="{{ $i }}">{{ $i }}</option> 
                                                             @endfor

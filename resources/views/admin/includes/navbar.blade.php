@@ -111,7 +111,7 @@
                                 <a href="{{ route('viewMonthlyBill') }}"  class="nav-link" data-key="t-horizontal">Bill Invoices</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('viewServiceCharges') }}"  class="nav-link" data-key="t-horizontal">Other Invoices</a>
+                                <a href="{{ route('viewOtherInvoices') }}"  class="nav-link" data-key="t-horizontal">Other Invoices</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewMonthlyExpenses') }}"  class="nav-link" data-key="t-two-column">Expenses</a>

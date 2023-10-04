@@ -258,7 +258,7 @@
         "serverSide": true,
         
         "ajax":{
-            "url": "{{ route('getServiceCharges') }}",
+            "url": "{{ route('getOtherInvoices') }}",
             "dataType": "json",
             "type": "POST",
             "data": function(d){
@@ -296,7 +296,7 @@
     $(document).on('click', '.edit_service_charge', function(){
         var id = $(this).attr("id");  
         $.ajax({  
-            url:"{{ route('fetchServiceChargeSingle') }}",  
+            url:"{{ route('fetchOtherInvoice') }}",  
             method:"post",  
             data:{id:id},  
             success:function(data){ 
@@ -337,7 +337,7 @@
     $('#add_service_charge_form').on("submit", function(event){  
         event.preventDefault();  
         $.ajax({  
-            url:"{{ route('addUpdateServiceCharge') }}",  
+            url:"{{ route('addEditOtherInvoice') }}",  
             method:"POST",  
             data:$('#add_service_charge_form').serialize(),  
             beforeSend:function(){  
@@ -362,7 +362,7 @@
     $(document).on('click', '.pay_service_charge', function(){
         var id = $(this).attr("id");  
         $.ajax({  
-            url:"{{ route('fetchServiceChargeSingle') }}",  
+            url:"{{ route('fetchOtherInvoice') }}",  
             method:"post",  
             data:{id:id},  
             success:function(data){ 
@@ -381,7 +381,7 @@
     $('#pay_service_charge_form').on("submit", function(event){  
         event.preventDefault();  
         $.ajax({  
-            url:"{{ route('payServiceCharge') }}",  
+            url:"{{ route('payOtherInvoice') }}",  
             method:"POST",  
             data:$('#pay_service_charge_form').serialize(),  
             beforeSend:function(){  
@@ -415,7 +415,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url:"{{ route('deleteServiceCharge') }}",
+                    url:"{{ route('deleteOtherInvoice') }}",
                     method:"POST",
                     data:{id:id},
                     success:function(data){

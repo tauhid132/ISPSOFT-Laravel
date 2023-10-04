@@ -1,9 +1,7 @@
 @extends('master')
 @section('title','Monthly Bill | ATS Technology')
-
 @section('main-body')
 @include('admin.includes.header')
-
 @include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
@@ -31,25 +29,11 @@
                                     <h5 class="card-title mb-0"><i class="fa fa-filter"></i>  Filter </h5>
                                 </div>
                             </div>
-                            <div class="col-sm-auto">
-                                <div class="d-flex flex-wrap align-items-start gap-2">
-                                    <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    {{-- <a href="{{ route('viewAddNewUserPage') }}"><button type="button" class="btn btn-success"><i class="ri-add-line align-bottom me-1"></i> Add Customer</button></a> --}}
-                                    {{-- <button type="button" class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Import</button> --}}
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="card-body border-bottom">
                         <form>
                             <div class="row g-3">
-                                {{-- <div class="col-lg-3">
-                                    <div class="search-box">
-                                        <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something...">
-                                        <i class="ri-search-line search-icon"></i>
-                                    </div>
-                                </div> --}}
-                                <!--end col-->
                                 <div class="col-md-12">
                                     <div class="row g-3">
                                         <div class="col-sm-2">
@@ -86,7 +70,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                         <div class="col-md-2">
                                             <div>
                                                 <select class="form-control" onchange="onPaymentStatusChange(this)">
@@ -97,7 +80,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                         <div class="col-md-2">
                                             <div>
                                                 <select class="form-control" onchange="onPaymentMethodChange(this)">
@@ -110,18 +92,14 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--end col-->
-                                        
                                         <div class="col-sm-2">
                                             <div>
                                                 <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Reset Filters</button>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                     </div>
                                 </div>
                             </div>
-                            <!--end row-->
                         </form>
                     </div>
                     
@@ -153,10 +131,7 @@
                 
             </div>
         </div>
-        <!-- container-fluid -->
     </div>
-    <!-- End Page-content -->
-    
     @include('footer')
 </div>
 
@@ -280,7 +255,7 @@
                                 <select class="custom-select form-control" name="received_by" id="received_by">
                                     <option value="">None</option>
                                     @foreach ($employees as $employee )
-                                    <option value="{{ $employee->id }}">{{ $employee->full_name }}</option>
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -484,6 +459,7 @@
                 $('#paid_due_bill').val(data.paid_due_bill);
                 $('#payment_method').val(data.payment_method);
                 $('#payment_date').val(data.payment_date);
+                $('#received_by').val(data.received_by);
                 $('#payBillBtn').html("Add Payment");
                 $('#payBillModal').modal("show");  
             }  

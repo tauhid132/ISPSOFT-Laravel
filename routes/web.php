@@ -122,15 +122,16 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         
 
 
-        Route::get('monthly-service-charges',[App\Http\Controllers\OtherInvoiceController::class, 'viewServiceCharges'])->name('viewServiceCharges');
-        Route::post('get-service-charges',[App\Http\Controllers\OtherInvoiceController::class, 'getServiceCharges'])->name('getServiceCharges');
-        Route::post('fetch-user-data',[App\Http\Controllers\OtherInvoiceController::class, 'fetchUserData'])->name('fetchUserData');
-        Route::post('add-update-service-charge',[App\Http\Controllers\OtherInvoiceController::class, 'addUpdateServiceCharge'])->name('addUpdateServiceCharge');
-        Route::post('fetch-service-charge-single',[App\Http\Controllers\OtherInvoiceController::class, 'fetchServiceChargeSingle'])->name('fetchServiceChargeSingle');
-        Route::post('pay-service-charge',[App\Http\Controllers\OtherInvoiceController::class, 'payServiceCharge'])->name('payServiceCharge');
-        Route::post('delete-service-charge',[App\Http\Controllers\OtherInvoiceController::class, 'deleteServiceCharge'])->name('deleteServiceCharge');
+        Route::get('other-invoices',[App\Http\Controllers\OtherInvoiceController::class, 'viewOtherInvoices'])->name('viewOtherInvoices');
+        Route::post('other-invoices/get-other-invoices',[App\Http\Controllers\OtherInvoiceController::class, 'getOtherInvoices'])->name('getOtherInvoices');
+        Route::post('other-invoices/fetch-user-data',[App\Http\Controllers\OtherInvoiceController::class, 'fetchUserData'])->name('fetchUserData');
+        Route::post('other-invoices/add-edit-other-invoice',[App\Http\Controllers\OtherInvoiceController::class, 'addEditOtherInvoice'])->name('addEditOtherInvoice');
+        Route::post('other-invoices/fetch-other-invoice',[App\Http\Controllers\OtherInvoiceController::class, 'fetchOtherInvoice'])->name('fetchOtherInvoice');
+        Route::post('other-invoices/pay-other-invoice',[App\Http\Controllers\OtherInvoiceController::class, 'payOtherInvoice'])->name('payOtherInvoice');
+        Route::post('other-invoices/delete-other-invoice',[App\Http\Controllers\OtherInvoiceController::class, 'deleteOtherInvoice'])->name('deleteOtherInvoice');
 
         Route::get('monthly-income-statement',[App\Http\Controllers\AccountsController::class, 'viewMonthlyIncomeStatement'])->name('viewMonthlyIncomeStatement');
+        Route::post('monthly-income-statement/update-bkash-withdraw',[App\Http\Controllers\AccountsController::class, 'updateBkashWithdraw'])->name('updateBkashWithdraw');
     });
     Route::prefix('sms')->group(function(){
         Route::get('bill-reminder',[App\Http\Controllers\SMSController::class, 'viewReminderSms'])->name('viewReminderSms');
