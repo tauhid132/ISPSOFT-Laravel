@@ -136,8 +136,9 @@ class MonthlyBillController extends Controller
             'description' => "Payment Added in $username. Invoice No: $bill->id. Monthly($bill->paid_monthly_bill)& Due($bill->paid_due_bill) by $bill->payment_method"
         ]);
         if($request->sendConfirmationSms){
+            $total_bill_paid = $bill->paid_monthly_bill + $bill->paid_due_bill;
             $response = AdnSms::to($bill->user->mobile_no)
-            ->message("Dear user, Your payment Tk.$bill->paid_monthly_bill + $bill->paid_due_bill has been received. Your current due is $current_due - ATS Technology ")
+            ->message("Dear user, Your payment Tk.$total_bill_paid has been received. Your current due is $current_due - ATS Technology ")
             ->send();
 
             SystemLog::create([

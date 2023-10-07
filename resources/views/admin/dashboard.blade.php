@@ -2,7 +2,6 @@
 @section('title','My Dashboard | ATS Technology')
 @section('main-body')
 @include('admin.includes.header')
-@include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -25,7 +24,7 @@
                     <div class="card crm-widget">
                         <div class="card-body p-0">
                             <div class="row row-cols-xxl-4 row-cols-md-3 row-cols-1 g-0">
-                                <div class="col">
+                                <div class="col-md-3">
                                     <div class="py-4 px-3">
                                         <h5 class="text-muted text-uppercase fs-13">Total Users <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i></h5>
                                         <div class="d-flex align-items-center">
@@ -38,7 +37,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-md-3">
                                     <div class="mt-3 mt-md-0 py-4 px-3">
                                         <h5 class="text-muted text-uppercase fs-13">Active Users <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i></h5>
                                         <div class="d-flex align-items-center">
@@ -51,7 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-md-3">
                                     <div class="mt-3 mt-md-0 py-4 px-3">
                                         <h5 class="text-muted text-uppercase fs-13">Expired Users <i class="ri-arrow-down-circle-line text-danger fs-18 float-end align-middle"></i></h5>
                                         <div class="d-flex align-items-center">
@@ -64,7 +63,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-md-3">
                                     <div class="mt-3 mt-lg-0 py-4 px-3">
                                         <h5 class="text-muted text-uppercase fs-13">Total Monthly Bill <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i></h5>
                                         <div class="d-flex align-items-center">
@@ -180,10 +179,10 @@
                             </div>
                         </div>
                         
-                        <div class="card-body" style="height: 330px; overflow-x: hidden; overflow-y: scroll">
+                        <div class="card-body">
                             <div class="table-responsive table-card">
                                 <table class="table table-borderless table-hover table-nowrap align-middle mb-0">
-                                    <thead class="table-light">
+                                    <thead class="table-primary">
                                         <tr class="text-muted">
                                             <th scope="col">Username</th>
                                             <th scope="col">Customer Name</th>
@@ -193,7 +192,7 @@
                                         </tr>
                                     </thead>
                                     
-                                    <tbody>
+                                    <tbody style="height: 330px; overflow-x: hidden; overflow-y: scroll">
                                         @forelse ($new_users as $new_user )
                                         <tr>
                                             <td>{{ $new_user->username }}</td>

@@ -22,7 +22,7 @@
                                 <div class="mb-4">
                                     <center>
                                         <h2 class="text-primary ">LOGIN</h2>
-                                        <p class="mt-0">Enter username and password to login!</p>
+                                        <p class="mt-0 fs-14">Enter username and password to login!</p>
                                     </center>
                                 </div>
                                 @if(Session::has('status'))

@@ -11,11 +11,19 @@ class SystemLogController extends Controller
         return view('admin.settings.system-logs');
     }
     public function getSystemLogs(Request $request){
-        $data = SystemLog::with('action_by')->orderBy('created_at', 'DESC')->get();
+        $data = SystemLog::with('action_by_admin')->orderBy('created_at', 'DESC')->get();
         return datatables($data)
         ->addIndexColumn()
         ->addColumn('created_at', function($row){
             return $row->created_at->format('l, j F, Y h:i A');
+        })
+        ->addColumn('action_by', function($row){
+            if($row->action_by == null){
+                return 'System';
+            }else{
+                return $row->action_by_admin->name;
+            }
+           
         })
         ->addColumn('action', function($row){
             
@@ -25,7 +33,7 @@ class SystemLogController extends Controller
             return $btn;
         })
         
-        ->rawColumns(['action' => 'action'])
+        ->rawColumns(['action' => 'action','action_by' => 'action_by'])
         ->make(true);
     }
 }

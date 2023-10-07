@@ -1,10 +1,7 @@
 @extends('master')
 @section('title','Bill Reminder Sender | ATS Technology')
-
 @section('main-body')
 @include('admin.includes.header')
-
-@include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">

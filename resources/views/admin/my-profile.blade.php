@@ -1,10 +1,14 @@
 @extends('master')
 @section('title','My Profile')
-
 @section('main-body')
 @include('admin.includes.header')
-
-@include('admin.includes.navbar')
+@if (Auth::guard('admin')->user()->role == 'Admin')
+@include('admin.includes.navbar-admin')
+@elseif (Auth::guard('admin')->user()->role == 'Accountant')
+@include('admin.includes.navbar-accountant')
+@elseif (Auth::guard('admin')->user()->role == 'Support')
+@include('admin.includes.navbar-support')
+@endif
 <div class="main-content">
     
     <div class="page-content">

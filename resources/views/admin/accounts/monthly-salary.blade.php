@@ -2,7 +2,6 @@
 @section('title','Monthly Salary Sheet | ATS Technology')
 @section('main-body')
 @include('admin.includes.header')
-@include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -279,7 +278,7 @@
             success:function(data){ 
                 $('#id').val(data.id);
                 $('#payment_by').val(data.payment_by_id);
-                $('#employee_name').val(data.employee.full_name);
+                $('#employee_name').val(data.employee.name);
                 $('#monthly_salary').val(data.monthly_salary);
                 $('#pre_advance').val(data.pre_advance);
                 $('#meal').val(data.meal);
@@ -324,7 +323,7 @@
             success:function(data){ 
                 $('#id2').val(data.id);
                 $('#payment_by').val(data.payment_by_id);
-                $('#employee_name2').val(data.employee.full_name);
+                $('#employee_name2').val(data.employee.name);
                 $('#payable_salary').val(data.monthly_salary + data.pre_advance + data.commission - data.meal);
                 $('#payment_date').val(data.payment_date);
                 $('#paid_salary').val(data.paid_salary);

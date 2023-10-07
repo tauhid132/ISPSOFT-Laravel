@@ -30,7 +30,7 @@ class AdminController extends Controller
             'new_users' => $new_users,
             'left_users' => $left_users,
             'total_employees' => Employee::count(),
-            'total_employees_salary' => Employee::sum('salary'),
+            'total_employees_salary' => Employee::where('status', 1)->sum('salary'),
         ]);
     }
     public function viewAdmins(){

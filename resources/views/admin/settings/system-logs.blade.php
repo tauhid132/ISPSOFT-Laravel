@@ -2,7 +2,6 @@
 @section('title','System Logs | ATS Technology')
 @section('main-body')
 @include('admin.includes.header')
-@include('admin.includes.navbar')
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -71,7 +70,7 @@
         "columns" : [
         {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": false, "searchable": false},
         {"data": "created_at"},
-        {"data": "action_by.name"},
+        {"data": "action_by"},
         {"data": "module"},
         {"data": "description"},
         

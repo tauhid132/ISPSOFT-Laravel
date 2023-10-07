@@ -19,32 +19,30 @@
   
   <link href="{{ asset('theme/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
- 
-  <link rel="stylesheet" href="https://erp.atsbd.net/dist/plugins/formwizard/jquery-steps.css">
+  <link rel="stylesheet" href="{{ asset('theme/libs/formwizard/jquery-steps.css') }}">
   
   <style>
     .select2-container .select2-search--inline .select2-search__field {
-        height: 24px; !important
+      height: 24px; !important
     }
-    </style>
+  </style>
   @yield('custom-stylesheet')
   
 </head>
 
 
 <body>
-  {{-- <div id="preloader">
-    <div id="status">
-      <div class="spinner-border text-primary avatar-sm" role="status">
-        <span class="visually-hidden"></span>
-      </div>
-    </div>
-  </div> --}}
+  @if(Auth::guard('admin')->check())
+  @if (Auth::guard('admin')->user()->role == 'Admin')
+  @include('admin.includes.navbar-admin')
+  @elseif (Auth::guard('admin')->user()->role == 'Accountant')
+  @include('admin.includes.navbar-accountant')
+  @elseif (Auth::guard('admin')->user()->role == 'Support')
+  @include('admin.includes.navbar-support')
+  @endif
+  @endif
   
-
-  <div id="app">
-    @yield('main-body')
-  </div>
+  @yield('main-body')
   
   
 </body>
@@ -54,7 +52,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="{{ asset('theme/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ asset('theme/libs/feather-icons/feather.min.js') }}"></script>
-<script src="{{ asset('theme/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
 <script src="{{ asset('theme/libs/node-waves/waves.min.js') }}"></script>
 <script src="{{ asset('theme/libs/swiper/swiper-bundle.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -63,12 +60,10 @@
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script src="https://erp.atsbd.net/dist/plugins/formwizard/jquery-steps.js"></script> 
+<script src="{{ asset('theme/libs/formwizard/jquery-steps.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
 <script src="{{ asset('theme/js/app.js') }}"></script>
 

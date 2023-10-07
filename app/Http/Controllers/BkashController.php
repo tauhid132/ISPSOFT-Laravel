@@ -13,7 +13,7 @@ class BkashController extends Controller
     private $username;
     private $password;
 
-    public function __construct()
+    public function __construct() 
     {
         // bKash Merchant API Information
 

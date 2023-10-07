@@ -13,7 +13,7 @@ class SystemLog extends Model
         'module',
         'action_by',
     ];
-    public function action_by(){
+    public function action_by_admin(){
         return $this->belongsTo(Admin::class,'action_by','id');
     }
 }

@@ -15,21 +15,13 @@ use Illuminate\Support\Facades\Artisan;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('bkash/pay', [App\Http\Controllers\UserController::class, 'viewBkash']);
-Route::post('bkash/get-token', [App\Http\Controllers\BkashController::class, 'getToken'])->name('bkash-get-token');
-    Route::post('bkash/create-payment', [App\Http\Controllers\BkashController::class, 'createPayment'])->name('bkash-create-payment');
-    Route::post('bkash/execute-payment', [App\Http\Controllers\BkashController::class, 'executePayment'])->name('bkash-execute-payment');
-    Route::get('bkash/query-payment', [App\Http\Controllers\BkashController::class, 'queryPayment'])->name('bkash-query-payment');
-    Route::post('bkash/success', [App\Http\Controllers\BkashController::class, 'bkashSuccess'])->name('bkash-success');
-    Route::get('mik/connect', [App\Http\Controllers\MikrotikApiController::class, 'connect']);
-
 
 Route::middleware('guest')->domain('admin.' . env('APP_URL'))->group(function(){
     Route::get('/',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage']);
     Route::get('login',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage'])->name('login');
     Route::post('login',[App\Http\Controllers\AdminAuthController::class, 'adminLoginValidate']);
     
-
+    
 });
 Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function(){
     Route::get('logout',[App\Http\Controllers\AdminAuthController::class, 'logout'])->name('logout');
@@ -41,7 +33,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
     Route::post('dashboard/add-edit-note',[App\Http\Controllers\AdminController::class, 'addEditNote'])->name('addEditNote');
     Route::post('dashboard/fetch-note',[App\Http\Controllers\AdminController::class, 'fetchNote'])->name('fetchNote');
     Route::post('dashboard/delete-note',[App\Http\Controllers\AdminController::class, 'deleteNote'])->name('deleteNote');
-
+    
     //CRM Module Routes
     Route::prefix('crm')->group(function(){
         Route::get('view-users',[App\Http\Controllers\UserController::class, 'viewUsersPage'])->name('viewUsersPage');
@@ -59,7 +51,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('fetch-single-left-user',[App\Http\Controllers\UserController::class, 'fetchSingleLeftUser'])->name('fetchSingleLeftUser');
         Route::post('update-left-user',[App\Http\Controllers\UserController::class, 'updateLeftUser'])->name('updateLeftUser');
         Route::post('delete-left-user',[App\Http\Controllers\UserController::class, 'deleteLeftUser'])->name('deleteLeftUser');
-
+        
         Route::get('test',[App\Http\Controllers\UserController::class, 'testsms']);
         Route::prefix('reseller')->group(function(){
             Route::get('resellers',[App\Http\Controllers\ResellerController::class, 'viewResellers'])->name('viewResellers');
@@ -70,11 +62,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
             Route::get('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewEditReseller'])->name('editReseller');
             Route::post('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'editReseller']);
             Route::get('view-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewReseller'])->name('viewReseller');
-           
-    
+            
+            
         });
-
-
+        
+        
     });
     Route::prefix('ticketing')->group(function(){
         Route::get('tickets',[App\Http\Controllers\TicketController::class, 'viewAllTickets'])->name('viewAllTickets');
@@ -85,8 +77,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('tickets/track-ticket/{id}',[App\Http\Controllers\TicketController::class, 'trackTicket'])->name('trackTicket');
         Route::get('tickets/track-ticket/{id}/start-processing',[App\Http\Controllers\TicketController::class, 'startProcessingTicket'])->name('startProcessingTicket');
         Route::get('tickets/track-ticket/{id}/close-ticket',[App\Http\Controllers\TicketController::class, 'closeTicket'])->name('closeTicket');
-       
-
+        
+        
     });
     Route::prefix('accounts')->group(function(){
         Route::get('monthly-bill',[App\Http\Controllers\MonthlyBillController::class, 'viewMonthlyBill'])->name('viewMonthlyBill');
@@ -98,30 +90,30 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('fetch-bill-history-single',[App\Http\Controllers\MonthlyBillController::class, 'fetchBillHistorySingle'])->name('fetchBillHistorySingle');
         Route::post('add-comment',[App\Http\Controllers\MonthlyBillController::class, 'addComment'])->name('addComment');
         Route::post('delete-bill-single',[App\Http\Controllers\MonthlyBillController::class, 'deleteBillSingle'])->name('deleteBillSingle');
-
+        
         Route::get('monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'viewMonthlyExpenses'])->name('viewMonthlyExpenses');
         Route::post('get-monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'getMonthlyExpenses'])->name('getMonthlyExpenses');
         Route::post('add-update-expense',[App\Http\Controllers\MonthlyExpenseController::class, 'addUpdateExpense'])->name('addUpdateExpense');
         Route::post('fetch-expense-single',[App\Http\Controllers\MonthlyExpenseController::class, 'fetchExpenseSingle'])->name('fetchExpenseSingle');
         Route::post('delete-expense-single',[App\Http\Controllers\MonthlyExpenseController::class, 'deleteExpenseSingle'])->name('deleteExpenseSingle');
-
+        
         Route::get('monthly-salary',[App\Http\Controllers\MonthlySalaryController::class, 'viewMonthlySalary'])->name('viewMonthlySalary');
         Route::post('get-monthly-salaries',[App\Http\Controllers\MonthlySalaryController::class, 'getMonthlySalaries'])->name('getMonthlySalaries');
         Route::post('fetch-salary-single',[App\Http\Controllers\MonthlySalaryController::class, 'fetchSalarySingle'])->name('fetchSalarySingle');
         Route::post('update-salary',[App\Http\Controllers\MonthlySalaryController::class, 'updateSalary'])->name('updateSalary');
         Route::post('pay-salary',[App\Http\Controllers\MonthlySalaryController::class, 'paySalary'])->name('paySalary');
         Route::post('delete-salary',[App\Http\Controllers\MonthlySalaryController::class, 'deleteSalary'])->name('deleteSalary');
-
+        
         Route::get('monthly-upstream-downstream-bills',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'viewMonthlyUpstreamDownstreamBill'])->name('viewMonthlyUpstreamDownstreamBill');
         Route::post('monthly-upstream-downstream-bills/get-monthly-upstream-downstream-bills',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'getMonthlyUpstreamDownstreamBills'])->name('getMonthlyUpstreamDownstreamBills');
         Route::post('fetch-monthly-upstream-downstream-bill-single',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'fetchMonthlyUpstreamDownstreamBillSingle'])->name('fetchMonthlyUpstreamDownstreamBillSingle');
         Route::post('update-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'updateUpstreamBill'])->name('updateUpstreamBill');
         Route::post('pay-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'payUpstreamBill'])->name('payUpstreamBill');
         Route::post('delete-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'deleteUpstreamBill'])->name('deleteUpstreamBill');
-
         
-
-
+        
+        
+        
         Route::get('other-invoices',[App\Http\Controllers\OtherInvoiceController::class, 'viewOtherInvoices'])->name('viewOtherInvoices');
         Route::post('other-invoices/get-other-invoices',[App\Http\Controllers\OtherInvoiceController::class, 'getOtherInvoices'])->name('getOtherInvoices');
         Route::post('other-invoices/fetch-user-data',[App\Http\Controllers\OtherInvoiceController::class, 'fetchUserData'])->name('fetchUserData');
@@ -129,7 +121,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('other-invoices/fetch-other-invoice',[App\Http\Controllers\OtherInvoiceController::class, 'fetchOtherInvoice'])->name('fetchOtherInvoice');
         Route::post('other-invoices/pay-other-invoice',[App\Http\Controllers\OtherInvoiceController::class, 'payOtherInvoice'])->name('payOtherInvoice');
         Route::post('other-invoices/delete-other-invoice',[App\Http\Controllers\OtherInvoiceController::class, 'deleteOtherInvoice'])->name('deleteOtherInvoice');
-
+        
         Route::get('monthly-income-statement',[App\Http\Controllers\AccountsController::class, 'viewMonthlyIncomeStatement'])->name('viewMonthlyIncomeStatement');
         Route::post('monthly-income-statement/update-bkash-withdraw',[App\Http\Controllers\AccountsController::class, 'updateBkashWithdraw'])->name('updateBkashWithdraw');
     });
@@ -138,11 +130,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('check-balance',[App\Http\Controllers\SMSController::class, 'checkSmsBalance'])->name('checkSmsBalance');
         Route::post('bill-reminder/fetch-users',[App\Http\Controllers\SMSController::class, 'fetchReminderSmsUsers'])->name('fetchReminderSmsUsers');
         Route::post('bill-reminder/send-sms',[App\Http\Controllers\SMSController::class, 'sendReminderSms'])->name('sendReminderSms');
-       
+        
         Route::get('single-sms',[App\Http\Controllers\SMSController::class, 'viewSingleSmsSender'])->name('viewSingleSmsSender');
         Route::post('single-sms/send-single-sms',[App\Http\Controllers\SMSController::class, 'sendSingleSms'])->name('sendSingleSms');
-
-
+        
+        
         Route::get('sms-templates',[App\Http\Controllers\SmsTemplateController::class, 'viewSmsTemplates'])->name('viewSmsTemplates');
         Route::get('sms-templates/get-sms-templates',[App\Http\Controllers\SmsTemplateController::class, 'getSmsTemplates'])->name('getSmsTemplates');
         Route::post('sms-templates/add-edit-template',[App\Http\Controllers\SmsTemplateController::class, 'addEditTemplate'])->name('addEditTemplate');
@@ -155,49 +147,53 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('admins/add-new-admin',[App\Http\Controllers\AdminController::class, 'addNewAdmin'])->name('addNewAdmin');
         Route::post('admins/delete-admin',[App\Http\Controllers\AdminController::class, 'deleteAdmin'])->name('deleteAdmin');
         Route::post('admins/change-password',[App\Http\Controllers\AdminController::class, 'changeAdminPassword'])->name('changeAdminPassword');
-
+        
         Route::get('manual-generator',[App\Http\Controllers\SettingsController::class, 'viewManualGenerator'])->name('viewManualGenerator');
         Route::post('manual-generator/generate-monthly-bill-invoices',[App\Http\Controllers\SettingsController::class, 'generateMonthlyBillInvoices'])->name('generateMonthlyBillInvoices');
         Route::post('manual-generator/generate-monthly-salary',[App\Http\Controllers\SettingsController::class, 'generateMonthlySalary'])->name('generateMonthlySalary');
         Route::post('manual-generator/generate-upstream-downstream-bills',[App\Http\Controllers\SettingsController::class, 'generateMonthlyUpstreamDownstreamBills'])->name('generateMonthlyUpstreamDownstreamBills');
         Route::get('manual-generator/billing-sheet-pdf',[App\Http\Controllers\SettingsController::class, 'generateBillingSheetPdf'])->name('generateBillingSheet');
         Route::get('manual-generator/monthly-invoices-pdf',[App\Http\Controllers\SettingsController::class, 'monthlyInvoicesPdf'])->name('monthlyInvoicesPdf');
-
+        
         Route::get('system-logs',[App\Http\Controllers\SystemLogController::class, 'viewSystemLogs'])->name('viewSystemLogs');
         Route::get('system-logs/get-system-logs',[App\Http\Controllers\SystemLogController::class, 'getSystemLogs'])->name('getSystemLogs');
-
-
+        
+        
     });
-
+    
     Route::prefix('inventory')->group(function(){
+        //Products Route
         Route::get('products',[App\Http\Controllers\ProductController::class, 'viewProducts'])->name('viewProducts');
         Route::get('products/get-products',[App\Http\Controllers\ProductController::class, 'getProducts'])->name('getProducts');
         Route::post('products/add-edit-product',[App\Http\Controllers\ProductController::class, 'addEditProduct'])->name('addEditProduct');
         Route::post('products/fetch-product',[App\Http\Controllers\ProductController::class, 'fetchProduct'])->name('fetchProduct');
         Route::post('products/delete-product',[App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('deleteProduct');
         
+        //Packages Routes
         Route::get('packages',[App\Http\Controllers\PackageController::class, 'viewPackages'])->name('viewPackages');
         Route::get('packages/get-packages',[App\Http\Controllers\PackageController::class, 'getPackages'])->name('getPackages');
         Route::post('packages/add-edit-package',[App\Http\Controllers\PackageController::class, 'addEditPackage'])->name('addEditPackage');
         Route::post('packages/fetch-package',[App\Http\Controllers\PackageController::class, 'fetchPackage'])->name('fetchPackage');
         Route::post('packages/delete-package',[App\Http\Controllers\PackageController::class, 'deletePackage'])->name('deletePackage');
-
-
+        
+        
     });
     Route::prefix('vendors')->group(function(){
+        //Upstream-Downstream Routes
         Route::get('up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'viewUpDownstreams'])->name('viewUpDownstreams');
         Route::get('up-downstreams/get-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'getUpDownstreams'])->name('getUpDownstreams');
         Route::post('up-downstreams/add-new-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'addNewUpDownstream'])->name('addNewUpDownstream');
         Route::post('up-downstreams/fetch-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'fetchUpDownstream'])->name('fetchUpDownstream');
         Route::post('up-downstreams/delete-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'deleteUpDownstream'])->name('deleteUpDownstream');
-
+        
+        //Vendor Routes
         Route::get('products-vendors',[App\Http\Controllers\ProductsVendorController::class, 'viewProductVendors'])->name('viewProductVendors');
         Route::get('products-vendors/get-products-vendors',[App\Http\Controllers\ProductsVendorController::class, 'getProductsVendors'])->name('getProductsVendors');
         Route::post('products-vendors/fetch-vendor',[App\Http\Controllers\ProductsVendorController::class, 'fetchVendor'])->name('fetchVendor');
         Route::post('products-vendors/add-edit-products-vendor',[App\Http\Controllers\ProductsVendorController::class, 'addEditProductsVendor'])->name('addEditProductsVendor');
         Route::post('products-vendors/delete-products-vendor',[App\Http\Controllers\ProductsVendorController::class, 'deleteProductsVendor'])->name('deleteProductsVendor');
     });
-
+    
     Route::prefix('hrm')->group(function(){
         Route::get('employees',[App\Http\Controllers\EmployeeController::class, 'viewEmployees'])->name('viewEmployees');
         Route::get('employees/get-employees',[App\Http\Controllers\EmployeeController::class, 'getEmployees'])->name('getEmployees');
@@ -208,6 +204,25 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('employees/edit-employee/{id}',[App\Http\Controllers\EmployeeController::class, 'editEmployee']);
         Route::get('employees/view-employee/{id}',[App\Http\Controllers\EmployeeController::class, 'viewEmployee'])->name('viewEmployee');
     });
+});
+
+
+Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function(){
+    //Auth Routes
+    Route::get('/',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage']);
+    Route::get('login',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage'])->name('login');
+    Route::post('login',[App\Http\Controllers\AdminAuthController::class, 'adminLoginValidate']);
     
-    
+    //QuickPay Routes
+    Route::get('quick-pay', [App\Http\Controllers\QuickPayController::class, 'viewQuickPay'])->name('viewQuickPay');
+    Route::post('quick-pay', [App\Http\Controllers\QuickPayController::class, 'quickPay']);
+    Route::post('quick-pay/pay', [App\Http\Controllers\QuickPayController::class, 'quickPayPayment'])->name('quickPayPayment');
+    Route::get('quick-pay/payment-success', [App\Http\Controllers\QuickPayController::class, 'viewQuickPayPaymentSuccess'])->name('viewQuickPayPaymentSuccess');
+    Route::get('quick-pay/payment-success/download-receipt/{invoice_id}', [App\Http\Controllers\QuickPayController::class, 'downloadPaymentReceipt'])->name('downloadPaymentReceipt');
+    Route::get('/bkash/payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'index']);
+    Route::get('/bkash/create-payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'createPayment'])->name('bkash-create-payment');
+    Route::get('/bkash/callback', [App\Http\Controllers\BkashTokenizePaymentController::class,'callBack'])->name('bkash-callBack');
+    Route::get('/bkash/search/{trxID}', [App\Http\Controllers\BkashTokenizePaymentController::class,'searchTnx'])->name('bkash-serach');
+    Route::get('/bkash/refund', [App\Http\Controllers\BkashTokenizePaymentController::class,'refund'])->name('bkash-refund');
+    Route::get('/bkash/refund/status', [App\Http\Controllers\BkashTokenizePaymentController::class,'refundStatus'])->name('bkash-refund-status');
 });
