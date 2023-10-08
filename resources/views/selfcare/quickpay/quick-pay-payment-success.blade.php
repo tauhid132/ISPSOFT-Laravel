@@ -16,9 +16,9 @@ background-size: cover">
                             <img src="{{ asset('images/successful-image.png') }}" height="100px"> 
                         </div>
                         <h3>Thank you ! Your Payment is successful !</h3>
-                        {{-- <p class="text-muted fs-16">To download Money Receipt <a href="{{ route('downloadPaymentReceipt', $invoice->id) }}">Click Here!</a></p> --}}
+                        <p class="text-muted fs-16">To download Money Receipt <a href="{{ route('downloadPaymentReceipt', $invoice->id) }}">Click Here!</a></p>
 
-                        {{-- <h3 class="fw-semibold">TRX ID: {{ $invoice->trx_id }}</a></h3> --}}
+                        <h3 class="fw-semibold">TRX ID: {{ $invoice->trx_id }}</a></h3>
                     </div>
                 </div>
             </div>

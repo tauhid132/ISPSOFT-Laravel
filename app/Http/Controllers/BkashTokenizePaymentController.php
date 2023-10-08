@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\SystemLog;
 use App\Models\MonthlyBill;
 use Illuminate\Http\Request;
+use RahulHaque\AdnSms\Facades\AdnSms;
 use Karim007\LaravelBkashTokenize\Facade\BkashRefundTokenize;
 use Karim007\LaravelBkashTokenize\Facade\BkashPaymentTokenize;
 
@@ -66,6 +67,10 @@ class BkashTokenizePaymentController extends Controller
                 $invoice->user()->update([
                     'current_due' => $current_due
                 ]);
+                $total_bill_paid = $invoice->paid_monthly_bill + $invoice->paid_due_bill;
+                $responseSms = AdnSms::to($invoice->user->mobile_no)
+                ->message("Dear user, Your payment Tk.$total_bill_paid has been received. Your current due is $current_due - ATS Technology ")
+                ->send();
                 SystemLog::create([
                     'module' => 'QuickPay',
                     'action_by' => null,

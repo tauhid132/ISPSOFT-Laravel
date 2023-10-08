@@ -58,7 +58,7 @@ background-size: cover">
                                             </label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="radio" name="payment_method" id="nagad_checkbox" value="nagad">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="nagad_checkbox" value="nagad" disabled>
                                             <label class="form-check-label" for="nagad_checkbox">
                                                 <img style="height: 60px" src="{{ asset('images/nagad.png') }}">
                                             </label>

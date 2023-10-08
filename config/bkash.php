@@ -1,12 +1,12 @@
 <?php
 
 return [
-    "sandbox"         => env("BKASH_SANDBOX", true),
+    "sandbox"         => env("BKASH_SANDBOX", false),
 
-    "bkash_app_key"     => '4f6o0cjiki2rfm34kfdadl1eqq',
-    "bkash_app_secret" => '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b',
-    "bkash_username"      => 'sandboxTokenizedUser02',
-    "bkash_password"     => 'sandboxTokenizedUser02@12345',
+    "bkash_app_key"     => '4l4f3PpgdoVqWRdXho0ecd44tc',
+    "bkash_app_secret" => 'qQrWYTuyRY2mx015cWkZ5j2SZI3Bw0BIsObyoXpJ895SpOnB6dJa',
+    "bkash_username"      => '01304779899',
+    "bkash_password"     => 'CQ<tqJ7HFcI',
 
     "bkash_app_key_2"     => env("BKASH_APP_KEY_2", ""),
     "bkash_app_secret_2" => env("BKASH_APP_SECRET_2", ""),
@@ -23,6 +23,6 @@ return [
     "bkash_username_4"      => env("BKASH_USERNAME_4", ""),
     "bkash_password_4"     => env("BKASH_PASSWORD_4", ""),
 
-    "callbackURL"     => env("BKASH_CALLBACK_URL", "http://127.0.0.1:8000/bkash/callback"),
+    "callbackURL"     => env("BKASH_CALLBACK_URL", "http://selfcare.localhost:8000/bkash/callback"),
     'timezone'        => 'Asia/Dhaka',
 ];
