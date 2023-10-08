@@ -10,13 +10,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class QuickPayController extends Controller
 {
     public function viewQuickPay(){
-        return view('quick-pay');
+        return view('selfcare.quickpay.quick-pay');
     }
     public function quickPay(Request $request){
         $user = User::where('username', $request->username)->orWhere('mobile_no', $request->username)->first();
         if($user != null){
             $latest_invoice = $user->bills()->where('billing_month', date('F'))->where('billing_year', date('Y'))->first();
-            return view('quick-pay-user-info',[
+            return view('selfcare.quickpay.quick-pay-user-info',[
                 'user' => $user,
                 'latest_invoice' => $latest_invoice
             ]);
@@ -31,7 +31,7 @@ class QuickPayController extends Controller
         }
     }
     public function viewQuickPayPaymentSuccess(){
-        return view('quick-pay-payment-success',[
+        return view('selfcare.quickpay.quick-pay-payment-success',[
             'invoice' => MonthlyBill::find(session()->get('invoice_id')),
         ]);
     }

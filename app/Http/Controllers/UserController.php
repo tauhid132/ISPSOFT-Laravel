@@ -236,4 +236,8 @@ class UserController extends Controller
         $pdf = Pdf::loadView('admin.crm.bill-invoice', compact('bill') );
         return $pdf->stream();
     }
+
+    public function viewUserLogin(){
+        return view('selfcare.auth.login');
+    }
 }

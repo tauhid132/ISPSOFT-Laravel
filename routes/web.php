@@ -209,8 +209,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
 Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function(){
     //Auth Routes
-    Route::get('/',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage']);
-    Route::get('login',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage'])->name('login');
+    Route::get('/',[App\Http\Controllers\UserController::class, 'viewUserLogin']);
+    Route::get('login',[App\Http\Controllers\UserController::class, 'viewUserLogin'])->name('userLogin');
     Route::post('login',[App\Http\Controllers\AdminAuthController::class, 'adminLoginValidate']);
     
     //QuickPay Routes
