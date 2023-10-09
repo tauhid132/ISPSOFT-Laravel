@@ -82,7 +82,7 @@ class UserController extends Controller
     public function addNewUser(Request $request){
         
         User::create([
-            'user_id' => $request->user_id,
+            'username' => $request->username,
             'customer_name' => $request->customer_name,
             'contact_person' => $request->contact_person,
             'connection_address' => $request->connection_address,

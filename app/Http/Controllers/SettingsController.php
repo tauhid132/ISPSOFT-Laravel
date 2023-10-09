@@ -75,7 +75,7 @@ class SettingsController extends Controller
         if($area != 'all'){
             $bills = MonthlyBill::whereHas('user', function($query2) use ($area){
                 $query2->where('service_area_id', $area);
-            })->where('billing_year', date('Y'))->where('billing_month', date('F'))->get();
+            })->whereRaw('paid_monthly_bill < monthly_bill')->where('billing_year', date('Y'))->where('billing_month', date('F')) ->get();
         }else{
             $bills = MonthlyBill::where('billing_year', date('Y'))->where('billing_month', date('F'))->get();
         }

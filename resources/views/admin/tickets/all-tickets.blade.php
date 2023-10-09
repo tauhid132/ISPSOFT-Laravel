@@ -154,7 +154,7 @@
                                 <label for="first_name" class="form-label">Assigned Executives</label>
                                 <select class="js-example-basic-multiple" name="assigned_executives[]" id="assigned_executives" multiple="multiple">
                                     <option value="">None</option>
-                                    
+                                     
                                     @foreach ($employees as $employee )
                                     <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                     @endforeach
@@ -289,7 +289,7 @@
         $('#ticket_form')[0].reset();
         $('#modalHeader').html("Add Ticket"); 
         $('#id').val(""); 
-        $('#assigned_executives').empty()
+        //$('#assigned_executives').empty()
     }); 
     $(document).on('click', '.edit_ticket', function(){
         var id = $(this).attr("id");  

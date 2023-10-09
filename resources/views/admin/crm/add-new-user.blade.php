@@ -42,7 +42,7 @@
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
                                                         <label class="form-label">User ID</label>
-                                                        <input type="text" class="form-control" name="user_id" >
+                                                        <input type="text" class="form-control" name="username" >
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">

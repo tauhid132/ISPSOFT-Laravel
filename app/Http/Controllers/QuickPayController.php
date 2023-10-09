@@ -37,8 +37,8 @@ class QuickPayController extends Controller
     }
     public function downloadPaymentReceipt($invoice_id){
         $invoice = MonthlyBill::find($invoice_id);
-        $pdf = Pdf::loadView('admin.pdfs.money-receipt', compact('invoice') );
-        return $pdf->download();
+        $pdf = Pdf::loadView('admin.pdfs.money-receipt', compact('invoice') )->setPaper('a4', 'landscape');
+        return $pdf->stream();
     
     }
 }
