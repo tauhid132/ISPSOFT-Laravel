@@ -84,10 +84,10 @@
                     <div class="collapse menu-dropdown" id="sales">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Connection Requests</a>
+                                <a href="{{ route('viewNewConnectionQueries') }}" class="nav-link">Connection Queries</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">D2D Marketing</a>
+                                <a href="{{ route('viewD2CMarketing') }}" class="nav-link">D2C Marketing</a>
                             </li>
                         </ul>
                     </div>

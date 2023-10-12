@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','View Users | ATS Technology')
+@section('title','Users | ATS Technology')
 @section('main-body')
 @include('admin.includes.header')
 <div class="main-content">
@@ -59,7 +59,7 @@
                                         <div class="col-sm-4">
                                             <div>
                                                 <select class="form-control" onchange="onStatusChange(this)">
-                                                    <option value="" selected>All</option>
+                                                    <option value="" selected>All Status</option>
                                                     <option value="1">Active</option>
                                                     <option value="0">Inactive</option>
                                                     <option value="2">Expired</option>

@@ -5,31 +5,22 @@ use App\Events\ChatMessageEvent;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
+//Admin Login Routes
 Route::middleware('guest')->domain('admin.' . env('APP_URL'))->group(function(){
-    Route::get('/',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage']);
-    Route::get('login',[App\Http\Controllers\AdminAuthController::class, 'viewAdminLoginPage'])->name('login');
-    Route::post('login',[App\Http\Controllers\AdminAuthController::class, 'adminLoginValidate']);
-    
-    
+    Route::get('/',[App\Http\Controllers\AdminController::class, 'viewAdminLoginPage']);
+    Route::get('login',[App\Http\Controllers\AdminController::class, 'viewAdminLoginPage'])->name('login');
+    Route::post('login',[App\Http\Controllers\AdminController::class, 'adminLoginValidate']);
 });
+
+//Admin Routes after Auth
 Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function(){
-    Route::get('logout',[App\Http\Controllers\AdminAuthController::class, 'logout'])->name('logout');
+    Route::get('logout',[App\Http\Controllers\AdminController::class, 'logout'])->name('logout');
     Route::get('dashboard',[App\Http\Controllers\AdminController::class, 'viewDashboard'])->name('viewAdminDashboard');
-    Route::get('my-profile',[App\Http\Controllers\AdminAuthController::class, 'viewMyProfile'])->name('viewMyProfileAdmin');
-    Route::post('my-profile/change-profile-info',[App\Http\Controllers\AdminAuthController::class, 'changeProfileInfo'])->name('changeProfileInfoAdmin');
-    Route::post('my-profile/change-password',[App\Http\Controllers\AdminAuthController::class, 'changePassword'])->name('changePasswordAdmin');
-    Route::post('my-profile/change-profile-picture',[App\Http\Controllers\AdminAuthController::class, 'changeProfilePicture'])->name('changeProfilePictureAdmin');
+    Route::get('my-profile',[App\Http\Controllers\AdminController::class, 'viewMyProfile'])->name('viewMyProfileAdmin');
+    Route::post('my-profile/change-profile-info',[App\Http\Controllers\AdminController::class, 'changeProfileInfo'])->name('changeProfileInfoAdmin');
+    Route::post('my-profile/change-password',[App\Http\Controllers\AdminController::class, 'changePassword'])->name('changePasswordAdmin');
+    Route::post('my-profile/change-profile-picture',[App\Http\Controllers\AdminController::class, 'changeProfilePicture'])->name('changeProfilePictureAdmin');
     Route::post('dashboard/add-edit-note',[App\Http\Controllers\AdminController::class, 'addEditNote'])->name('addEditNote');
     Route::post('dashboard/fetch-note',[App\Http\Controllers\AdminController::class, 'fetchNote'])->name('fetchNote');
     Route::post('dashboard/delete-note',[App\Http\Controllers\AdminController::class, 'deleteNote'])->name('deleteNote');
@@ -52,7 +43,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('update-left-user',[App\Http\Controllers\UserController::class, 'updateLeftUser'])->name('updateLeftUser');
         Route::post('delete-left-user',[App\Http\Controllers\UserController::class, 'deleteLeftUser'])->name('deleteLeftUser');
         
-        Route::get('test',[App\Http\Controllers\UserController::class, 'testsms']);
+        
         Route::prefix('reseller')->group(function(){
             Route::get('resellers',[App\Http\Controllers\ResellerController::class, 'viewResellers'])->name('viewResellers');
             Route::post('resellers/get-resellers',[App\Http\Controllers\ResellerController::class, 'getResellers'])->name('getResellers');
@@ -62,12 +53,10 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
             Route::get('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewEditReseller'])->name('editReseller');
             Route::post('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'editReseller']);
             Route::get('view-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewReseller'])->name('viewReseller');
-            
-            
         });
-        
-        
     });
+
+    //Tickets Module Route
     Route::prefix('ticketing')->group(function(){
         Route::get('tickets',[App\Http\Controllers\TicketController::class, 'viewAllTickets'])->name('viewAllTickets');
         Route::post('tickets/get-tickets',[App\Http\Controllers\TicketController::class, 'getTickets'])->name('getTickets');
@@ -77,9 +66,10 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('tickets/track-ticket/{id}',[App\Http\Controllers\TicketController::class, 'trackTicket'])->name('trackTicket');
         Route::get('tickets/track-ticket/{id}/start-processing',[App\Http\Controllers\TicketController::class, 'startProcessingTicket'])->name('startProcessingTicket');
         Route::get('tickets/track-ticket/{id}/close-ticket',[App\Http\Controllers\TicketController::class, 'closeTicket'])->name('closeTicket');
-        
-        
     });
+
+
+    //Accounts Module Routes
     Route::prefix('accounts')->group(function(){
         Route::get('monthly-bill',[App\Http\Controllers\MonthlyBillController::class, 'viewMonthlyBill'])->name('viewMonthlyBill');
         Route::post('get-monthly-bills',[App\Http\Controllers\MonthlyBillController::class, 'getMonthlyBills'])->name('getMonthlyBills');
@@ -111,9 +101,6 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('pay-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'payUpstreamBill'])->name('payUpstreamBill');
         Route::post('delete-upstream-bill',[App\Http\Controllers\MonthlyUpstreamDownstreamBillController::class, 'deleteUpstreamBill'])->name('deleteUpstreamBill');
         
-        
-        
-        
         Route::get('other-invoices',[App\Http\Controllers\OtherInvoiceController::class, 'viewOtherInvoices'])->name('viewOtherInvoices');
         Route::post('other-invoices/get-other-invoices',[App\Http\Controllers\OtherInvoiceController::class, 'getOtherInvoices'])->name('getOtherInvoices');
         Route::post('other-invoices/fetch-user-data',[App\Http\Controllers\OtherInvoiceController::class, 'fetchUserData'])->name('fetchUserData');
@@ -125,6 +112,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('monthly-income-statement',[App\Http\Controllers\AccountsController::class, 'viewMonthlyIncomeStatement'])->name('viewMonthlyIncomeStatement');
         Route::post('monthly-income-statement/update-bkash-withdraw',[App\Http\Controllers\AccountsController::class, 'updateBkashWithdraw'])->name('updateBkashWithdraw');
     });
+
+    //SMS Module Routes
     Route::prefix('sms')->group(function(){
         Route::get('bill-reminder',[App\Http\Controllers\SMSController::class, 'viewReminderSms'])->name('viewReminderSms');
         Route::get('check-balance',[App\Http\Controllers\SMSController::class, 'checkSmsBalance'])->name('checkSmsBalance');
@@ -134,13 +123,14 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('single-sms',[App\Http\Controllers\SMSController::class, 'viewSingleSmsSender'])->name('viewSingleSmsSender');
         Route::post('single-sms/send-single-sms',[App\Http\Controllers\SMSController::class, 'sendSingleSms'])->name('sendSingleSms');
         
-        
         Route::get('sms-templates',[App\Http\Controllers\SmsTemplateController::class, 'viewSmsTemplates'])->name('viewSmsTemplates');
         Route::get('sms-templates/get-sms-templates',[App\Http\Controllers\SmsTemplateController::class, 'getSmsTemplates'])->name('getSmsTemplates');
         Route::post('sms-templates/add-edit-template',[App\Http\Controllers\SmsTemplateController::class, 'addEditTemplate'])->name('addEditTemplate');
         Route::post('sms-templates/fetch-template',[App\Http\Controllers\SmsTemplateController::class, 'fetchTemplate'])->name('fetchTemplate');
         Route::post('sms-templates/delete-template',[App\Http\Controllers\SmsTemplateController::class, 'deleteTemplate'])->name('deleteTemplate');
     });
+
+    //Settings Module Routes
     Route::prefix('settings')->group(function(){
         Route::get('admins',[App\Http\Controllers\AdminController::class, 'viewAdmins'])->name('viewAdmins');
         Route::get('admins/get-admins',[App\Http\Controllers\AdminController::class, 'getAdmins'])->name('getAdmins');
@@ -157,43 +147,42 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         
         Route::get('system-logs',[App\Http\Controllers\SystemLogController::class, 'viewSystemLogs'])->name('viewSystemLogs');
         Route::get('system-logs/get-system-logs',[App\Http\Controllers\SystemLogController::class, 'getSystemLogs'])->name('getSystemLogs');
-        
-        
     });
     
+
+    //Inventory Module Routes
     Route::prefix('inventory')->group(function(){
-        //Products Route
         Route::get('products',[App\Http\Controllers\ProductController::class, 'viewProducts'])->name('viewProducts');
         Route::get('products/get-products',[App\Http\Controllers\ProductController::class, 'getProducts'])->name('getProducts');
         Route::post('products/add-edit-product',[App\Http\Controllers\ProductController::class, 'addEditProduct'])->name('addEditProduct');
         Route::post('products/fetch-product',[App\Http\Controllers\ProductController::class, 'fetchProduct'])->name('fetchProduct');
         Route::post('products/delete-product',[App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('deleteProduct');
         
-        //Packages Routes
         Route::get('packages',[App\Http\Controllers\PackageController::class, 'viewPackages'])->name('viewPackages');
         Route::get('packages/get-packages',[App\Http\Controllers\PackageController::class, 'getPackages'])->name('getPackages');
         Route::post('packages/add-edit-package',[App\Http\Controllers\PackageController::class, 'addEditPackage'])->name('addEditPackage');
         Route::post('packages/fetch-package',[App\Http\Controllers\PackageController::class, 'fetchPackage'])->name('fetchPackage');
         Route::post('packages/delete-package',[App\Http\Controllers\PackageController::class, 'deletePackage'])->name('deletePackage');
-        
-        
     });
+
+    
+    //Vendor Module Routes
     Route::prefix('vendors')->group(function(){
-        //Upstream-Downstream Routes
         Route::get('up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'viewUpDownstreams'])->name('viewUpDownstreams');
         Route::get('up-downstreams/get-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'getUpDownstreams'])->name('getUpDownstreams');
         Route::post('up-downstreams/add-new-up-downstreams',[App\Http\Controllers\UpstreamDownstreamController::class, 'addNewUpDownstream'])->name('addNewUpDownstream');
         Route::post('up-downstreams/fetch-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'fetchUpDownstream'])->name('fetchUpDownstream');
         Route::post('up-downstreams/delete-up-downstream',[App\Http\Controllers\UpstreamDownstreamController::class, 'deleteUpDownstream'])->name('deleteUpDownstream');
         
-        //Vendor Routes
         Route::get('products-vendors',[App\Http\Controllers\ProductsVendorController::class, 'viewProductVendors'])->name('viewProductVendors');
         Route::get('products-vendors/get-products-vendors',[App\Http\Controllers\ProductsVendorController::class, 'getProductsVendors'])->name('getProductsVendors');
         Route::post('products-vendors/fetch-vendor',[App\Http\Controllers\ProductsVendorController::class, 'fetchVendor'])->name('fetchVendor');
         Route::post('products-vendors/add-edit-products-vendor',[App\Http\Controllers\ProductsVendorController::class, 'addEditProductsVendor'])->name('addEditProductsVendor');
         Route::post('products-vendors/delete-products-vendor',[App\Http\Controllers\ProductsVendorController::class, 'deleteProductsVendor'])->name('deleteProductsVendor');
     });
-    
+
+
+    //HRM Module Routes
     Route::prefix('hrm')->group(function(){
         Route::get('employees',[App\Http\Controllers\EmployeeController::class, 'viewEmployees'])->name('viewEmployees');
         Route::get('employees/get-employees',[App\Http\Controllers\EmployeeController::class, 'getEmployees'])->name('getEmployees');
@@ -204,6 +193,22 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('employees/edit-employee/{id}',[App\Http\Controllers\EmployeeController::class, 'editEmployee']);
         Route::get('employees/view-employee/{id}',[App\Http\Controllers\EmployeeController::class, 'viewEmployee'])->name('viewEmployee');
     });
+
+
+    //Sales & Marketing Module Routes
+    Route::prefix('sales-and-marketing')->group(function(){
+        Route::get('new-connection-queries',[App\Http\Controllers\NewConnectionQueryController::class, 'viewNewConnectionQueries'])->name('viewNewConnectionQueries');
+        Route::get('new-connection-queries/get-new-connection-queries',[App\Http\Controllers\NewConnectionQueryController::class, 'getNewConnectionQueries'])->name('getNewConnectionQueries');
+        Route::post('new-connection-queries/add-edit-new-connection-queries',[App\Http\Controllers\NewConnectionQueryController::class, 'addEditNewConnectionQuery'])->name('addEditNewConnectionQuery'); 
+        Route::post('new-connection-queries/fetch-new-connection-queries',[App\Http\Controllers\NewConnectionQueryController::class, 'fetchNewConnectionQuery'])->name('fetchNewConnectionQuery');
+        Route::post('new-connection-queries/delete-new-connection-queries',[App\Http\Controllers\NewConnectionQueryController::class, 'deleteNewConnectionQuery'])->name('deleteNewConnectionQuery');
+        
+        Route::get('d2c-marketing',[App\Http\Controllers\D2CMarketingController::class, 'viewD2CMarketing'])->name('viewD2CMarketing');
+        Route::get('d2c-marketing/get-d2c-marketing',[App\Http\Controllers\D2CMarketingController::class, 'getD2CMarketing'])->name('getD2CMarketing');
+        Route::post('d2c-marketing/add-edit-d2c-marketing',[App\Http\Controllers\D2CMarketingController::class, 'addEditD2CMarketing'])->name('addEditD2CMarketing'); 
+        Route::post('d2c-marketing/fetch-d2c-marketing',[App\Http\Controllers\D2CMarketingController::class, 'fetchD2CMarketing'])->name('fetchD2CMarketing');
+        Route::post('d2c-marketing/delete-d2c-marketing',[App\Http\Controllers\D2CMarketingController::class, 'deleteD2CMarketing'])->name('deleteD2CMarketing');
+    });
 });
 
 
@@ -211,7 +216,7 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
     //Auth Routes
     Route::get('/',[App\Http\Controllers\UserController::class, 'viewUserLogin']);
     Route::get('login',[App\Http\Controllers\UserController::class, 'viewUserLogin'])->name('userLogin');
-    Route::post('login',[App\Http\Controllers\AdminAuthController::class, 'adminLoginValidate']);
+    Route::post('login',[App\Http\Controllers\AdminController::class, 'adminLoginValidate']);
     
     //QuickPay Routes
     Route::get('quick-pay', [App\Http\Controllers\QuickPayController::class, 'viewQuickPay'])->name('viewQuickPay');

@@ -111,7 +111,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="fw-medium text-muted mb-0">Left Users</p>
-                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="{{ $new_users->count() }}">0</span></h2>
+                                    <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="{{ $left_users->count() }}">0</span></h2>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
@@ -169,7 +169,7 @@
             
             <div class="row">
                 <div class="col-xl-7">
-                    <div class="card">
+                    <div class="card" style="">
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1"><i class="fa fa-user-plus me-1"></i>New Connections of {{ date('F-Y') }}</h4>
                             <div class="flex-shrink-0">
@@ -179,9 +179,9 @@
                             </div>
                         </div>
                         
-                        <div class="card-body">
+                        <div class="card-body" style="height: 330px;overflow-x: hidden; overflow-y: scroll">
                             <div class="table-responsive table-card">
-                                <table class="table table-borderless table-hover table-nowrap align-middle mb-0">
+                                <table class="table table-borderless table-hover table-nowrap align-middle mb-0" >
                                     <thead class="table-primary">
                                         <tr class="text-muted">
                                             <th scope="col">Username</th>
@@ -192,7 +192,7 @@
                                         </tr>
                                     </thead>
                                     
-                                    <tbody style="height: 330px; overflow-x: hidden; overflow-y: scroll">
+                                    <tbody>
                                         @forelse ($new_users as $new_user )
                                         <tr>
                                             <td>{{ $new_user->username }}</td>

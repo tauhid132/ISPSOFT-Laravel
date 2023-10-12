@@ -16,9 +16,7 @@
                                     <img src="{{ asset('images/logo.png') }}" alt="" height="80">
                                 </span>
                             </div>
-                          
-                            
-                            <div class="p-2 mt-3">
+                            <div class="p-2 mt-3 mb-4">
                                 <div class="mb-4">
                                     <center>
                                         <h2 class="text-primary ">LOGIN</h2>
@@ -53,14 +51,6 @@
                                             <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" name="password" id="password-input">
                                         </div>
                                     </div>
-                                    {{-- <div class="mb-3">
-                                        
-                                        <label class="form-label" for="password-input">Password</label>
-                                        <div class="position-relative auth-pass-inputgroup mb-3">
-                                            <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" name="password" id="password-input">
-                                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                        </div>
-                                    </div> --}}
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="auth-remember-check" name="remember">
                                         <label class="form-check-label" for="auth-remember-check">Remember me</label>
@@ -69,12 +59,11 @@
                                         </div>
                                     </div>
                                     <div class="mt-4">
-                                        <button class="btn btn-primary w-100" type="submit">LOGIN</button>
+                                        <button class="btn btn-primary w-100 fs-14" type="submit"><i class="fa fa-sign-in me-1"></i>LOGIN</button>
                                     </div>
                                 </form>
                             </div>
                             <div class="mt-2 fs-14"><center>Copyright © {{ date('Y') }} | <a href="http://atsbd.net" class="text-center">ATS Technology</a></center></div>
-                            
                         </div>
                     </div>
                 </div>

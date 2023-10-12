@@ -50,7 +50,7 @@
                                         <div class="col-sm-4">
                                             <div>
                                                 <select class="form-control" onchange="onTicketTypeChange(this)">
-                                                    <option value="all">All Types</option>
+                                                    <option value="all">All Ticket Types</option>
                                                     @foreach ($ticket_types as $type )
                                                     <option value="{{ $type->id }}">{{ $type->ticket_type_name }}</option>
                                                     @endforeach
@@ -60,7 +60,7 @@
                                         <div class="col-sm-4">
                                             <div>
                                                 <select class="form-control" onchange="onStatusChange(this)">
-                                                    <option value="all" selected>All</option>
+                                                    <option value="all" selected>All Status</option>
                                                     <option value="0">Created</option>
                                                     <option value="1">Processing</option>
                                                     <option value="2">Closed</option>
@@ -138,7 +138,7 @@
                             <div>
                                 <label for="first_name" class="form-label">Username</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="username" id="username">
+                                    <input type="text" class="form-control" name="username" id="username" value="{{ null }}">
                                     <a class="btn btn-primary get_user_data" ><i class="fa fa-refresh"></i> Fetch</a>
                                 </div>
                             </div>
@@ -149,26 +149,15 @@
                                 <input type="text" name="customer_name" id="customer_name" class="form-control"  />
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div>
-                                <label for="first_name" class="form-label">Assigned Executives</label>
-                                <select class="js-example-basic-multiple" name="assigned_executives[]" id="assigned_executives" multiple="multiple">
-                                    <option value="">None</option>
-                                     
-                                    @foreach ($employees as $employee )
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                         
-                        <div class="col-lg-3">
+                        
+                        <div class="col-lg-6">
                             <div>
                                 <label for="first_name" class="form-label">Added By</label>
                                 <input type="text" name="added_by" id="added_by" value="{{ Auth::guard('admin')->user()->name }}" class="form-control" disabled />
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-6">
                             <div>
                                 <label for="first_name" class="form-label">User Notification</label><br>
                                 <div class="form-check form-check-inline">
@@ -229,7 +218,7 @@
         {"data": "id"},
         {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
-        {"data": "user.username"},
+        {"data": "user_id"},
         {"data": "type.ticket_type_name"},
         {"data": "ticket_description"},
         {"data": "created_at"},

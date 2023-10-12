@@ -55,16 +55,28 @@ class TicketController extends Controller
         ->addColumn('created_at', function($row){
             return $row->created_at->format('l, j F, Y h:i A');
         })
-       
-        ->rawColumns(['action' => 'action','status' => 'status'])
+        ->addColumn('user_id', function($row){
+            if($row->user_id == null){
+                return '';
+            }else{
+                return $row->user->username;
+            }
+        })
+        ->rawColumns(['action' => 'action','status' => 'status','user_id' => 'user_id'])
         ->make(true);
     }
 
     public function addUpdateTicket(Request $request){
-        $user = User::where('username', $request->username)->first();
+        if($request->username == null){
+            $user_id = null;
+        }else{
+            $user = User::where('username', $request->username)->first();
+            $user_id = $user->id;
+        }
+        
         if(empty($request->id)){
             $ticket = Ticket::create([
-                'user_id' => $user->id,
+                'user_id' => $user_id,
                 'ticket_type_id' => $request->ticket_type,
                 'ticket_description' => $request->ticket_description,
                 'created_by_id' => Auth::guard('admin')->user()->id,

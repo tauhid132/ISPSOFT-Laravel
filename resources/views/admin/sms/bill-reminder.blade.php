@@ -156,7 +156,7 @@
                 },  
                 success:function(){
                     toastr["success"]("Sent Successfully")
-                    $('.send_sms').html("Send SMS"); 
+                    $('.send_sms').html('<i class="fa fa-paper-plane me-1"></i>Send SMS'); 
                     loader.style.visibility = 'hidden';
                     
                 }  

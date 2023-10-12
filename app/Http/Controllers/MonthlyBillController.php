@@ -78,6 +78,7 @@ class MonthlyBillController extends Controller
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-envelope text-warning send_reminder_sms m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Reminder SMS"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-history text-info view_bill_history m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View Bill History"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-comment text-primary add_comment m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Comment"></i></a>';
+            $btn = $btn.'<a href="#"><i class="fa fa-link text-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Invoice"></i></a>';
             return $btn;
         })
         ->addColumn('userStatus', function($row){

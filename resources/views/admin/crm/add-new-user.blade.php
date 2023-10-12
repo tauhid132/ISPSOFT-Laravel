@@ -253,7 +253,7 @@
                                                             <option value="Campain">Campain</option>
                                                             <option value="User Reference">User Reference</option>
                                                             @foreach ($employees as $employee )
-                                                            <option value="{{ $employee->username  }}">{{ $employee->full_name }}</option>
+                                                            <option value="{{ $employee->name  }}">{{ $employee->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

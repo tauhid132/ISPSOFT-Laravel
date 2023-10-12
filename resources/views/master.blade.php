@@ -47,10 +47,10 @@
   
 </body>
 
-
+<script src="{{ asset('theme/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ asset('theme/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="{{ asset('theme/libs/simplebar/simplebar.min.js') }}"></script>
+
 <script src="{{ asset('theme/libs/feather-icons/feather.min.js') }}"></script>
 <script src="{{ asset('theme/libs/node-waves/waves.min.js') }}"></script>
 <script src="{{ asset('theme/libs/swiper/swiper-bundle.min.js') }}"></script>

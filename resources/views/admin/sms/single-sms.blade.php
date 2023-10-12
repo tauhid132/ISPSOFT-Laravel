@@ -109,7 +109,7 @@
             success:function(data){  
                 $('#single_sms_sender_form')[0].reset();  
                 $('#submit-btn').html('<i class="fa fa-paper-plane me-1"></i>Send'); 
-                toastr["success"]("Vendor Updated Successfully")
+                toastr["success"]("SMS Sent Successfully!")
             },
             error: function(xhr, status, error) 
             {

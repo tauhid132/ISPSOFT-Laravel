@@ -23,8 +23,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="demo">
-                            <form id="adduser" method="POST"  action="{{ route('editUser', $user->id) }}">
-                                @csrf
+                            <form id="adduser">
                                 <div class="step-app">
                                     <ul class="step-steps">
                                         <li><a href="#tab1"><span class="number">1</span> Personal Info</a></li>
@@ -245,11 +244,11 @@
                                                     <div class="mb-3">
                                                         <label for="intType1">Reference</label>
                                                         <select class="custom-select form-control" name="reference" disabled>
-                                                            <option value="Advertisement">Advertisement</option>
-                                                            <option value="Campain">Campain</option>
-                                                            <option value="User Reference">User Reference</option>
+                                                            <option {{ $user->reference == 'Advertisement' ? 'selected' : '' }} value="Advertisement">Advertisement</option>
+                                                            <option {{ $user->reference == 'Campain' ? 'selected' : '' }} value="Campain">Campain</option>
+                                                            <option {{ $user->reference == 'User Reference' ? 'selected' : '' }} value="User Reference">User Reference</option>
                                                             @foreach ($employees as $employee )
-                                                            <option value="{{ $employee->username  }}">{{ $employee->full_name }}</option>
+                                                            <option {{ $user->reference == $employee->name ? 'selected' : '' }} value="{{ $employee->name  }}">{{ $employee->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -364,7 +363,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             
-            <div class="modal-body">
+            <div class="modal-body table-responsive">
                 <table class="table align-middle bordered table-nowrap mb-0">
                     <thead class="table-primary">
                         <tr>
@@ -417,7 +416,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
             
-            <div class="modal-body">
+            <div class="modal-body table-responsive">
                 <table class="table align-middle bordered table-nowrap mb-0">
                     <thead class="table-primary">
                         <tr>
@@ -522,6 +521,7 @@
         }
     });
     
+    
     if (document.getElementById('ftth-checkbox').checked) {
         $('#onu-mac').show();
         $('#fiber-code').show();
@@ -535,7 +535,7 @@
         $('#ip-address').hide();
     } 
     
-    $('#ip-address').hide();
+   
     $('#ftth-checkbox').change(function() {
         if ($(this).is(':checked')) {
             $('#fiber-code').show();

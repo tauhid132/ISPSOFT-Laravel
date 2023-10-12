@@ -19,6 +19,6 @@
         </div>
     </div>
     <div class="card-footer">
-        <button class="btn btn-primary float-end send_sms">Send SMS</button>
+        <button class="btn btn-primary float-end send_sms"><i class="fa fa-paper-plane me-1"></i>Send SMS</button>
     </div>
 </div>
