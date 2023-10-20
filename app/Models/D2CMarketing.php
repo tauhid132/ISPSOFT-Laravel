@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class D2CMarketing extends Model
 {
     use HasFactory;
+    protected $table = 'd2c_marketings';
     protected $fillable = [
         'customer_name',
         'address',

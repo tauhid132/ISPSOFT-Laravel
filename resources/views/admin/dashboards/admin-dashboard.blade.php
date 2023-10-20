@@ -116,7 +116,7 @@
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
                                         <span class="avatar-title bg-soft-primary rounded-circle fs-2">
-                                            <i class="fa fa-user-times fs-20 text-danger"></i>
+                                            <i class="fa fa-user-minus fs-20 text-danger"></i>
                                         </span>
                                     </div>
                                 </div>

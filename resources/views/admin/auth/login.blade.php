@@ -42,7 +42,7 @@
                                     <div class="mb-4">
                                         <div class="input-group">
                                             <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                            <input type="text" class="form-control" name="username"  placeholder="Enter Username" required autofocus>
+                                            <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Enter Username" required>
                                         </div>
                                     </div>
                                     <div class="mb-4">

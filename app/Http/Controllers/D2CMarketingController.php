@@ -67,7 +67,7 @@ class D2CMarketingController extends Controller
     public function fetchD2CMarketing(Request $request){
         return response()->json(D2CMarketing::find($request->id));
     }
-    public function deleteNewConnectionQuery(Request $request){
+    public function deleteD2CMarketing(Request $request){
         D2CMarketing::find($request->id)->delete();
     }
 }

@@ -209,6 +209,18 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('d2c-marketing/fetch-d2c-marketing',[App\Http\Controllers\D2CMarketingController::class, 'fetchD2CMarketing'])->name('fetchD2CMarketing');
         Route::post('d2c-marketing/delete-d2c-marketing',[App\Http\Controllers\D2CMarketingController::class, 'deleteD2CMarketing'])->name('deleteD2CMarketing');
     });
+
+    Route::prefix('mikrotik-api')->group(function(){
+        Route::get('mikrotiks',[App\Http\Controllers\MikrotikController::class, 'viewMikrotiks'])->name('viewMikrotiks');
+        Route::get('mikrotiks/get-mikrotiks',[App\Http\Controllers\MikrotikController::class, 'getMikrotiks'])->name('getMikrotiks');
+        Route::post('mikrotiks/add-edit-mikrotik',[App\Http\Controllers\MikrotikController::class, 'addEditMikrotik'])->name('addEditMikrotik'); 
+        Route::post('mikrotiks/fetch-mikrotik',[App\Http\Controllers\MikrotikController::class, 'fetchMikrotik'])->name('fetchMikrotik');
+        Route::post('mikrotiks/delete-mikrotik',[App\Http\Controllers\MikrotikController::class, 'deleteMikrotik'])->name('deleteMikrotik');
+
+        Route::get('connect',[App\Http\Controllers\MikrotikController::class, 'connect']);
+        
+        
+    });
 });
 
 

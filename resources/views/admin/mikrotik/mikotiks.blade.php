@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','Direct Client Marketing | ATS Technology')
+@section('title','Mikrotiks | ATS Technology')
 @section('main-body')
 @include('admin.includes.header')
 <div class="main-content">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0"><i class="fa fa-user"></i> Direct Client Marketing</h4>
+                        <h4 class="mb-sm-0"><i class="fa fa-user"></i> Mikrotiks</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Sales & Marketing</a></li>
-                                <li class="breadcrumb-item active">Direct Client Marketing</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">API</a></li>
+                                <li class="breadcrumb-item active">Mikrotiks</li>
                             </ol>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
             
             <div class="col-lg-12">
                 <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
-                    <a href="#" id="add-new-connection-query" data-bs-toggle="modal" data-bs-target="#addEditD2CModal"><button type="button" class="btn btn-success"><i class="fa fa-plus me-1"></i> Add New</button></a>
+                    <a href="#" id="add-new-mikrotik" data-bs-toggle="modal" data-bs-target="#addEditMikrotikModal"><button type="button" class="btn btn-success"><i class="fa fa-plus me-1"></i> Add New Mikrotik</button></a>
                 </div>
                 @foreach ($errors->all() as $error)
                 <div class="alert alert-danger text-start alert-dismissible fade show mb-4 mx-2" role="alert">
@@ -50,14 +50,12 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Timestamp</th>
-                                    <th>Customer Name</th>
-                                    <th>Address</th>
-                                    <th>Mobile</th>
-                                    <th>Medium</th>
+                                    <th>Name</th>
+                                    <th>Host</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
                                     <th>Status</th>
                                     <th>Action</th>
-                                    <th>Comment</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,68 +70,40 @@
 </div>
 
 
-<div class="modal fade zoomIn" id="addEditD2CModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade zoomIn" id="addEditMikrotikModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-soft-info">
-                <h5 class="modal-title" id="modalHeader">Add New Connection Query</h5>
+                <h5 class="modal-title" id="modalHeader">Add New Mikrotik</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            <form id="add_edit_new_connection_query_form">
+            <form id="add-edit-mikrotik-form">
                 <div class="modal-body">
                     <div class="row g-3">
                         <input type="hidden" name="id" id="id">
                         <div class="col-lg-6">
                             <div>
-                                <label for="name" class="form-label">Customer Name</label>
-                                <input type="text" name="customer_name" class="form-control" id="customer_name" />
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" id="name" />
                             </div>
                         </div>
                         
                         <div class="col-lg-6">
                             <div>
-                                <label for="name" class="form-label">Address</label>
-                                <input type="text" name="address" class="form-control" id="address" />
+                                <label for="name" class="form-label">Hostname</label>
+                                <input type="text" name="host" class="form-control" id="host" />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div>
-                                <label for="name" class="form-label">Mobile No</label>
-                                <input type="text" name="mobile_no" class="form-control" id="mobile_no"/>
+                                <label for="name" class="form-label">Username</label>
+                                <input type="text" name="username" class="form-control" id="username"/>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div>
-                                <label for="name" class="form-label">Email</label>
-                                <input type="text" name="email_address" class="form-control" id="email_address" />
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div>
-                                <label for="name" class="form-label">Package</label>
-                                <input type="text" name="package" class="form-control" id="package" />
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div>
-                                <label for="name" class="form-label">Possibility</label>
-                                <input type="text" name="possibility" class="form-control" id="possibility" />
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div>
-                                <label for="name" class="form-label">Status</label>
-                                <select class="form-select" name="status" id="status1" required>
-                                    <option selected value="{{ null }}">Select One</option>
-                                    <option value="0">Pending</option>
-                                    <option value="1">Successful</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div>
-                                <label for="name" class="form-label">Comment</label>
-                                <input type="text" name="comment" class="form-control" id="comment" />
+                                <label for="name" class="form-label">Password</label>
+                                <input type="text" name="password" class="form-control" id="password" />
                             </div>
                         </div>
                     </div>
@@ -163,42 +133,40 @@
         "processing" : true,
         "serverSide": true,
         "ajax":{
-            "url": "{{ route('getD2CMarketing') }}",
+            "url": "{{ route('getMikrotiks') }}",
             "dataType": "json",
             "type": "GET",
         },
         "columns" : [
         {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": false, "searchable": false},
-        {"data": "created_at"},
-        {"data": "customer_name"},
-        {"data": "address"},
-        {"data": "mobile_no"},
-        {"data": "possibility"},
-        {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
+        {"data": "name"},
+        {"data": "host"},
+        {"data": "username"},
+        {"data": "password"},
         {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
-        {"data": "comment"},
+        {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
         ]
     });
     
-    $('#add-new-connection-query').click(function(){  
-        $('#submit-btn').html("Add");  
-        $('#add_edit_new_connection_query_form')[0].reset();
-        $('#modalHeader').html("Add New Connection Query"); 
+    $('#add-new-mikrotik').click(function(){  
+        $('#submit-btn').html('<i class="fa fa-plus me-1"></i>Add');  
+        $('#add-edit-mikrotik-form')[0].reset();
+        $('#modalHeader').html("Add New Mikrotik"); 
         $('#id').val(""); 
     }); 
     
-    $('#add_edit_new_connection_query_form').on("submit", function(event){ 
+    $('#add-edit-mikrotik-form').on("submit", function(event){ 
         event.preventDefault();  
         $.ajax({  
-            url:"{{ route('addEditD2CMarketing') }}",  
+            url:"{{ route('addEditMikrotik') }}",  
             method:"POST",  
-            data:$('#add_edit_new_connection_query_form').serialize(),  
+            data:$('#add-edit-mikrotik-form').serialize(),  
             beforeSend:function(){  
                 $('#submit-btn').html("Updating");  
             },  
             success:function(data){  
-                $('#add_edit_new_connection_query_form')[0].reset();  
-                $('#addEditD2CModal').modal('hide');  
+                $('#add-edit-mikrotik-form')[0].reset();  
+                $('#addEditMikrotikModal').modal('hide');  
                 dataTable.ajax.reload();
                 toastr["success"]("Updated Successfully")
             },
@@ -212,31 +180,27 @@
         });     
     });
 
-    $(document).on('click', '.edit_D2CMarketing', function(){
+    $(document).on('click', '.edit_mikrotik', function(){
         var id = $(this).attr("id");  
         $.ajax({  
-            url:"{{ route('fetchD2CMarketing') }}",  
+            url:"{{ route('fetchMikrotik') }}",  
             method:"post",  
             data:{id:id},  
             success:function(data){ 
                 $('#id').val(data.id);
-                $('#customer_name').val(data.customer_name);
-                $('#address').val(data.address);
-                $('#mobile_no').val(data.mobile_no);
-                $('#email_address').val(data.email_address);
-                $('#package').val(data.package);
-                $('#possibility').val(data.possibility);
-                $('#comment').val(data.comment);
-                $('#status1').val(data.status);
+                $('#name').val(data.name);
+                $('#host').val(data.host);
+                $('#username').val(data.username);
+                $('#password').val(data.password);
                 
-                $('#modalHeader').html("Edit Package");
+                $('#modalHeader').html("Edit Mikrotik");
                 $('#submit-btn').html("Update"); 
-                $('#addEditD2CModal').modal("show");  
+                $('#addEditMikrotikModal').modal("show");  
             }  
         });  
     }); 
     
-    $(document).on('click', '.delete_D2CMarketing', function(){
+    $(document).on('click', '.delete_mikrotik', function(){
         var id = $(this).attr("id");
         Swal.fire({
             title: 'Are you sure?',
@@ -248,7 +212,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url:"{{ route('deleteD2CMarketing') }}",
+                    url:"{{ route('deleteMikrotik') }}",
                     method:"POST",
                     data:{id:id},
                     success:function(data){

@@ -573,16 +573,16 @@
         },
         {
             "name": "evilfreelancer/routeros-api-php",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EvilFreelancer/routeros-api-php.git",
-                "reference": "19d98d72f19067dacf3b7babf66192c5bc2998f4"
+                "reference": "1145661701787e0eed2939c021ac916a51eb7f57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EvilFreelancer/routeros-api-php/zipball/19d98d72f19067dacf3b7babf66192c5bc2998f4",
-                "reference": "19d98d72f19067dacf3b7babf66192c5bc2998f4",
+                "url": "https://api.github.com/repos/EvilFreelancer/routeros-api-php/zipball/1145661701787e0eed2939c021ac916a51eb7f57",
+                "reference": "1145661701787e0eed2939c021ac916a51eb7f57",
                 "shasum": ""
             },
             "require": {
@@ -640,7 +640,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EvilFreelancer/routeros-api-php/issues",
-                "source": "https://github.com/EvilFreelancer/routeros-api-php/tree/1.5.0"
+                "source": "https://github.com/EvilFreelancer/routeros-api-php/tree/1.5.1"
             },
             "funding": [
                 {
@@ -660,7 +660,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-12-25T20:05:43+00:00"
+            "time": "2023-10-09T19:07:45+00:00"
         },
         {
             "name": "fruitcake/php-cors",

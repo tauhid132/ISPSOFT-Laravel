@@ -156,12 +156,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#mikrotikApi" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
-                        <i class="fa fa-key"></i> <span>Mikrotik API</span>
+                        <i class="fa fa-server"></i> <span>Mikrotik API</span>
                     </a>
                     <div class="collapse menu-dropdown" id="mikrotikApi">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Mikrotik List</a>
+                                <a href="{{ route('viewMikrotiks') }}" class="nav-link">Mikrotiks</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">API Users</a>
