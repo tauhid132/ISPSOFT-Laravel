@@ -110,6 +110,7 @@
                                     <option selected value="Admin">Admin</option>
                                     <option value="Accountant">Accountant</option>
                                     <option value="Support">Support</option>
+                                    <option value="Sales-Marketing">Sales-Marketing</option>
                                 </select>
                             </div>
                         </div>

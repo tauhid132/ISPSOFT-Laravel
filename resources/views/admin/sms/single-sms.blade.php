@@ -38,7 +38,7 @@
                                         <div class="col-md-12">
                                             <div>
                                                 <label for="first_name" class="form-label">Receipent</label>
-                                                <input class="form-control" type="text" name="mobile_no" maxlength="11" minlength="11" placeholder="01XXXXXXXXX" required>
+                                                <input class="form-control" type="text" name="mobile_no" maxlength="11" minlength="11" placeholder="01XXXXXXXXX" value="{{ request('mobile') }}" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -104,11 +104,13 @@
             method:"POST",  
             data:$('#single_sms_sender_form').serialize(),  
             beforeSend:function(){  
-                $('#submit-btn').html("Sending");  
+                $('#submit-btn').html('<i class="fa fa-spinner fa-spin"></i> Sending');
+                $('#submit-btn').attr('disabled','true')  
             },  
             success:function(data){  
                 $('#single_sms_sender_form')[0].reset();  
                 $('#submit-btn').html('<i class="fa fa-paper-plane me-1"></i>Send'); 
+                $('#submit-btn').removeAttr('disabled')
                 toastr["success"]("SMS Sent Successfully!")
             },
             error: function(xhr, status, error) 

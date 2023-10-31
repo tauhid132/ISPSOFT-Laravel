@@ -66,6 +66,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('tickets/track-ticket/{id}',[App\Http\Controllers\TicketController::class, 'trackTicket'])->name('trackTicket');
         Route::get('tickets/track-ticket/{id}/start-processing',[App\Http\Controllers\TicketController::class, 'startProcessingTicket'])->name('startProcessingTicket');
         Route::get('tickets/track-ticket/{id}/close-ticket',[App\Http\Controllers\TicketController::class, 'closeTicket'])->name('closeTicket');
+        Route::post('tickets/track-ticket/{id}/assign-executives',[App\Http\Controllers\TicketController::class, 'assignExecutive'])->name('assignExecutive');
     });
 
 
@@ -216,6 +217,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('mikrotiks/add-edit-mikrotik',[App\Http\Controllers\MikrotikController::class, 'addEditMikrotik'])->name('addEditMikrotik'); 
         Route::post('mikrotiks/fetch-mikrotik',[App\Http\Controllers\MikrotikController::class, 'fetchMikrotik'])->name('fetchMikrotik');
         Route::post('mikrotiks/delete-mikrotik',[App\Http\Controllers\MikrotikController::class, 'deleteMikrotik'])->name('deleteMikrotik');
+
+        Route::get('api-users',[App\Http\Controllers\MikrotikController::class, 'viewApiUsers'])->name('viewApiUsers');
+        Route::get('api-users/get-api-users',[App\Http\Controllers\MikrotikController::class, 'getApiUsers'])->name('getApiUsers');
+        Route::post('api-users/block-user',[App\Http\Controllers\MikrotikController::class, 'blockUser'])->name('blockUser');
+       
 
         Route::get('connect',[App\Http\Controllers\MikrotikController::class, 'connect']);
         

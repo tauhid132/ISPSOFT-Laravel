@@ -52,6 +52,16 @@ class TicketController extends Controller
             }
             return $btn;
         })
+        ->addColumn('priority', function($row){
+            if($row->priority == 0){
+                $btn = '<span class="badge bg-info">Low</span>';
+            }else if($row->priority == 1){
+                $btn = '<span class="badge bg-warning">Medium</span>';
+            }else if($row->priority == 2){
+                $btn = '<span class="badge bg-danger">High</span>';
+            }
+            return $btn;
+        })
         ->addColumn('created_at', function($row){
             return $row->created_at->format('l, j F, Y h:i A');
         })
@@ -62,7 +72,7 @@ class TicketController extends Controller
                 return $row->user->username;
             }
         })
-        ->rawColumns(['action' => 'action','status' => 'status','user_id' => 'user_id'])
+        ->rawColumns(['action' => 'action','status' => 'status','user_id' => 'user_id', 'priority' => 'priority'])
         ->make(true);
     }
 
@@ -80,7 +90,7 @@ class TicketController extends Controller
                 'ticket_type_id' => $request->ticket_type,
                 'ticket_description' => $request->ticket_description,
                 'created_by_id' => Auth::guard('admin')->user()->id,
-                
+                'priority' => $request->priority,                
             ]);
             $ticket->assigned_executives()->attach($request->assigned_executives);
             if($request->sendConfirmationSms){
@@ -95,6 +105,7 @@ class TicketController extends Controller
                 'user_id' => $user->id,
                 'ticket_type_id' => $request->ticket_type,
                 'ticket_description' => $request->ticket_description,
+                'priority' => $request->priority,
                 'created_by_id' => Auth::guard('admin')->user()->id,
             ]);
             $ticket->assigned_executives()->sync($request->assigned_executives);
@@ -111,6 +122,7 @@ class TicketController extends Controller
     public function trackTicket($id){
         return view('admin.tickets.track-ticket',[
             'ticket' => Ticket::find($id),
+            'employees' => Employee::all()
         ]);
     }
     public function startProcessingTicket($id){
@@ -129,6 +141,12 @@ class TicketController extends Controller
             'closed_at' => Carbon::now(),
             'closed_by_id' => Auth::guard('admin')->user()->id,
         ]);
+        return back();
+    }
+
+    public function assignExecutive(Request $request, $id){
+        $ticket = Ticket::find($id);
+        $ticket->assigned_executives()->sync($request->assigned_executives);
         return back();
     }
 }

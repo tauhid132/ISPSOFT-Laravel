@@ -59,28 +59,25 @@
                     </div>
                 </li>
 
+            
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#inventory" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
-                        <i class="fa fa-briefcase"></i> <span>Inventory</span>
+                    <a class="nav-link menu-link" href="#sales" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                        <i class="fa fa-shopping-cart"></i> <span>Sales & Marketing</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="inventory">
+                    <div class="collapse menu-dropdown" id="sales">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('viewProducts') }}" class="nav-link">Products</a>
+                                <a href="{{ route('viewNewConnectionQueries') }}" class="nav-link">Connection Queries</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Cable Stock</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('viewPackages') }}" class="nav-link">Packages</a>
+                                <a href="{{ route('viewD2CMarketing') }}" class="nav-link">D2C Marketing</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-                
+               
 
-                
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sms" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="fa fa-envelope"></i> <span>SMS</span>
@@ -103,19 +100,6 @@
                     </div>
                 </li>
                
-                
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#setting" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
-                        <i class="fa fa-cog"></i> <span>Settings</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="setting">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('viewSystemLogs') }}" class="nav-link">System Logs</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>

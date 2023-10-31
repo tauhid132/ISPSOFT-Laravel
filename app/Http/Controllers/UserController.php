@@ -10,6 +10,7 @@ use App\Models\ServiceArea;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use RahulHaque\AdnSms\Facades\AdnSms;
 
 class UserController extends Controller
@@ -54,7 +55,9 @@ class UserController extends Controller
         
         ->addColumn('action', function($row){
             $btn = '<a href="'.route('viewUser',$row->id).'" class="btn btn-sm btn-info"><i id="'.$row->id.'" class="fa fa-eye m-1"></i>View</a>';
+            if(Auth::guard('admin')->user()->role == 'Admin'){
             $btn = $btn.'<a href="'.route('editUser',$row->id).'" class="btn btn-sm btn-primary m-1"><i id="'.$row->id.'" class="fa fa-edit m-1"></i>Edit</a>';
+            }
             //$btn = $btn.'<a><button id="'.$row->id.'" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i> Delete</button></a>';
             return $btn;
         })

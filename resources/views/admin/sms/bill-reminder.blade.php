@@ -151,12 +151,14 @@
                 method:"post",  
                 data:{id:id,reminderType:reminderType},
                 beforeSend:function(){  
-                    loader.style.visibility = 'visible';
-                    $('.send_sms').html('<i class="fa fa-spinner fa-spin"></i> Sending SMS');  
+                    loader.style.visibility = 'visible';  
+                    $('.send_sms').html('<i class="fa fa-spinner fa-spin"></i> Sending');
+                    $('.send_sms').attr('disabled','true')  
                 },  
                 success:function(){
                     toastr["success"]("Sent Successfully")
                     $('.send_sms').html('<i class="fa fa-paper-plane me-1"></i>Send SMS'); 
+                    $('.send_sms').removeAttr('disabled')
                     loader.style.visibility = 'hidden';
                     
                 }  

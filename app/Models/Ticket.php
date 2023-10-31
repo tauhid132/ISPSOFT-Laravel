@@ -16,6 +16,7 @@ class Ticket extends Model
         'created_by_id',
         'comment',
         'status',
+        'priority',
         'start_processing_at',
         'start_processing_by_id',
         'closed_at',
@@ -38,6 +39,9 @@ class Ticket extends Model
     }
     public function closed_by(){
         return $this->belongsTo(Admin::class,'closed_by_id','id');
+    }
+    public function comments(){
+        return $this->hasMany(TicketComment::class,'ticket_id','id');
     }
 
 }

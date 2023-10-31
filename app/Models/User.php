@@ -86,6 +86,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function package(){
         return $this->belongsTo(Package::class,'package_id','id');
     }
+    public function api_server(){
+        return $this->belongsTo(Mikrotik::class,'api_server','id');
+    }
 
    
 

@@ -342,7 +342,7 @@
                         <div class="d-flex flex-wrap gap-2 justify-content-center">
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#billingHistoryModal"><i class="fa fa-dollar"></i> Billing</button>
                             <button type="button" class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#ticketsModal"><i class="fa fa-ticket"></i> Ticketing</button>
-                            <button type="button" class="btn btn-success waves-effect waves-light"><i class="fa fa-message"></i> SMS</button>
+                            <a href="{{ route('viewSingleSmsSender') }}?mobile={{ $user->mobile_no }}" class="btn btn-success waves-effect waves-light"><i class="fa fa-message"></i> SMS</a>
                         </div>
                     </div>
                 </div>

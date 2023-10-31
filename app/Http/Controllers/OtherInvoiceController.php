@@ -39,7 +39,7 @@ class OtherInvoiceController extends Controller
     }
     
     public function fetchUserData(Request $request){
-        $user = User::where('username', $request->username)->first();
+        $user = User::where('username','LIKE', '%'.$request->username.'%')->first();
         if($user == null){
             return response()->json(['user' => $user, 'status' => 0]);
         }else{

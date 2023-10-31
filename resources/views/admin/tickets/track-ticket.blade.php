@@ -37,6 +37,7 @@
                                             <input type="text" class="form-control" name="joining_date" value="{{ $ticket->id }}" disabled>
                                         </div>
                                     </div>
+                                    @if($ticket->username != null)
                                     <div class="col-lg-2">
                                         <div class="mb-3">
                                             <label>Username</label>
@@ -49,7 +50,8 @@
                                             <input type="text" class="form-control" name="joining_date" value="{{ $ticket->user->customer_name }}" disabled>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    @endif
+                                    <div class="{{ $ticket->username != null ? 'col-lg-4' : 'col-lg-10' }}">
                                         <div class="mb-3">
                                             <label>Ticket Type</label>
                                             <input type="text" class="form-control" name="joining_date" value="{{ $ticket->type->ticket_type_name }}" disabled>
@@ -164,6 +166,36 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <h6 class="card-title mb-0 flex-grow-1">Assigned To</h6>
+                                <div class="flex-shrink-0">
+                                    <button type="button" class="btn btn-soft-success btn-sm" data-bs-toggle="modal" data-bs-target="#inviteMembersModal"><i class="ri-share-line me-1 align-bottom"></i> Assigned Member</button>
+                                </div>
+                            </div>
+                            <ul class="list-unstyled vstack gap-3 mb-0">
+                                @forelse ($ticket->assigned_executives as $executive)
+                                <li>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <img src="{{ asset('images/avatar.png') }}" alt="" class="avatar-xs rounded-circle">
+                                        </div>
+                                        <div class="flex-grow-1 ms-2">
+                                            <h6 class="mb-1"><a href="pages-profile.html">{{ $executive->name }}</a></h6>
+                                            <p class="text-muted mb-0">{{ $executive->position }}</p>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <button class="btn btn-sm btn-danger">Remove</button>
+                                        </div>
+                                    </div>
+                                </li> 
+                                @empty
+                                    <center><h4 class="p-2">No Members Assigned!</h4></center>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -171,7 +203,51 @@
     @include('footer')
 </div>
 
-
+<div class="modal fade" id="inviteMembersModal" tabindex="-1" aria-labelledby="inviteMembersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 ps-4 bg-soft-success">
+                <h5 class="modal-title" id="inviteMembersModalLabel">Team Members</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{{ route('assignExecutive', $ticket->id) }}">
+            @csrf
+            @php
+            $assigned_executives = [];
+            foreach ($ticket->assigned_executives as $executive) {
+                array_push($assigned_executives, $executive->id);
+            };
+            @endphp
+            <div class="modal-body p-4">
+                <div class="mt-2">
+                    <div class="vstack gap-3">
+                        @foreach ($employees as $employee )
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-xs flex-shrink-0 me-3">
+                                <img src="{{ asset('images/avatar.png') }}" alt="" class="avatar-xs rounded-circle">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fs-13 mb-0"><a href="javascript:void(0);" class="text-body d-block">{{ $employee->name }}</a></h5>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <input type="checkbox" {{ (in_array($employee->id, $assigned_executives)) ? 'checked' : '' }} name="assigned_executives[]" value="{{ $employee->id }}" class="form-check-input me-2">
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <!-- end list -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success w-xs">Assign</button>
+            </div>
+            </form>
+        </div>
+        <!-- end modal-content -->
+    </div>
+    <!-- modal-dialog -->
+</div>
 
 
 @endsection

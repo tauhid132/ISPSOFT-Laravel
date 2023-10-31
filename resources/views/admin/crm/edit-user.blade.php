@@ -220,9 +220,9 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-2">
                                                     <div class="mb-3">
-                                                        <label for="intType1">Billing Cycle :</label>
+                                                        <label for="intType1">Billing Cycle</label>
                                                         <select class="custom-select form-control" name="billing_cycle" >
                                                             <option>Select One</option>
                                                             <option {{ $user->billing_cycle == 'Prepaid' ? 'selected' : '' }} value="Prepaid">Prepaid</option>
@@ -231,7 +231,7 @@
                                                     </div>
                                                 </div>
                                                 
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-2">
                                                     <div class="mb-3">
                                                         <label for="intType1">Expire Day</label>
                                                         <select class="custom-select form-control" name="expiry_day" >
@@ -240,6 +240,12 @@
                                                             <option {{ $user->expiry_day == $i ? 'selected' : '' }} value="{{ $i }}">{{ $i }}</option> 
                                                             @endfor
                                                         </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Expiry Date</label>
+                                                        <input type="date" class="form-control" name="expiry_date" value="{{ $user->expiry_date }}" >
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -298,11 +304,11 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Other Settings :</label>
-                                                        <div class="form-group mb-3">
+                                                        <div class="form-group mb-3 d-flex" style="justify-content: space-evenly;">
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="send_sms" {{ $user->send_sms == 1 ? 'checked' : '' }}>
                                                                 <label class="form-check-label" for="inlineCheckbox2">SMS Notification</label>
@@ -313,7 +319,7 @@
                                                             </div>
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="print_invoice" {{ $user->print_invoice == 1 ? 'checked' : '' }}>
-                                                                <label class="form-check-label" for="inlineCheckbox2">Generate Invoice</label>
+                                                                <label class="form-check-label" for="inlineCheckbox2">Auto Print Invoice</label>
                                                             </div>
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="auto_disconnect" {{ $user->auto_disconnect == 1 ? 'checked' : '' }}>
@@ -343,7 +349,7 @@
                         <div class="d-flex flex-wrap gap-2 justify-content-center">
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#billingHistoryModal"><i class="fa fa-dollar"></i> Billing</button>
                             <button type="button" class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#ticketsModal"><i class="fa fa-ticket"></i> Ticketing</button>
-                            <button type="button" class="btn btn-success waves-effect waves-light"><i class="fa fa-message"></i> SMS</button>
+                            <a href="{{ route('viewSingleSmsSender') }}?mobile={{ $user->mobile_no }}" class="btn btn-success waves-effect waves-light"><i class="fa fa-message"></i> SMS</a>
                             <button type="button" class="btn btn-warning waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#generateBill"><i class="fa fa-plus"></i> Generate Bill</button>
                             <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#shiftLeftModal"><i class="fa fa-arrows"></i> Shift To Left</button>
                             <button type="button" class="btn btn-dark waves-effect waves-light"><i class="fa fa-lock"></i> Change Password</button>

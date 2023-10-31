@@ -87,6 +87,7 @@
                                     <th>No</th>
                                     <th>Ticket-ID</th>
                                     <th>Status</th>
+                                    <th>Priority</th>
                                     <th>Action</th>
                                     <th>Username</th>
                                     <th>Ticket Type</th>
@@ -157,7 +158,17 @@
                                 <input type="text" name="added_by" id="added_by" value="{{ Auth::guard('admin')->user()->name }}" class="form-control" disabled />
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
+                            <div>
+                                <label for="first_name" class="form-label">Priority Level</label>
+                                <select class="custom-select form-control" name="priority" id="priority">
+                                    <option value="0">Low</option>
+                                    <option value="1">Medium</option>
+                                    <option value="2">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div>
                                 <label for="first_name" class="form-label">User Notification</label><br>
                                 <div class="form-check form-check-inline">
@@ -217,6 +228,7 @@
         {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": false, "searchable": false},
         {"data": "id"},
         {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
+        {"data" : 'priority', "name" : 'priority' , "orderable": false, "searchable": false},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
         {"data": "user_id"},
         {"data": "type.ticket_type_name"},
@@ -292,6 +304,7 @@
                 $('#ticket_description').val(data.ticket_description);
                 $('#username').val(data.user.username);
                 $('#customer_name').val(data.user.customer_name);
+                $('#priority').val(data.priority);
                 $.each(data.assigned_executives, function(key, value) { 
                     $('#assigned_executives').empty()  
                     $('#assigned_executives')

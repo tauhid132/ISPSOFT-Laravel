@@ -164,7 +164,7 @@
                                 <a href="{{ route('viewMikrotiks') }}" class="nav-link">Mikrotiks</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">API Users</a>
+                                <a href="{{ route('viewApiUsers') }}" class="nav-link">API Users</a>
                             </li>
                         </ul>
                     </div>

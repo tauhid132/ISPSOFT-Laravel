@@ -32,7 +32,7 @@ class AccountsController extends Controller
         $collected_service_charge =  OtherInvoice::where('month', $month)->where('year', $year)->sum('paid_amount');
         $user_total_collected_bill = $users_collected_monthly_bill + $users_collected_due_bill + $collected_service_charge;
 
-        $collected_bill_percentage = $users_total_generated_bill == 0 ? 0 : round(($user_total_collected_bill / $users_total_generated_bill) * 100,2);
+        $collected_bill_percentage = $users_total_generated_bill == 0 ? 0 : round(($users_collected_monthly_bill / $users_monthly_bill) * 100,2);
 
         $users_remaining_monthly_bill = $users_monthly_bill - $users_collected_monthly_bill;
         $users_remaining_due_bill = $users_due_bill - $users_collected_due_bill;

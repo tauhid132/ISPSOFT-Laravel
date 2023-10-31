@@ -39,6 +39,8 @@
   @include('admin.includes.navbar-accountant')
   @elseif (Auth::guard('admin')->user()->role == 'Support')
   @include('admin.includes.navbar-support')
+  @elseif (Auth::guard('admin')->user()->role == 'Sales-Marketing')
+  @include('admin.includes.navbar-sales-marketing')
   @endif
   @endif
   

@@ -7,6 +7,7 @@ use App\Models\Note;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Employee;
+use App\Models\SystemLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class AdminController extends Controller
         $new_users = User::whereBetween('installation_date', [$start_day, $end_day])->get();
         $left_users = DB::table('left_users')->whereBetween('created_at', [$start_day, $end_day])->get();
         
-        return view('admin.dashboards.admin-dashboard',[
+        return view('admin.dashboards.dashboard',[
             'total_users' => User::where('status', 1)->orWhere('status', 2)->count(),
             'active_users' => User::where('status', 1)->count(),
             'expired_users' => User::where('status', 2)->count(),
@@ -177,5 +178,12 @@ class AdminController extends Controller
     }
     public function deleteNote(Request $request){
         Note::find($request->id)->delete();
+    }
+    public function test(){
+        SystemLog::create([
+            'module' => 'Accounts',
+            'action_by' => '1',
+            'description' => "scheduler"
+        ]);
     }
 }
