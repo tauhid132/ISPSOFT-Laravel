@@ -125,18 +125,18 @@
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
-                                                        <label for="intType1">Customer Type :</label>
+                                                        <label for="intType1">Customer Type</label>
                                                         <select class="custom-select form-control" name="customer_type" disabled>
                                                             <option value="{{ null }}">Select One</option>
                                                             <option {{ $user->customer_type == 'Home' ? 'selected' : '' }} value="Home">Home</option>
+                                                            <option {{ $user->customer_type == 'SME' ? 'selected' : '' }} value="SME">SME</option>
                                                             <option {{ $user->customer_type == 'Dedicated' ? 'selected' : '' }} value="Dedicated">Dedicated</option>
-                                                            <option {{ $user->customer_type == 'Corporate' ? 'selected' : '' }} value="Corporate">Corporate</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
-                                                        <label for="intType1">Package :</label>
+                                                        <label for="intType1">Package</label>
                                                         <select class="custom-select form-control" name="package" disabled>
                                                             <option value="{{ null }}">Select One</option>
                                                             @foreach ($packages as $package )
@@ -148,7 +148,7 @@
                                                 
                                                 
                                                 <div class="col-lg-3">
-                                                    <label>Physical Connectivity :</label>
+                                                    <label>Physical Connectivity</label>
                                                     <div class="mb-3">
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio" id="ftth-checkbox" name="physical_connectivity_type" value="1" {{ $user->physical_connectivity_type == 1 ? 'checked' : '' }} disabled>
@@ -161,7 +161,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    <label for="intType1">Logical Connectivity :</label>
+                                                    <label for="intType1">Logical Connectivity</label>
                                                     <div class="mb-3">
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio" id="pppoe-checkbox" name="logical_connectivity_type" value="1" {{ $user->logical_connectivity_type == 1 ? 'checked' : '' }} disabled>
@@ -204,13 +204,23 @@
                                         
                                         <div class="step-tab-panel" id="tab3">
                                             <div class="row mt-2">
-                                                <div class="col-lg-6">
+                                                <div class="col-md-4">
+                                                    <div class="form-group mb-3">
+                                                        <label for="participants1">Account Status</label>
+                                                        <select class="custom-select form-control" name="status" disabled>
+                                                            <option {{ $user->status == 1 ? 'selected' : '' }} value="1">Active</option>
+                                                            <option {{ $user->status == 0 ? 'selected' : '' }} value="0">Inactive</option>
+                                                            <option {{ $user->status == 2 ? 'selected' : '' }} value="2">Expired</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
                                                     <div class="mb-3">
                                                         <label class="form-label">Monthly Bill</label>
                                                         <input type="text" value="0" class="form-control" name="monthly_bill" value="{{ $user->monthly_bill }}" disabled>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <div class="mb-3">
                                                         <label class="form-label">Current Due</label>
                                                         <input type="text" value="0" class="form-control" name="current_due" value="{{ $user->current_due }}" disabled >
@@ -259,16 +269,6 @@
                                             <div class="row mt-2">
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3">
-                                                        <label for="participants1">Account Status</label>
-                                                        <select class="custom-select form-control" name="status" disabled>
-                                                            <option {{ $user->status == 1 ? 'selected' : '' }} value="1">Active</option>
-                                                            <option {{ $user->status == 0 ? 'selected' : '' }} value="0">Inactive</option>
-                                                            <option {{ $user->status == 2 ? 'selected' : '' }} value="2">Expired</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group mb-3">
                                                         <label for="participants1">API Status</label>
                                                         <select class="custom-select form-control" id="participants1" name="api_status" disabled>
                                                             <option {{ $user->api_status == 0 ? 'selected' : '' }} value="0">Diabled</option>
@@ -276,31 +276,22 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mt-2">
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3">
                                                         <label for="participants1">API Server</label>
                                                         <select class="custom-select form-control" id="participants1" name="api_server" disabled>
                                                             <option value="{{ null }}">None</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group mb-3">
-                                                        <label for="participants1">API Package</label>
-                                                        <select class="custom-select form-control" name="statusss">
-                                                            <option value="1">Enabled</option>
-                                                            <option value="0">Diabled</option>
+                                                            @foreach ($mikrotiks as $mikrotik)
+                                                                <option {{ $user->api_server == $mikrotik->id ? 'selected' : '' }} value="{{ $mikrotik->id }}">{{ $mikrotik->name }} ({{ $mikrotik->host }})</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row mt-4">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Other Settings :</label>
-                                                        <div class="form-group mb-3">
+                                                        <div class="form-group mb-3 d-flex" style="justify-content: space-evenly;">
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="send_sms" {{ $user->send_sms == 1 ? 'checked' : '' }} disabled>
                                                                 <label class="form-check-label" for="inlineCheckbox2">SMS Notification</label>

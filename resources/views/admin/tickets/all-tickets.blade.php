@@ -253,9 +253,11 @@
             success:function(data, statusCode){
                 if(data.status == 1){
                     $('#customer_name').val(data.user.customer_name);
+                    $('#username').val(data.user.username);
                 }else{
                     toastr["error"]("User Not Found!")
                     $('#customer_name').val("");
+                    $('#username').val("");
                 }
                 $('.get_user_data').html('<i class="fa fa-refresh"></i> Fetch');
             }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Models\Employee;
+use App\Models\TicketComment;
 use App\Models\TicketType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -147,6 +148,20 @@ class TicketController extends Controller
     public function assignExecutive(Request $request, $id){
         $ticket = Ticket::find($id);
         $ticket->assigned_executives()->sync($request->assigned_executives);
+        return back();
+    }
+
+    public function addCommentTicket(Request $request, $ticket_id){
+        $ticket = Ticket::find($ticket_id);
+        TicketComment::create([
+            'ticket_id' => $ticket_id,
+            'comment' => $request->comment,
+            'comment_by' => Auth::guard('admin')->user()->id,
+        ]);
+        return back();
+    }
+    public function deleteCommentTicket($ticket_id, $comment_id){
+        TicketComment::find($comment_id)->delete();
         return back();
     }
 }

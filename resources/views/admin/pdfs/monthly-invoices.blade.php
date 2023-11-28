@@ -52,14 +52,7 @@ function numberToWord($num = '')
     }
     
     @endphp
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Invoice</title>
-    </head>
+
     <style>
         table {
             border-collapse: collapse;
@@ -88,104 +81,92 @@ function numberToWord($num = '')
             color: #000;
             width: 200px
         }
-        div.page_break + div.page_break{
+        .page_break{
             page-break-before: always;
         }
         
     </style>
-    <body>
         @foreach ($bills as $bill )
-        
-        
-        <div class="container">
-            
-            
-            <div class="header">
-                <center><h2>INVOICE</h2></center>
-            </div>
-            <div style="margin-top:50px">
-                <table style="margin: 0 0px 0 20px; width:47%; float:right">
-                    <tr>
-                        <td><b>Invoice No</b></td>
-                        <td>INV-{{ $bill->user->username }}-{{ date('F') }}{{ date('Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Invoice Date</b></td>
-                        <td>{{ date('d-m-Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Billing Month</b></td>
-                        <td>{{ date('F-Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Billing Cycle</b></td>
-                        <td>Prepaid</td>
-                    </tr>
-                </table>
-                <table style="margin: 0 20px 0 0px; width:47%;">
-                    <tr>
-                        <td><b>Customer Name</b></td>
-                        <td>{{ $bill->user->customer_name }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Username</b></td>
-                        <td>{{ $bill->user->username }}</td>
-                    </tr>
-                    <tr>
-                        <td ><b>Address</b></td>
-                        <td>{{ $bill->user->connection_address }}</td>
-                    </tr>
-                </table>
-            </div>
-            <div style="margin-top:100px">
-                <table style="width: 100%;">
-                    <tr>
-                        <td><b>No</b></td>
-                        <td><b>Particulars</b></td>
-                        <td><b>Amount (BDT)</b></td>
-                        <td><b>Vat(5%)</b></td>
-                        <td><b>Total (BDT)</b></td>
-                    </tr>
-                    <tr class="item">
-                        <td>1</td>
-                        <td>Monthly Internet Bill</td>
-                        <td>{{ $bill->monthly_bill }}</td>
-                        <td>Nill</td>
-                        <td>{{ $bill->monthly_bill }}</td>
-                    </tr>
-                    @if ($bill->due_bill != 0)
-                    <tr class="item">
-                        <td>2</td>
-                        <td>Due Bill</td>
-                        <td>{{ $bill->due_bill }}</td>
-                        <td>Nill</td>
-                        <td>{{ $bill->due_bill }}</td>
-                    </tr>
-                    @endif
-                    <tr>
-                        <td colspan="4"><span style="float:right"><b>Total Payable Amount</b></span></td>
-                        <td>{{ $bill->monthly_bill + $bill->due_bill }}</td>
-                    </tr>
-                    
-                </table>
-            </div>
-            <div style="margin-top: 50px">
-                <b>In Words:</b> {{ numberToWord($bill->monthly_bill + $bill->due_bill) }} Taka Only.
-            </div>
-            <div style="margin-top: 200px; width:30%">
-                <div class="line"><hr></div>
-                <center>
-                    <div>
-                        Signature 
-                        <br>
-                        Accounts Department
-                    </div>
-                </center>
-            </div>
-            
+        <div class="header">
+            <center><h2>INVOICE</h2></center>
         </div>
-        <div class="page_break"></div>
+        <div style="margin-top:50px">
+            <table style="margin: 0 0px 0 20px; width:47%; float:right">
+                <tr>
+                    <td><b>Invoice No</b></td>
+                    <td>INV-{{ $bill->user->username }}-{{ date('F') }}{{ date('Y') }}</td>
+                </tr>
+                <tr>
+                    <td><b>Invoice Date</b></td>
+                    <td>{{ date('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <td><b>Billing Month</b></td>
+                    <td>{{ date('F-Y') }}</td>
+                </tr>
+                <tr>
+                    <td><b>Billing Cycle</b></td>
+                    <td>Prepaid</td>
+                </tr>
+            </table>
+            <table style="margin: 0 20px 0 0px; width:47%;">
+                <tr>
+                    <td><b>Customer Name</b></td>
+                    <td>{{ $bill->user->customer_name }}</td>
+                </tr>
+                <tr>
+                    <td><b>Username</b></td>
+                    <td>{{ $bill->user->username }}</td>
+                </tr>
+                <tr>
+                    <td ><b>Address</b></td>
+                    <td>{{ $bill->user->connection_address }}</td>
+                </tr>
+            </table>
+        </div>
+        <div style="margin-top:100px">
+            <table style="width: 100%;">
+                <tr>
+                    <td><b>No</b></td>
+                    <td><b>Particulars</b></td>
+                    <td><b>Amount (BDT)</b></td>
+                    <td><b>Vat(5%)</b></td>
+                    <td><b>Total (BDT)</b></td>
+                </tr>
+                <tr class="item">
+                    <td>1</td>
+                    <td>Monthly Internet Bill</td>
+                    <td>{{ $bill->monthly_bill }}</td>
+                    <td>Nill</td>
+                    <td>{{ $bill->monthly_bill }}</td>
+                </tr>
+                @if ($bill->due_bill != 0)
+                <tr class="item">
+                    <td>2</td>
+                    <td>Due Bill</td>
+                    <td>{{ $bill->due_bill }}</td>
+                    <td>Nill</td>
+                    <td>{{ $bill->due_bill }}</td>
+                </tr>
+                @endif
+                <tr>
+                    <td colspan="4"><span style="float:right"><b>Total Payable Amount</b></span></td>
+                    <td>{{ $bill->monthly_bill + $bill->due_bill }}</td>
+                </tr>
+                
+            </table>
+        </div>
+        <div style="margin-top: 50px">
+            <b>In Words:</b> {{ numberToWord($bill->monthly_bill + $bill->due_bill) }} Taka Only.
+        </div>
+        <div style="margin-top: 200px; width:30%">
+            <div class="line"><hr></div>
+            <center>
+                <div>
+                    Signature 
+                    <br>
+                    Accounts Department
+                </div>
+            </center>
+        </div><div class="page_break"></div>
         @endforeach
-        
-    </body>
-    </html>

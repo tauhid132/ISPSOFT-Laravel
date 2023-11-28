@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Package;
 use App\Models\Employee;
 use App\Models\LeftUser;
+use App\Models\Mikrotik;
 use App\Models\MonthlyBill;
 use App\Models\ServiceArea;
 use Illuminate\Http\Request;
@@ -78,12 +79,12 @@ class UserController extends Controller
         return view('admin.crm.add-new-user',[
             'service_areas' => ServiceArea::all(),
             'packages' => Package::all(),
-            'employees' => Employee::all()
+            'employees' => Employee::all(),
+            'mikrotiks' => Mikrotik::all()
         ]);
     }
     
     public function addNewUser(Request $request){
-        
         User::create([
             'username' => $request->username,
             'customer_name' => $request->customer_name,
@@ -118,6 +119,7 @@ class UserController extends Controller
             'auto_disconnect' => $request->auto_disconnect ? 1 : 0,
             // 'password' => $request->user_id,
         ]);
+        return redirect()->route('viewUsersPage');
     }
 
     public function viewEditUser($id){
@@ -126,7 +128,8 @@ class UserController extends Controller
             'service_areas' => ServiceArea::all(),
             'packages' => Package::all(),
             'employees' => Employee::all(),
-            'user' => $user
+            'user' => $user,
+            'mikrotiks' => Mikrotik::all()
         ]);
     }
     public function editUserAction(Request $request, $id){
@@ -173,7 +176,8 @@ class UserController extends Controller
             'service_areas' => ServiceArea::all(),
             'packages' => Package::all(),
             'employees' => Employee::all(),
-            'user' => User::find($id)
+            'user' => User::find($id),
+            'mikrotiks' => Mikrotik::all()
         ]);
     }
     public function viewLeftUsers(){

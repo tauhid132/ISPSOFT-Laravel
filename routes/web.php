@@ -67,6 +67,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('tickets/track-ticket/{id}/start-processing',[App\Http\Controllers\TicketController::class, 'startProcessingTicket'])->name('startProcessingTicket');
         Route::get('tickets/track-ticket/{id}/close-ticket',[App\Http\Controllers\TicketController::class, 'closeTicket'])->name('closeTicket');
         Route::post('tickets/track-ticket/{id}/assign-executives',[App\Http\Controllers\TicketController::class, 'assignExecutive'])->name('assignExecutive');
+        Route::post('tickets/track-ticket/{ticket_id}/add-comment',[App\Http\Controllers\TicketController::class, 'addCommentTicket'])->name('addCommentTicket');
+        Route::get('tickets/track-ticket/{ticket_id}/delete-comment/{comment_id}',[App\Http\Controllers\TicketController::class, 'deleteCommentTicket'])->name('deleteCommentTicket');
     });
 
 

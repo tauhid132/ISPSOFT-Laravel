@@ -59,8 +59,8 @@
                                         <div class="col-sm-4">
                                             <div>
                                                 <select class="form-control" onchange="onStatusChange(this)">
-                                                    <option value="" selected>All Status</option>
-                                                    <option value="1">Active</option>
+                                                    <option value="">All Status</option>
+                                                    <option value="1" selected>Active</option>
                                                     <option value="0">Inactive</option>
                                                     <option value="2">Expired</option>
                                                 </select>
@@ -116,7 +116,7 @@
     });
 </script>
 <script>
-    let selectedStatus = '';
+    let selectedStatus = '1';
     let selectedArea = '';
     let search_keyword = '';
     

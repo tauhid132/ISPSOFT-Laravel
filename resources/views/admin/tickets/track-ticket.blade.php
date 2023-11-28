@@ -37,7 +37,7 @@
                                             <input type="text" class="form-control" name="joining_date" value="{{ $ticket->id }}" disabled>
                                         </div>
                                     </div>
-                                    @if($ticket->username != null)
+                                    @if($ticket->user_id != null)
                                     <div class="col-lg-2">
                                         <div class="mb-3">
                                             <label>Username</label>
@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                     @endif
-                                    <div class="{{ $ticket->username != null ? 'col-lg-4' : 'col-lg-10' }}">
+                                    <div class="{{ $ticket->user_id != null ? 'col-lg-4' : 'col-lg-10' }}">
                                         <div class="mb-3">
                                             <label>Ticket Type</label>
                                             <input type="text" class="form-control" name="joining_date" value="{{ $ticket->type->ticket_type_name }}" disabled>
@@ -78,6 +78,50 @@
                                     <a href="{{ route('startProcessingTicket', $ticket->id) }}" class="btn btn-warning"><i class="fa fa-spinner"></i> Start Processing</a>
                                     <a href="{{ route('closeTicket', $ticket->id) }}" class="btn btn-success"><i class="fa fa-check"></i> Close Ticket</a>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Comments</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="px-3 mx-n3 mb-2">
+                                    @forelse ($ticket->comments as $comment)
+                                    <div class="d-flex mb-4">
+                                        <div class="flex-shrink-0">
+                                            <img src="{{ asset('images/avatar.png') }}" alt="" class="avatar-xs rounded-circle" />
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h5 class="fs-13"><a href="#">{{ $comment->commentor->name }}</a> <small class="text-muted">{{ \Carbon\Carbon::parse($comment->created_at)->format('l, j F, Y h:i A') }}</small></h5>
+                                            <p class="text-muted">{{ $comment->comment }}</p>
+                                        </div>
+                                        <div class="text-end">
+                                            <a href="{{ route('deleteCommentTicket', ['ticket_id'=>$ticket->id, 'comment_id' => $comment->id]) }}"><i class="fa fa-trash text-danger p-2"></i></a>
+                                            <i class="fa fa-edit text-primary p-2"></i>
+                                        </div>
+                                    </div>
+                                    @empty
+                                        <center><h4>No Comments!</h4></center>
+                                    @endforelse
+                                 
+                                    
+                                    
+                                </div>
+                                <form class="mt-4" method="post" action="{{ route('addCommentTicket', $ticket->id) }}">
+                                    @csrf
+                                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                                    <div class="row g-3">
+                                        <div class="col-lg-12">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Leave a Comments</label>
+                                            <textarea class="form-control bg-light border-light" id="exampleFormControlTextarea1" rows="3" name="comment" placeholder="Enter comments"></textarea>
+                                        </div>
+                                        <div class="col-12 text-end">
+                                            <button type="button" class="btn btn-ghost-secondary btn-icon waves-effect me-1"><i class="ri-attachment-line fs-16"></i></button>
+                                            <button type="submit" class="btn btn-success">Post Comments</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                
                             </div>
                         </div>
                     </div>
@@ -191,7 +235,7 @@
                                     </div>
                                 </li> 
                                 @empty
-                                    <center><h4 class="p-2">No Members Assigned!</h4></center>
+                                <center><h4 class="p-2">No Members Assigned!</h4></center>
                                 @endforelse
                             </ul>
                         </div>
@@ -211,37 +255,37 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="{{ route('assignExecutive', $ticket->id) }}">
-            @csrf
-            @php
-            $assigned_executives = [];
-            foreach ($ticket->assigned_executives as $executive) {
-                array_push($assigned_executives, $executive->id);
-            };
-            @endphp
-            <div class="modal-body p-4">
-                <div class="mt-2">
-                    <div class="vstack gap-3">
-                        @foreach ($employees as $employee )
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-xs flex-shrink-0 me-3">
-                                <img src="{{ asset('images/avatar.png') }}" alt="" class="avatar-xs rounded-circle">
+                @csrf
+                @php
+                $assigned_executives = [];
+                foreach ($ticket->assigned_executives as $executive) {
+                    array_push($assigned_executives, $executive->id);
+                };
+                @endphp
+                <div class="modal-body p-4">
+                    <div class="mt-2">
+                        <div class="vstack gap-3">
+                            @foreach ($employees as $employee )
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-xs flex-shrink-0 me-3">
+                                    <img src="{{ asset('images/avatar.png') }}" alt="" class="avatar-xs rounded-circle">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5 class="fs-13 mb-0"><a href="javascript:void(0);" class="text-body d-block">{{ $employee->name }}</a></h5>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <input type="checkbox" {{ (in_array($employee->id, $assigned_executives)) ? 'checked' : '' }} name="assigned_executives[]" value="{{ $employee->id }}" class="form-check-input me-2">
+                                </div>
                             </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-13 mb-0"><a href="javascript:void(0);" class="text-body d-block">{{ $employee->name }}</a></h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <input type="checkbox" {{ (in_array($employee->id, $assigned_executives)) ? 'checked' : '' }} name="assigned_executives[]" value="{{ $employee->id }}" class="form-check-input me-2">
-                            </div>
+                            @endforeach
                         </div>
-                        @endforeach
+                        <!-- end list -->
                     </div>
-                    <!-- end list -->
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-success w-xs">Assign</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success w-xs">Assign</button>
+                </div>
             </form>
         </div>
         <!-- end modal-content -->
