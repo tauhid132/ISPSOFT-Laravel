@@ -223,9 +223,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('api-users',[App\Http\Controllers\MikrotikController::class, 'viewApiUsers'])->name('viewApiUsers');
         Route::get('api-users/get-api-users',[App\Http\Controllers\MikrotikController::class, 'getApiUsers'])->name('getApiUsers');
         Route::post('api-users/block-user',[App\Http\Controllers\MikrotikController::class, 'blockUser'])->name('blockUser');
+        Route::post('api-users/unblock-user',[App\Http\Controllers\MikrotikController::class, 'unblockUser'])->name('unblockUser');
        
 
-        Route::get('connect',[App\Http\Controllers\MikrotikController::class, 'connect']);
+        Route::get('connect',[App\Http\Controllers\MikrotikController::class, 'autoExpireUsers']);
+        Route::get('users',[App\Http\Controllers\MikrotikController::class, 'users']);
         
         
     });

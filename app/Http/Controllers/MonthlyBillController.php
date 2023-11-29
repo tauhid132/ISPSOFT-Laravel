@@ -130,8 +130,10 @@ class MonthlyBillController extends Controller
             
         ]);
         $current_due = ($bill->monthly_bill + $bill->due_bill) - ($bill->paid_monthly_bill + $bill->paid_due_bill);
+        $new_expiry_date = date('Y-m').'-'.$bill->user->expiry_day;
         $bill->user()->update([
-            'current_due' => $current_due
+            'current_due' => $current_due,
+            'expiry_date' => $new_expiry_date
         ]);
         $username = $bill->user->username;
         SystemLog::create([

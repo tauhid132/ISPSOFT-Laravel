@@ -80,10 +80,10 @@ class BkashTokenizePaymentController extends Controller
                 //return BkashPaymentTokenize::success('Thank you for your payment', $response['trxID']);
             }
             //return BkashPaymentTokenize::failure($response['statusMessage']);
-            return redirect()->route('viewQuickPay')->with('error', 'Bkash Payment Failed!');
+            return redirect()->route('viewQuickPay')->with('success', 'Bkash Payment Sucessful!');
         }else if ($request->status == 'cancel'){
             //return BkashPaymentTokenize::cancel('Your payment is canceled');
-            return redirect()->route('viewQuickPay')->with('error', 'Bkash Payment Failed!');
+            return redirect()->route('viewQuickPay')->with('error', 'Bkash Payment Cancelled!');
         }else{
             //return BkashPaymentTokenize::failure('Your transaction is failed');
             return redirect()->route('viewQuickPay')->with('error', 'Bkash Payment Failed!');

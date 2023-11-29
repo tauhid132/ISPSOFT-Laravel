@@ -44,6 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'current_due',
         'billing_cycle',
         'expiry_day',
+        'expiry_date',
         'reference',
         'status',
         'api_status',
@@ -86,7 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function package(){
         return $this->belongsTo(Package::class,'package_id','id');
     }
-    public function api_server(){
+    public function server(){
         return $this->belongsTo(Mikrotik::class,'api_server','id');
     }
 

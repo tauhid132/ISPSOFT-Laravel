@@ -21,7 +21,7 @@ class SettingsController extends Controller
         ]);
     }
     public function generateMonthlyBillInvoices(){
-        $active_users = User::where('status',1)->get();
+        $active_users = User::where('status',1)->orWhere('status', 2)->get();
         foreach($active_users as $user){
             MonthlyBill::create([
                 'user_id' => $user->id,
@@ -30,8 +30,10 @@ class SettingsController extends Controller
                 'billing_month' => date('F'),
                 'billing_year' => date('Y')
             ]);
+            $new_expiry_date = date('Y-m').'-'.$user->expiry_day;
             $user->update([
                 'current_due' => $user->monthly_bill + $user->current_due,
+                'expiry_date' => $new_expiry_date
             ]);
         }
         PaymentGatewayWithdraw::create([

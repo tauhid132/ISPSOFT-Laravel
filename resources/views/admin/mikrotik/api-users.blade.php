@@ -20,9 +20,7 @@
             </div>
             
             <div class="col-lg-12">
-                <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
-                    <a href="#" id="add-new-mikrotik" data-bs-toggle="modal" data-bs-target="#addEditMikrotikModal"><button type="button" class="btn btn-success"><i class="fa fa-plus me-1"></i> Add New Mikrotik</button></a>
-                </div>
+               
                 @foreach ($errors->all() as $error)
                 <div class="alert alert-danger text-start alert-dismissible fade show mb-4 mx-2" role="alert">
                     <i class="ri-error-warning-line me-1 align-middle fs-16"></i>
@@ -53,6 +51,7 @@
                                     <th>Username</th>
                                     <th>Customer Name</th>
                                     <th>Account Status</th>
+                                    <th>Validity</th>
                                     <th>Server</th>
                                     <th>Uptime</th>
                                     <th>Status</th>
@@ -143,7 +142,8 @@
         {"data": "username"},
         {"data": "customer_name"},
         {"data" : 'account_status', "name" : 'status' , "orderable": false, "searchable": false},
-        {"data": "api_server.name"},
+        {"data" : 'validity', "name" : 'status' , "orderable": false, "searchable": false},
+        {"data": "server.name"},
         {"data": "uptime"},
         {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
@@ -226,6 +226,29 @@
             }
         })
     });
+    $(document).on('click', '.unblock_user', function(){
+        var id = $(this).attr("id");
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{ route('unblockUser') }}",
+                    method:"POST",
+                    data:{id:id},
+                    success:function(data){
+                        toastr["success"]("Unblocked Successfully")
+                        dataTable.ajax.reload();
+                    }
+                })
+            }
+        })
+    });
     $(document).on('click', '.delete_mikrotik', function(){
         var id = $(this).attr("id");
         Swal.fire({
@@ -248,6 +271,11 @@
                 })
             }
         })
+    });
+
+    $(document).on('click', '.change_expiry_date', function(){
+        var id = $(this).attr("id");
+        alert(id)
     });
     
     

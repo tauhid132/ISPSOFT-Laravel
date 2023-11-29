@@ -158,6 +158,7 @@ class UserController extends Controller
             'current_due' => $request->current_due,
             'billing_cycle' => $request->billing_cycle,
             'expiry_day' => $request->expiry_day,
+            'expiry_date' => $request->expiry_date,
             'reference' => $request->reference,
             'status' => $request->status,
             'api_status' => $request->api_status,
