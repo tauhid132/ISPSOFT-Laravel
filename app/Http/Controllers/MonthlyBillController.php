@@ -81,6 +81,7 @@ class MonthlyBillController extends Controller
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-envelope text-warning send_reminder_sms m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Reminder SMS"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-history text-info view_bill_history m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View Bill History"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-comment text-primary add_comment m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Comment"></i></a>';
+            $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-calendar text-info change_expiry_date m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Comment"></i></a>';
             $btn = $btn.'<a href="#"><i class="fa fa-link text-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Invoice"></i></a>';
             return $btn;
         })
@@ -130,8 +131,14 @@ class MonthlyBillController extends Controller
             
         ]);
         $current_due = ($bill->monthly_bill + $bill->due_bill) - ($bill->paid_monthly_bill + $bill->paid_due_bill);
-        $new_expiry_date = date('Y-m').'-'.$bill->user->expiry_day;
+
+        //Check if the user is expired
+        if($bill->user->status == 2){
+            MikrotikController::autoUnblockuser($bill->user->id);
+        }
+        $new_expiry_date = date('Y').'-'.(date('m')+1).'-'.$bill->user->expiry_day;
         $bill->user()->update([
+            'status' => 1,
             'current_due' => $current_due,
             'expiry_date' => $new_expiry_date
         ]);
@@ -183,6 +190,13 @@ class MonthlyBillController extends Controller
             'module' => 'Accounts',
             'action_by' => Auth::guard('admin')->user()->id,
             'description' => "Monthly Bill Invoice No: $request->id Deleted."
+        ]);
+    }
+
+    public function changeExpiryDate(Request $request){
+        $user = User::find($request->user_id);
+        $user->update([
+            'expiry_date' => $request->expiry_date
         ]);
     }
         

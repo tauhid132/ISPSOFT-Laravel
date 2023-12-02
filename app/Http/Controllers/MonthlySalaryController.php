@@ -63,7 +63,7 @@ class MonthlySalaryController extends Controller
             'payment_date' => $request->payment_date,
             'payment_by_id' => $request->payment_by,
         ]);
-        $new_pre_advance = ($salary->monthly_salary + $salary->pre_advance + $salary->commission - $salary->meal);
+        $new_pre_advance = ($salary->monthly_salary + $salary->pre_advance + $salary->commission - $salary->meal) - $request->paid_salary;
         $salary->employee()->update([
             'current_balance' => $new_pre_advance
         ]);

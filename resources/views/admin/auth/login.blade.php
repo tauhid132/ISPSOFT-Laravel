@@ -19,7 +19,7 @@
                             <div class="p-2 mt-3 mb-4">
                                 <div class="mb-4">
                                     <center>
-                                        <h2 class="text-primary ">LOGIN</h2>
+                                        <h3 class="text-primary ">LOGIN</h2>
                                         <p class="mt-0 fs-14">Enter username and password to login!</p>
                                     </center>
                                 </div>

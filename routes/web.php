@@ -82,6 +82,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('send-reminder-sms-single',[App\Http\Controllers\MonthlyBillController::class, 'sendSingleReminderSms'])->name('sendSingleReminderSms');
         Route::post('fetch-bill-history-single',[App\Http\Controllers\MonthlyBillController::class, 'fetchBillHistorySingle'])->name('fetchBillHistorySingle');
         Route::post('add-comment',[App\Http\Controllers\MonthlyBillController::class, 'addComment'])->name('addComment');
+        Route::post('change-expiry-date',[App\Http\Controllers\MonthlyBillController::class, 'changeExpiryDate'])->name('changeExpiryDate');
         Route::post('delete-bill-single',[App\Http\Controllers\MonthlyBillController::class, 'deleteBillSingle'])->name('deleteBillSingle');
         
         Route::get('monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'viewMonthlyExpenses'])->name('viewMonthlyExpenses');

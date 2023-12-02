@@ -341,6 +341,36 @@
     </div>
 </div>
 
+<div class="modal fade zoomIn" id="changeExpiryDateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-soft-info">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar"></i> Change Expiry Date</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form id="change_expiry_date_form">
+                <input type="hidden" name="user_id" id="id4">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="first_name" class="form-label">Expiry Date</label>
+                                <input type="date" name="expiry_date" placeholder="dd-mm-yyyy" id="expiry_date" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" id="edit-btn">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade zoomIn" id="billingSheetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -605,6 +635,43 @@
             success:function(data){  
                 $('#add_comment_form')[0].reset();  
                 $('#addCommentModal').modal('hide');  
+                dataTable.ajax.reload();
+                toastr["success"]("Updated Successfully")
+            },
+            error: function(xhr, status, error) 
+            {
+                $.each(xhr.responseJSON.errors, function (key, item) 
+                {
+                    toastr["error"](item)
+                });
+            } 
+        });  
+    }); 
+    $(document).on('click', '.change_expiry_date', function(){
+        var id = $(this).attr("id");  
+        $.ajax({  
+            url:"{{ route('fetchSingleBill') }}",  
+            method:"post",  
+            data:{id:id},  
+            success:function(data){ 
+                $('#id4').val(data.user.id);
+                $('#expiry_date').val(data.user.expiry_date);
+                $('#changeExpiryDateModal').modal("show");  
+            }  
+        });  
+    }); 
+    $('#change_expiry_date_form').on("submit", function(event){  
+        event.preventDefault();  
+        $.ajax({  
+            url:"{{ route('changeExpiryDate') }}",  
+            method:"POST",  
+            data:$('#change_expiry_date_form').serialize(),  
+            beforeSend:function(){  
+                $('#edit-btn').val("Updating");  
+            },  
+            success:function(data){  
+                $('#change_expiry_date_form')[0].reset();  
+                $('#changeExpiryDateModal').modal('hide');  
                 dataTable.ajax.reload();
                 toastr["success"]("Updated Successfully")
             },

@@ -149,7 +149,7 @@ class MikrotikController extends Controller
             $now = Carbon::now();
             
             $diff = $now->diffInDays($expiry_date);
-            if($now->lt($expiry_date)){
+            if($now->gt($expiry_date)){
                 return '<i class="fa fa-edit me-1 text-success change_expiry_date" id="'.$row->id.'"></i>Expired '.$diff.' days back';
             }else{
                 return '<i class="fa fa-edit me-1 text-success change_expiry_date" id="'.$row->id.'"></i>Expires in '.$diff.' days';
@@ -198,6 +198,17 @@ class MikrotikController extends Controller
                 break;
             }
         }
+        
+        $query2 = (new Query('/ppp/active/print'));
+        $active_connections = $client->query($query2)->read();
+        for($i=0; $i<sizeof($active_connections); $i++){
+            if($active_connections[$i]['name'] == Str::lower($user->username)){
+                $query = (new Query('/ppp/active/remove'));
+                $query->equal('.id', $i);
+                $client->query($query)->read();
+                break;
+            }
+        }
         $user->update([
             'status' => 2
         ]);
@@ -232,78 +243,104 @@ class MikrotikController extends Controller
             'status' => 1
         ]);
     }
+    public static function autoUnblockuser($user_id){
+        $user = User::find($user_id);
+        if($user->api_status){
+            $mikrotik = Mikrotik::find($user->api_server);
+            $client = new Client([
+                'host' => $mikrotik->host,
+                'user' => $mikrotik->username,
+                'pass' => $mikrotik->password
+            ]);
+            $query = (new Query('/ppp/secret/print'));
+            $ppp_secrets = $client->query($query)->read();
+            for($i=0; $i<sizeof($ppp_secrets); $i++){
+                if($ppp_secrets[$i]['name'] == Str::lower($user->username)){
+                    $query = (new Query('/ppp/secret/set'));
+                    $query->equal('comment','');
+                    $query->equal('disabled','no');
+                    $query->equal('.id', $i);
+                    $client->query($query)->read();
+                    break;
+                }
+            }
+            return;
+        }else{
+            return;
+        }
+        
+    }
     
     public function autoExpireUsers(){
-        // $today = Carbon::today()->toDateString();
-        // //Get Unpaid and API Enabled Users
-        // $year = request('year',date('Y'));
-        // $month = request('month',date('F'));
-        // $unpaid_invoices = MonthlyBill::with('user')->whereHas('user', function($query2) use($today){
-            //     $query2->where('api_status',1)->where('expiry_date','<=', $today);
-            // })->where('billing_year', $year)
-            // ->where('billing_month',$month)->where('paid_monthly_bill', 0)->get();
+        $today = Carbon::today()->toDateString();
+        //Get Unpaid and API Enabled Users
+        $year = request('year',date('Y'));
+        $month = request('month',date('F'));
+        $unpaid_invoices = MonthlyBill::with('user')->whereHas('user', function($query2) use($today){
+            $query2->where('api_status',1)->where('expiry_date','<=', $today);
+        })->where('billing_year', $year)
+        ->where('billing_month',$month)->where('paid_monthly_bill', 0)->get();
+        
+        dd($unpaid_invoices);
+        //Get Mikrotik Info
+        $mikrotiks = Mikrotik::all();
+        foreach($mikrotiks as $mikrotik){
+            try{
+                $client = new Client([
+                    'host' => $mikrotik->host,
+                    'user' => $mikrotik->username,
+                    'pass' => $mikrotik->password
+                ]);
+                $clients[$mikrotik->name] = $client;
+            }catch(BadCredentialsException $exp){
+                dd('WrongPassword');
+            }catch(ConnectException $exp){
+                dd('Connection Error');
+            }
+            $query = (new Query('/ppp/secret/print'));
             
-            // dd($unpaid_invoices);
-            // //Get Mikrotik Info
-            // $mikrotiks = Mikrotik::all();
-            // foreach($mikrotiks as $mikrotik){
-                //     try{
-                    //         $client = new Client([
-                        //             'host' => $mikrotik->host,
-                        //             'user' => $mikrotik->username,
-                        //             'pass' => $mikrotik->password
-                        //         ]);
-                        //         $clients[$mikrotik->name] = $client;
-                        //     }catch(BadCredentialsException $exp){
-                            //         dd('WrongPassword');
-                            //     }catch(ConnectException $exp){
-                                //         dd('Connection Error');
-                                //     }
-                                //     $query = (new Query('/ppp/secret/print'));
-                                
-                                //     $api_users[$mikrotik->name] = $client->query($query)->read();
-                                
-                                //     $query2 = (new Query('/ppp/active/print'));
-                                //     $active_connections[$mikrotik->name] = $client->query($query2)->read();
-                                // }
-                                
-                                // //Disable User
-                                // foreach($unpaid_invoices as $unpaid){
-                                    //     for($i=0; $i<sizeof($api_users[$unpaid->user->server->name]); $i++){
-                                        //         if($api_users[$unpaid->user->server->name][$i]['name'] == Str::lower($unpaid->user->username)){
-                                            //             $query = (new Query('/ppp/secret/set'));
-                                            //             $query->equal('comment','Disabled By API');
-                                            //             $query->equal('disabled','yes');
-                                            //             $query->equal('.id', $i);
-                                            //             $client = $clients[$unpaid->user->server->name];
-                                            //             $client->query($query)->read();
-                                            //             break;
-                                            //         }
-                                            //     }
-                                            //     //Remove From Active Connections
-                                            //     for($i=0; $i<sizeof($active_connections[$unpaid->user->server->name]); $i++){
-                                                //         if($active_connections[$unpaid->user->server->name][$i]['name'] == Str::lower($unpaid->user->username)){
-                                                    //             $query = (new Query('/ppp/active/remove'));
-                                                    //             $query->equal('.id', $i);
-                                                    //             $client = $clients[$unpaid->user->server->name];
-                                                    //             $client->query($query)->read();
-                                                    //             break;
-                                                    //         }
-                                                    //     }
-                                                    //     //Profile Expire
-                                                    //     $unpaid->user->update([
-                                                        //         'status' => 2
-                                                        //     ]);
-                                                        //     //Send Notification
-                                                        //     $response = AdnSms::to('01304779899')
-                                                        //         ->message("Dear user, Please pay your Internet Bill. bKash Payment: 01304779899.ATS Technology ")
-                                                        //         ->queue();
-                                                        // }
-                                                        
-                                                        // dd($today);
-                                                        dispatch(new ExpireUnpaidUsers);
-                                                    }
-                                                    
-                                                    
-                                                }
-                                                
+            $api_users[$mikrotik->name] = $client->query($query)->read();
+            
+            $query2 = (new Query('/ppp/active/print'));
+            $active_connections[$mikrotik->name] = $client->query($query2)->read();
+        }
+        
+        //Disable User
+        foreach($unpaid_invoices as $unpaid){
+            for($i=0; $i<sizeof($api_users[$unpaid->user->server->name]); $i++){
+                if($api_users[$unpaid->user->server->name][$i]['name'] == Str::lower($unpaid->user->username)){
+                    $query = (new Query('/ppp/secret/set'));
+                    $query->equal('comment','Disabled By API');
+                    $query->equal('disabled','yes');
+                    $query->equal('.id', $i);
+                    $client = $clients[$unpaid->user->server->name];
+                    $client->query($query)->read();
+                    break;
+                }
+            }
+            //Remove From Active Connections
+            for($i=0; $i<sizeof($active_connections[$unpaid->user->server->name]); $i++){
+                if($active_connections[$unpaid->user->server->name][$i]['name'] == Str::lower($unpaid->user->username)){
+                    $query = (new Query('/ppp/active/remove'));
+                    $query->equal('.id', $i);
+                    $client = $clients[$unpaid->user->server->name];
+                    $client->query($query)->read();
+                    break;
+                }
+            }
+            //Profile Expire
+            $unpaid->user->update([
+                'status' => 2
+            ]);
+            //Send Notification
+            $response = AdnSms::to('01304779899')
+            ->message("Dear user, Please pay your Internet Bill. bKash Payment: 01304779899.ATS Technology ")
+            ->queue();
+        }
+        
+        dd($today);
+        dispatch(new ExpireUnpaidUsers);
+    }
+    
+    
+}

@@ -62,15 +62,21 @@ class BkashTokenizePaymentController extends Controller
                     'payment_date' => Carbon::now(),
                     'trx_id' => $response['trxID'],
                 ]);
+                
                 $username = $invoice->user->username;
+                if($invoice->user->status == 2){
+                    MikrotikController::autoUnblockuser($invoice->user->id);
+                }
                 $current_due = ($invoice->monthly_bill + $invoice->due_bill) - ($invoice->paid_monthly_bill + $invoice->paid_due_bill);
                 $invoice->user()->update([
+                    'status' => 1,
                     'current_due' => $current_due
                 ]);
                 $total_bill_paid = $invoice->paid_monthly_bill + $invoice->paid_due_bill;
                 $responseSms = AdnSms::to($invoice->user->mobile_no)
                 ->message("Dear user, Your payment Tk.$total_bill_paid has been received. Your current due is $current_due - ATS Technology ")
                 ->send();
+                
                 SystemLog::create([
                     'module' => 'QuickPay',
                     'action_by' => null,
