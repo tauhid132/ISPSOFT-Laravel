@@ -18,9 +18,9 @@
             
             <div class="d-flex align-items-center">
                 <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen">
-                        <i class='bx bx-fullscreen fs-22'></i>
-                    </button>
+                    <a href="{{ route('createTicket') }}" type="button" class="btn btn-primary rounded-4 p-2">
+                        <i class="fa fa-plus me-1"></i>Create Ticket
+                    </a>
                 </div>
                 <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">

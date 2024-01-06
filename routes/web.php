@@ -69,6 +69,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('tickets/track-ticket/{id}/assign-executives',[App\Http\Controllers\TicketController::class, 'assignExecutive'])->name('assignExecutive');
         Route::post('tickets/track-ticket/{ticket_id}/add-comment',[App\Http\Controllers\TicketController::class, 'addCommentTicket'])->name('addCommentTicket');
         Route::get('tickets/track-ticket/{ticket_id}/delete-comment/{comment_id}',[App\Http\Controllers\TicketController::class, 'deleteCommentTicket'])->name('deleteCommentTicket');
+        Route::get('tickets/create-ticket',[App\Http\Controllers\TicketController::class, 'viewCreateTicket'])->name('createTicket');
+        Route::post('tickets/create-ticket',[App\Http\Controllers\TicketController::class, 'createTicket']);
     });
 
 
@@ -156,6 +158,16 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
     //Inventory Module Routes
     Route::prefix('inventory')->group(function(){
+        Route::get('product-categories',[App\Http\Controllers\ProductCategoryController::class, 'viewProductCategories'])->name('viewProductCategories');
+        Route::get('product-categories/get-product-categories',[App\Http\Controllers\ProductCategoryController::class, 'getProductCategories'])->name('getProductCategories');
+        Route::post('product-categories/add-edit-product-category',[App\Http\Controllers\ProductCategoryController::class, 'addEditProductCategory'])->name('addEditProductCategory');
+        Route::post('product-categories/fetch-product-category',[App\Http\Controllers\ProductCategoryController::class, 'fetchProductCategory'])->name('fetchProductCategory');
+        Route::post('product-categories/delete-product-category',[App\Http\Controllers\ProductCategoryController::class, 'deleteProductCategory'])->name('deleteProductCategory');
+        Route::post('product-categories/add-stock',[App\Http\Controllers\ProductCategoryController::class, 'addProductStock'])->name('addProductStock');
+        Route::post('product-categories/remove-stock',[App\Http\Controllers\ProductCategoryController::class, 'removeProductStock'])->name('removeProductStock');
+        Route::get('product-categories/view-stock-history/{product_id}',[App\Http\Controllers\ProductCategoryController::class, 'viewProductStockHistory'])->name('viewProductStockHistory');
+        Route::post('product-categories/view-stock-history/get-stock-history/',[App\Http\Controllers\ProductCategoryController::class, 'getProductStockHistory'])->name('getProductStockHistory');
+
         Route::get('products',[App\Http\Controllers\ProductController::class, 'viewProducts'])->name('viewProducts');
         Route::get('products/get-products',[App\Http\Controllers\ProductController::class, 'getProducts'])->name('getProducts');
         Route::post('products/add-edit-product',[App\Http\Controllers\ProductController::class, 'addEditProduct'])->name('addEditProduct');

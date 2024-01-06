@@ -178,8 +178,9 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="card-body" style="height: 330px;overflow-x: hidden; overflow-y: scroll">
+                        <div data-simplebar style="height: 250px;">
+                        <div class="card-body">
+                            
                             <div class="table-responsive table-card">
                                 <table class="table table-borderless table-hover table-nowrap align-middle mb-0" >
                                     <thead class="table-primary">
@@ -207,6 +208,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,7 +226,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="height: 330px; overflow-x: hidden; overflow-y: scroll">
+                        <div data-simplebar style="height: 250px;">
+                        <div class="card-body">
                             <ul class="list-group list-group-flush border-dashed" id="notes">
                                 @forelse (Auth::guard('admin')->user()->notes as $note)
                                 <li class="list-group-item ps-0">
@@ -245,8 +248,13 @@
                                 
                             </ul>
                         </div>
+                        </div>
                     </div>
                 </div>
+
+
+            </div>
+
             </div>
         </div>
     </div>

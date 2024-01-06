@@ -76,11 +76,13 @@ class UserController extends Controller
         ->make(true);
     }
     public function viewAddNewUserPage(){
+        $user_id = User::count() + 1;
         return view('admin.crm.add-new-user',[
             'service_areas' => ServiceArea::all(),
             'packages' => Package::all(),
             'employees' => Employee::all(),
-            'mikrotiks' => Mikrotik::all()
+            'mikrotiks' => Mikrotik::all(),
+            'user_id' => $user_id
         ]);
     }
     
@@ -109,7 +111,7 @@ class UserController extends Controller
             'current_due' => $request->current_due,
             'billing_cycle' => $request->billing_cycle,
             'expiry_day' => $request->expiry_day,
-            'reference' => $request->reference,
+            'sales_method' => $request->sales_method,
             'status' => $request->status,
             'api_status' => $request->api_status,
             'api_server' => $request->api_server,
@@ -159,7 +161,7 @@ class UserController extends Controller
             'billing_cycle' => $request->billing_cycle,
             'expiry_day' => $request->expiry_day,
             'expiry_date' => $request->expiry_date,
-            'reference' => $request->reference,
+            'sales_method' => $request->sales_method,
             'status' => $request->status,
             'api_status' => $request->api_status,
             'api_server' => $request->api_server,

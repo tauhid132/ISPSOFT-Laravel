@@ -31,14 +31,14 @@
                                         <li><a href="#tab1"><span class="number">1</span> Personal Info</a></li>
                                         <li><a href="#tab2"><span class="number">2</span> Connection Info</a></li>
                                         <li><a href="#tab3"><span class="number">3</span> Billing Info</a></li>
-                                        <li><a href="#tab4"><span class="number">4</span> Technical Info</a></li>
+                                        <li><a href="#tab4"><span class="number">4</span> API & Notification</a></li>
                                     </ul>
                                     <div class="step-content">
                                         <div class="step-tab-panel" id="tab1">
                                             <div class="row mt-2">
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label">User ID</label>
+                                                        <label class="form-label">User ID/Username</label>
                                                         <input type="text" class="form-control" name="username" value="{{ $user->username }}">
                                                     </div>
                                                 </div>
@@ -93,7 +93,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="location1">Area :</label>
+                                                        <label for="location1">Service Area/Zone</label>
                                                         <select class="custom-select form-control" name="service_area_id">
                                                             <option selected>Choose Branch or Area</option>
                                                             @foreach ($service_areas as $area )
@@ -104,13 +104,13 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="lastName1">NID/Passport No:</label>
+                                                        <label for="lastName1">NID/Passport No</label>
                                                         <input class="form-control" type="text" value="{{ $user->nid_passport }}" name="nid_passport" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="lastName1">Sign Up Soft Copy</label>
+                                                        <label for="lastName1">Sign Up</label>
                                                         <input class="form-control" type="file" >
                                                     </div>
                                                 </div>
@@ -119,24 +119,14 @@
                                         </div>
                                         <div class="step-tab-panel" id="tab2">
                                             <div class="row mt-2">
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <div class="mb-3">
                                                         <label class="form-label">Installation Date</label>
                                                         <input type="date" class="form-control" value="{{ $user->installation_date }}" name="installation_date" >
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="intType1">Customer Type</label>
-                                                        <select class="custom-select form-control" name="customer_type" >
-                                                            <option value="{{ null }}">Select One</option>
-                                                            <option {{ $user->customer_type == 'Home' ? 'selected' : '' }} value="Home">Home</option>
-                                                            <option {{ $user->customer_type == 'Dedicated' ? 'selected' : '' }} value="Dedicated">Dedicated</option>
-                                                            <option {{ $user->customer_type == 'SME' ? 'selected' : '' }} value="SME">SME</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
+                                                
+                                                <div class="col-lg-3">
                                                     <div class="mb-3">
                                                         <label for="intType1">Package</label>
                                                         <select class="custom-select form-control" name="package_id" >
@@ -260,8 +250,8 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label for="intType1">Reference</label>
-                                                        <select class="custom-select form-control" name="reference">
+                                                        <label for="intType1">Sales Method</label>
+                                                        <select class="custom-select form-control" name="sales_method">
                                                             <option {{ $user->reference == 'Advertisement' ? 'selected' : '' }} value="Advertisement">Advertisement</option>
                                                             <option {{ $user->reference == 'Campain' ? 'selected' : '' }} value="Campain">Campain</option>
                                                             <option {{ $user->reference == 'User Reference' ? 'selected' : '' }} value="User Reference">User Reference</option>

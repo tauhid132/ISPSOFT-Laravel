@@ -19,8 +19,8 @@
                             <div class="p-2 mt-3 mb-4">
                                 <div class="mb-4">
                                     <center>
-                                        <h3 class="text-primary ">LOGIN</h2>
-                                        <p class="mt-0 fs-14">Enter username and password to login!</p>
+                                        <h1 class="text-primary ">LOGIN</h1>
+                                        <p class="mt-0 fs-16">ATS Technology Management Portal</p>
                                     </center>
                                 </div>
                                 @if(Session::has('status'))
@@ -63,6 +63,7 @@
                                     </div>
                                 </form>
                             </div>
+                            <hr>
                             <div class="mt-2 fs-14"><center>Copyright © {{ date('Y') }} | <a href="http://atsbd.net" class="text-center">ATS Technology</a></center></div>
                         </div>
                     </div>

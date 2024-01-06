@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\SystemLog;
@@ -136,7 +137,8 @@ class MonthlyBillController extends Controller
         if($bill->user->status == 2){
             MikrotikController::autoUnblockuser($bill->user->id);
         }
-        $new_expiry_date = date('Y').'-'.(date('m')+1).'-'.$bill->user->expiry_day;
+        $new_expiry_date = date('Y').'-'.date('m').'-'.$bill->user->expiry_day;
+        $new_expiry_date = Carbon::parse($new_expiry_date)->addMonth()->toDateString();
         $bill->user()->update([
             'status' => 1,
             'current_due' => $current_due,

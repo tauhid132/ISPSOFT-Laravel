@@ -1,10 +1,10 @@
-<div class="app-menu navbar-menu">
+<div class="app-menu navbar-menu" >
     <div class="navbar-brand-box">
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
         </button>
     </div>
 
-    <div id="scrollbar">
+    <div id="scrollbar" class="minimized-sidebar">
         <div class="container-fluid">
             <div id="two-column-menu">
             </div>
@@ -66,10 +66,10 @@
                     <div class="collapse menu-dropdown" id="inventory">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('viewProducts') }}" class="nav-link">Products</a>
+                                <a href="{{ route('viewProductCategories') }}" class="nav-link">Product Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Cable Stock</a>
+                                <a href="{{ route('viewProducts') }}" class="nav-link">Products</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewPackages') }}" class="nav-link">Packages</a>
@@ -202,6 +202,7 @@
                         </ul>
                     </div>
                 </li>
+                
             </ul>
         </div>
     </div>

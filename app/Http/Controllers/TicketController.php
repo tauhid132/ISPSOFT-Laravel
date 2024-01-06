@@ -164,4 +164,33 @@ class TicketController extends Controller
         TicketComment::find($comment_id)->delete();
         return back();
     }
+
+    public function viewCreateTicket(){
+        return view('admin.tickets.create-ticket',[
+            'ticket_types' => TicketType::all(),
+            'employees' => Employee::where('status', 1)->get()
+        ]);
+    }
+    public function createTicket(Request $request){
+        if($request->username == null){
+            $user_id = null;
+        }else{
+            $user = User::where('username', $request->username)->first();
+            $user_id = $user->id;
+        }
+        $ticket = Ticket::create([
+            'user_id' => $user_id,
+            'ticket_type_id' => $request->ticket_type,
+            'ticket_description' => $request->ticket_description,
+            'created_by_id' => Auth::guard('admin')->user()->id,
+            'priority' => $request->priority,                
+        ]);
+        $ticket->assigned_executives()->attach($request->assigned_executives);
+        if($request->sendConfirmationSms){
+            $response = AdnSms::to($ticket->user->mobile_no)
+            ->message("Dear user, Your ticket has been created. Ticket No-$ticket->id - ATS Technology ")
+            ->send();
+        }
+        return back();
+    }
 }

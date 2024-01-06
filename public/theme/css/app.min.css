@@ -770,6 +770,9 @@
 [data-layout=vertical][data-sidebar-size=sm] .footer {
     left: 70px
 }
+[data-sidebar-size=sm] .minimized-sidebar {
+    top: -70px
+}
 
 @media (max-width:767.98px) {
 
@@ -842,7 +845,7 @@
     top: 0;
     -webkit-box-shadow: 0 2px 4px rgba(15, 34, 58, .12);
     box-shadow: 0 2px 4px rgba(15, 34, 58, .12);
-    padding: 0 0 calc(70px + 25px) 0;
+    padding: 0 0 25px 0;
     -webkit-transition: all .1s ease-out;
     transition: all .1s ease-out
 }
@@ -9384,7 +9387,7 @@ button {
 }
 
 [data-simplebar] {
-    /* position: relative; */
+    position: relative;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -9398,13 +9401,13 @@ button {
     align-content: flex-start;
     -webkit-box-align: start;
     -ms-flex-align: start;
-    align-items: flex-start
+    align-items: flex-start;
 }
 
 .simplebar-wrapper {
     overflow: hidden;
     width: inherit;
-    height: inherit;
+    height: 100%;
     max-width: inherit;
     max-height: inherit
 }
