@@ -76,7 +76,7 @@
                             <div class="card-body">
                                 <div class="d-flex flex-wrap gap-2 justify-content-center">
                                     <a href="{{ route('startProcessingTicket', $ticket->id) }}" class="btn btn-warning"><i class="fa fa-spinner"></i> Start Processing</a>
-                                    <a href="{{ route('closeTicket', $ticket->id) }}" class="btn btn-success"><i class="fa fa-check"></i> Close Ticket</a>
+                                    <a data-bs-toggle="modal" data-bs-target="#closeTicketModal" class="btn btn-success"><i class="fa fa-check"></i> Close Ticket</a>
                                 </div>
                             </div>
                         </div>
@@ -294,4 +294,41 @@
 </div>
 
 
+
+<div class="modal fade zoomIn" id="closeTicketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-soft-info">
+                <h5 class="modal-title" id="modalHeader">Close Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form action="{{ route('closeTicket', $ticket->id) }}" method="get">
+                @csrf
+                <input type="hidden" value="" name="id" id="id">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="first_name" class="form-label">User Notification</label><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="sendConfirmationSms" name="sendCloseTicketSms">
+                                    <label class="form-check-label" for="sendConfirmationSms">SMS</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" id="submitBtn">Close Ticket</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
+
+

@@ -252,8 +252,8 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label for="intType1">Sales Method</label>
-                                                        <select class="custom-select form-control" name="sales_method" >
+                                                        <label for="intType1">Sales Person</label>
+                                                        <select class="custom-select form-control" name="sales_person" >
                                                             <option value="Advertisement">Advertisement</option>
                                                             <option value="Campain">Campain</option>
                                                             <option value="User Reference">User Reference</option>

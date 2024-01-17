@@ -189,18 +189,18 @@
                                             <th scope="col">Customer Name</th>
                                             <th scope="col">Monthly Bill</th>
                                             <th scope="col">Connection Date</th>
-                                            <th scope="col">Reference</th>
+                                            <th scope="col">Sales By</th>
                                         </tr>
                                     </thead>
                                     
                                     <tbody>
                                         @forelse ($new_users as $new_user )
                                         <tr>
-                                            <td>{{ $new_user->username }}</td>
+                                            <td><a href="{{ route('viewUser', $new_user->id) }}">{{ $new_user->username }}</a></td>
                                             <td>{{ $new_user->customer_name }}</td>
                                             <td>{{ $new_user->monthly_bill }}</td>
                                             <td>{{ $new_user->installation_date }}</td>
-                                            <td>{{ $new_user->reference }}</td>
+                                            <td>{{ $new_user->sales_person }}</td>
                                         </tr>
                                         @empty
                                         

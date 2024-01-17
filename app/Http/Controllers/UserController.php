@@ -18,8 +18,8 @@ class UserController extends Controller
 {
     public function testsms(){
         $response = AdnSms::to('017513968954')
-            ->message('Send SMS Test.')
-            ->send();
+        ->message('Send SMS Test.')
+        ->send();
         
         return $response->json();
     }
@@ -42,14 +42,14 @@ class UserController extends Controller
         }
         if($request->search_keyword != ''){
             $data = $data->where('username','LIKE', '%'.$request->search_keyword.'%')
-                        ->orWhere('customer_name','LIKE', '%'.$request->search_keyword.'%');
+            ->orWhere('customer_name','LIKE', '%'.$request->search_keyword.'%');
         }
-
+        
         $data = $data->get();
         
         return datatables($data)
         ->addIndexColumn()
-
+        
         ->addColumn('service_area' , function($row){
             return $row->service_area->area_name;
         })
@@ -57,7 +57,7 @@ class UserController extends Controller
         ->addColumn('action', function($row){
             $btn = '<a href="'.route('viewUser',$row->id).'" class="btn btn-sm btn-info"><i id="'.$row->id.'" class="fa fa-eye m-1"></i>View</a>';
             if(Auth::guard('admin')->user()->role == 'Admin'){
-            $btn = $btn.'<a href="'.route('editUser',$row->id).'" class="btn btn-sm btn-primary m-1"><i id="'.$row->id.'" class="fa fa-edit m-1"></i>Edit</a>';
+                $btn = $btn.'<a href="'.route('editUser',$row->id).'" class="btn btn-sm btn-primary m-1"><i id="'.$row->id.'" class="fa fa-edit m-1"></i>Edit</a>';
             }
             //$btn = $btn.'<a><button id="'.$row->id.'" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i> Delete</button></a>';
             return $btn;
@@ -99,7 +99,6 @@ class UserController extends Controller
             'nid_passport' => $request->nid_passport,
             'service_area_id' => $request->service_area_id,
             'installation_date' => $request->installation_date,
-            'customer_type' => $request->customer_type,
             'package_id' => $request->package_id,
             'physical_connectivity_type' => $request->physical_connectivity_type,
             'logical_connectivity_type' => $request->logical_connectivity_type,
@@ -111,7 +110,7 @@ class UserController extends Controller
             'current_due' => $request->current_due,
             'billing_cycle' => $request->billing_cycle,
             'expiry_day' => $request->expiry_day,
-            'sales_method' => $request->sales_method,
+            'sales_person' => $request->sales_person,
             'status' => $request->status,
             'api_status' => $request->api_status,
             'api_server' => $request->api_server,
@@ -123,7 +122,7 @@ class UserController extends Controller
         ]);
         return redirect()->route('viewUsersPage');
     }
-
+    
     public function viewEditUser($id){
         $user = User::find($id);
         return view('admin.crm.edit-user',[
@@ -148,7 +147,6 @@ class UserController extends Controller
             'nid_passport' => $request->nid_passport,
             'service_area_id' => $request->service_area_id,
             'installation_date' => $request->installation_date,
-            'customer_type' => $request->customer_type,
             'package_id' => $request->package_id,
             'physical_connectivity_type' => $request->physical_connectivity_type,
             'logical_connectivity_type' => $request->logical_connectivity_type,
@@ -161,7 +159,7 @@ class UserController extends Controller
             'billing_cycle' => $request->billing_cycle,
             'expiry_day' => $request->expiry_day,
             'expiry_date' => $request->expiry_date,
-            'sales_method' => $request->sales_method,
+            'sales_person' => $request->sales_person,
             'status' => $request->status,
             'api_status' => $request->api_status,
             'api_server' => $request->api_server,
@@ -173,7 +171,7 @@ class UserController extends Controller
         ]);
         return redirect()->route('viewUsersPage');
     }
-
+    
     public function viewViewUser($id){
         return view('admin.crm.view-user',[
             'service_areas' => ServiceArea::all(),
@@ -208,6 +206,16 @@ class UserController extends Controller
             'left_reason' => $request->left_reason,
             'left_reason_details' => $request->left_reason_details,
         ]);
+        $user = User::find($request->user_id);
+        $user->update([
+            'status' => 0,
+            'api_status' => 0,
+            'api_server' => null,
+            'send_sms' => 0,
+            'send_email' => 0,
+            'print_invoice' => 0,
+            'auto_disconnect' => 0,
+        ]);
         return back();
     }
     public function fetchSingleLeftUser(Request $request){
@@ -225,7 +233,7 @@ class UserController extends Controller
     public function deleteLeftUser(Request $request){
         return DB::table('left_users')->where('id',$request->id)->delete();
     }
-
+    
     public function generateBill(Request $request){
         MonthlyBill::create([
             'user_id' => $request->user_id,
@@ -234,19 +242,22 @@ class UserController extends Controller
             'billing_month' => $request->billing_month,
             'billing_year' => $request->billing_year,
         ]);
-        User::find($request->user_id)->update([
-            'current_due' => $request->monthly_bill + $request->due_bill
+        $user = User::find($request->user_id);
+        $new_expiry_date = date('Y-m').'-'.$user->expiry_day;
+        $user->update([
+            'current_due' => $request->monthly_bill + $request->due_bill,
+            'expiry_date' => $new_expiry_date
         ]);
         return back();
     }
-
+    
     public function generateInvoice($id){
         $bill = MonthlyBill::find($id);
         //$user = User::find($id);
         $pdf = Pdf::loadView('admin.crm.bill-invoice', compact('bill') );
         return $pdf->stream();
     }
-
+    
     public function viewUserLogin(){
         return view('selfcare.auth.login');
     }

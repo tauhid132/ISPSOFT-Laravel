@@ -254,11 +254,11 @@
                                                     <div class="mb-3">
                                                         <label for="intType1">Reference</label>
                                                         <select class="custom-select form-control" name="reference" disabled>
-                                                            <option {{ $user->reference == 'Advertisement' ? 'selected' : '' }} value="Advertisement">Advertisement</option>
-                                                            <option {{ $user->reference == 'Campain' ? 'selected' : '' }} value="Campain">Campain</option>
-                                                            <option {{ $user->reference == 'User Reference' ? 'selected' : '' }} value="User Reference">User Reference</option>
+                                                            <option {{ $user->sales_person == 'Advertisement' ? 'selected' : '' }} value="Advertisement">Advertisement</option>
+                                                            <option {{ $user->sales_person == 'Campain' ? 'selected' : '' }} value="Campain">Campain</option>
+                                                            <option {{ $user->sales_person == 'User Reference' ? 'selected' : '' }} value="User Reference">User Reference</option>
                                                             @foreach ($employees as $employee )
-                                                            <option {{ $user->reference == $employee->name ? 'selected' : '' }} value="{{ $employee->name  }}">{{ $employee->name }}</option>
+                                                            <option {{ $user->sales_person == $employee->name ? 'selected' : '' }} value="{{ $employee->name  }}">{{ $employee->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

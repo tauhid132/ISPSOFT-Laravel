@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TicketNotificationAdmin;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Ticket;
@@ -10,6 +11,7 @@ use App\Models\TicketComment;
 use App\Models\TicketType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use RahulHaque\AdnSms\Facades\AdnSms;
 
 class TicketController extends Controller
@@ -95,8 +97,9 @@ class TicketController extends Controller
             ]);
             $ticket->assigned_executives()->attach($request->assigned_executives);
             if($request->sendConfirmationSms){
+                $ticket_type = $ticket->type->ticket_type_name;
                 $response = AdnSms::to($ticket->user->mobile_no)
-                ->message("Dear user, Your ticket has been created. Ticket No-$ticket->id - ATS Technology ")
+                ->message("Dear User, Your ticket is created for $ticket_type. Ticket No - $ticket->id")
                 ->send();
             }
             return 'Ticket Added Successfully!';
@@ -135,13 +138,19 @@ class TicketController extends Controller
         ]);
         return back();
     }
-    public function closeTicket($id){
+    public function closeTicket(Request $request, $id){
         $ticket = Ticket::find($id);
         $ticket->update([
             'status' => 2,
             'closed_at' => Carbon::now(),
             'closed_by_id' => Auth::guard('admin')->user()->id,
         ]);
+        if($request->sendCloseTicketSms){
+            $user = User::find($ticket->user_id);
+            $response = AdnSms::to($user->mobile_no)
+            ->message("Dear User, Your ticket No $ticket->id is closed.")
+            ->send();
+        }
         return back();
     }
 
@@ -187,10 +196,12 @@ class TicketController extends Controller
         ]);
         $ticket->assigned_executives()->attach($request->assigned_executives);
         if($request->sendConfirmationSms){
+            $ticket_type = $ticket->type->ticket_type_name;
             $response = AdnSms::to($ticket->user->mobile_no)
-            ->message("Dear user, Your ticket has been created. Ticket No-$ticket->id - ATS Technology ")
+            ->message("Dear User, Your ticket is created for $ticket_type. Ticket No - $ticket->id")
             ->send();
         }
-        return back();
+        Mail::to('atstechnologybd@gmail.com')->send(new TicketNotificationAdmin($ticket));
+        return redirect()->route('viewAllTickets')->with('success', 'Ticket Created Succcessfully!');
     }
 }
