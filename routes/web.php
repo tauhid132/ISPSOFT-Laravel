@@ -53,6 +53,10 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
             Route::get('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewEditReseller'])->name('editReseller');
             Route::post('edit-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'editReseller']);
             Route::get('view-reseller/{id}',[App\Http\Controllers\ResellerController::class, 'viewReseller'])->name('viewReseller');
+            Route::get('reseller-users/{reseller_id}',[App\Http\Controllers\ResellerController::class, 'viewResellerUsers'])->name('viewResellerUsers');
+            Route::get('reseller-users/{reseller_id}/get-users',[App\Http\Controllers\ResellerController::class, 'getResellerUsers'])->name('getResellerUsers');
+            Route::post('reseller-users/{reseller_id}/add-edit-user',[App\Http\Controllers\ResellerController::class, 'addEditResellerUser'])->name('addEditResellerUser');
+            
         });
     });
 

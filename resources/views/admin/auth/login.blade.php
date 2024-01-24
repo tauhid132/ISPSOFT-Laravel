@@ -63,7 +63,6 @@
                                     </div>
                                 </form>
                             </div>
-                            <hr>
                             <div class="mt-2 fs-14"><center>Copyright © {{ date('Y') }} | <a href="http://atsbd.net" class="text-center">ATS Technology</a></center></div>
                         </div>
                     </div>

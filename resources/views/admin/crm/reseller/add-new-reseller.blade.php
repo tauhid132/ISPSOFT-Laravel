@@ -47,6 +47,16 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="mb-3">
+                                        <label>Status</label>
+                                        <select class="custom-select form-control" name="status" >
+                                            <option value="{{ null }}">Select One</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
                                         <label class="form-label">Address</label>
                                         <input type="text" class="form-control" name="address"  >
                                     </div>
@@ -63,26 +73,7 @@
                                         <input type="text" class="form-control" name="email_address"  >
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="mb-3">
-                                        <label>Reseller Type :</label>
-                                        <select class="custom-select form-control" name="reseller_type" >
-                                            <option value="{{ null }}">Select One</option>
-                                            <option value="1">Bandwidth</option>
-                                            <option value="2">Mac</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="mb-3">
-                                        <label>Status :</label>
-                                        <select class="custom-select form-control" name="status" >
-                                            <option value="{{ null }}">Select One</option>
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

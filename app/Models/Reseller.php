@@ -16,7 +16,6 @@ class Reseller extends Model
         'password',
         'email_address',
         'mobile_no',
-        'reseller_type',
         'address',
         'monthly_bill',
         'current_due',

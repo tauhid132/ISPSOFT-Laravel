@@ -50,7 +50,7 @@
                             <div class="col-sm-auto">
                                 <div class="d-flex flex-wrap align-items-start gap-2">
                                     <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    <button type="button" class="btn btn-success" id="add-ticket" data-bs-toggle="modal" data-bs-target="#addTicketModal"><i class="ri-add-line align-bottom me-1"></i> Add Ticket</button>
+                                    <a href="{{ route('createTicket') }}" type="button" class="btn btn-success"><i class="ri-add-line align-bottom me-1"></i> Create Ticket</a>
                                 </div>
                             </div>
                         </div>
