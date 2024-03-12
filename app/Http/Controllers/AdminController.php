@@ -18,11 +18,11 @@ use Illuminate\Validation\Rules\Password;
 class AdminController extends Controller
 {
     public function viewDashboard(){
-        $start_day = date('Y-m').'-01';
-        $end_day = date('Y-m').'-31';
+        $start_day = Carbon::now()->startOfMonth();
+        $end_day = Carbon::now()->endOfMonth();
 
         $new_users = User::whereBetween('installation_date', [$start_day, $end_day])->get();
-        $left_users = DB::table('left_users')->whereBetween('created_at', [$start_day, $end_day])->get();
+        $left_users = DB::table('left_users')->whereBetween('left_date', [$start_day, $end_day])->get();
         
         return view('admin.dashboards.dashboard',[
             'total_users' => User::where('status', 1)->orWhere('status', 2)->count(),

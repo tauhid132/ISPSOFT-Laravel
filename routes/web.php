@@ -90,6 +90,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('add-comment',[App\Http\Controllers\MonthlyBillController::class, 'addComment'])->name('addComment');
         Route::post('change-expiry-date',[App\Http\Controllers\MonthlyBillController::class, 'changeExpiryDate'])->name('changeExpiryDate');
         Route::post('delete-bill-single',[App\Http\Controllers\MonthlyBillController::class, 'deleteBillSingle'])->name('deleteBillSingle');
+        Route::get('download-money-receipt/{invoice_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadMoneyReceipt'])->name('downloadMoneyReceipt');
         
         Route::get('monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'viewMonthlyExpenses'])->name('viewMonthlyExpenses');
         Route::post('get-monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'getMonthlyExpenses'])->name('getMonthlyExpenses');
@@ -138,6 +139,10 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('sms-templates/add-edit-template',[App\Http\Controllers\SmsTemplateController::class, 'addEditTemplate'])->name('addEditTemplate');
         Route::post('sms-templates/fetch-template',[App\Http\Controllers\SmsTemplateController::class, 'fetchTemplate'])->name('fetchTemplate');
         Route::post('sms-templates/delete-template',[App\Http\Controllers\SmsTemplateController::class, 'deleteTemplate'])->name('deleteTemplate');
+
+        Route::get('group-sms',[App\Http\Controllers\SMSController::class, 'viewGroupSms'])->name('viewGroupSms');
+        Route::post('group-sms/fetch-users',[App\Http\Controllers\SMSController::class, 'fetchGroupSmsUsers'])->name('fetchGroupSmsUsers');
+        Route::post('group-sms/send-sms',[App\Http\Controllers\SMSController::class, 'sendGroupSms'])->name('sendGroupSms');
     });
 
     //Settings Module Routes

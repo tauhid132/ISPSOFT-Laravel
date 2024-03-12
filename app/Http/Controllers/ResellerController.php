@@ -23,10 +23,9 @@ class ResellerController extends Controller
         })
         
         ->addColumn('action', function($row){
-            $btn = '<a href="'.route('viewReseller',$row->id).'"><i id="'.$row->id.'" class="fa fa-eye text-dark m-1"></i></a>';
-            $btn = $btn.'<a href="'.route('editReseller',$row->id).'"><i id="'.$row->id.'" class="fa fa-edit text-primary m-1"></i></a>';
-            $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-trash text-danger delete_reseller m-1"></i></a>';
-            $btn = $btn.'<a href="'.route('viewResellerUsers', $row->id).'"><button class="btn btn-primary btn-sm">Users</button></a>';
+            $btn = '<a href="'.route('viewResellerUsers',$row->id).'" class="btn btn-primary btn-sm me-1"><i class="fa fa-users me-1"></i>Users</a>';
+            $btn = $btn.'<a href="'.route('editReseller',$row->id).'" class="btn btn-info btn-sm me-1"><i class="fa fa-edit me-1"></i>Edit</a>';
+            $btn = $btn.'<a class="btn btn-danger btn-sm me-1 delete_reseller"><i class="fa fa-trash me-1"></i>Delete</a>';
             return $btn;
         })
         ->addColumn('status', function($row){
@@ -109,10 +108,11 @@ class ResellerController extends Controller
         })
         
         ->addColumn('action', function($row){
-            $btn = '<a href="'.route('viewReseller',$row->id).'"><i id="'.$row->id.'" class="fa fa-eye text-dark m-1"></i></a>';
-            $btn = $btn.'<a href="'.route('editReseller',$row->id).'"><i id="'.$row->id.'" class="fa fa-edit text-primary m-1"></i></a>';
-            $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-trash text-danger delete_reseller m-1"></i></a>';
-            $btn = $btn.'<a href="'.route('viewResellerUsers', $row->id).'"><button class="btn btn-primary btn-sm">Users</button></a>';
+            $btn = '<a href="'.route('viewReseller',$row->id).'" class="btn btn-primary btn-sm me-1"><i class="fa fa-eye me-1"></i>View</a>';
+            $btn = $btn.'<a href="'.route('viewReseller',$row->id).'" class="btn btn-info btn-sm me-1"><i class="fa fa-edit me-1"></i>Edit</a>';
+            $btn = $btn.'<a href="'.route('viewReseller',$row->id).'" class="btn btn-danger btn-sm me-1"><i class="fa fa-trash me-1"></i>Delete</a>';
+            $btn = $btn.'<a href="'.route('viewReseller',$row->id).'" class="btn btn-danger btn-sm me-1"><i class="fa fa-ban me-1"></i>Block</a>';
+            $btn = $btn.'<a href="'.route('viewReseller',$row->id).'" class="btn btn-success btn-sm me-1"><i class="fa fa-check me-1"></i>Unblock</a>';
             return $btn;
         })
         ->addColumn('status', function($row){

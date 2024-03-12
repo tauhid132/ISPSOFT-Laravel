@@ -36,9 +36,6 @@
                                         <li class="nav-item">
                                             <a href="{{ route('viewResellers') }}" class="nav-link">Resellers List</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="auth-pass-reset-cover.html" class="nav-link">Reseller Mac</a>
-                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -143,7 +140,7 @@
                                 <a href="{{ route('viewReminderSms') }}" class="nav-link">Bill Reminder</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Group SMS</a>
+                                <a href="{{ route('viewGroupSms') }}" class="nav-link">Group SMS</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewSingleSmsSender') }}" class="nav-link">Single SMS</a>

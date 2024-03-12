@@ -97,19 +97,19 @@
     
 </style>
 <body>
-    <div class="container">
-        <hr>
-        <div style="margin-top:50px">
-        <img src="{{ public_path('images/logo.png') }}" style="height: 70px; margin-top:-20px">
+    <div class="container" style="border: 1px solid">
+        <div style="padding: 15px">
+        <div style="margin-top:20px">
+        <img src="{{ public_path('images/logo.png') }}" style="height: 70px; margin-top:-20px; margin-left: 30px">
         <div style="float:right; ">
-        <h1 style="color:#0099ff; margin-top:-20px; font-size:36px">ATS Technology</h1>
-        <p style=" margin-top:-20px; float:right; font-size: 18px">Connecting With Confidence</p>
+        <h1 style="color:#0099ff; margin-top:-20px; font-size:40px; font-display:Sans-serif">ATS Technology</h1>
+        <p style=" margin-top:-20px; float:right; font-size: 18px; font-style: italic">Connecting With Confidence</p>
         </div>
         </div>
         <div class="header">
-            <center><h2>Money Receipt</h2></center>
+            <center><h1 style="text-decoration: underline">Money Receipt</h1></center>
         </div>
-        <div style="margin-top:30px">
+        <div style="margin-top:20px">
             <table style="margin: 0 0px 0 20px; width:100%; float:right">
                 <tr>
                     <td><b>Receipt No</b></td>
@@ -143,9 +143,9 @@
         
         
         <div style="margin-top: 120px;">
-            <center><p>This is an online Money Receipt. Doesn't Need Signature.</p></center>
+            <center><p>This is an Online Money Receipt. Doesn't Need Signature.</p></center>
         </div>
-        <hr>
+        </div>
     </div>
     {{-- <div class="page_break"></div> --}}
     

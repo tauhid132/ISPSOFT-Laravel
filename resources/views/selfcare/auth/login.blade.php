@@ -11,14 +11,14 @@ background-size: cover">
                 <div class="col-lg-10">
                     <div class="card overflow-hidden">
                         <div class="row g-0">
-                            <div class="col-lg-7">
+                            <div class="col-lg-6">
                                 <div class="p-lg-5 p-4 h-100" style="background-image: url({{ asset('images/selfcare.jpg') }});
                                 background-position: center;
                                 background-size: cover">
                                     <div class="bg-overlay-2"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-5" >
+                            <div class="col-lg-6" >
                                 <div class="p-4">
                                     <div class="text-center mt-1 mb-4">
                                         <span class="logo-lg">
@@ -55,7 +55,7 @@ background-size: cover">
                                             </div>
                                             <hr>
                                             <div class="d-flex mt-4">
-                                                <a href="{{ route('viewQuickPay') }}" class="btn btn-primary w-50 m-1" type="submit"><i class="fa fa-money-bill me-1"></i>Pay Bill</a>
+                                                <a href="{{ route('viewQuickPay') }}" class="btn btn-primary w-50 m-1" type="submit"><i class="fa fa-money-bill me-1"></i>Bill Payment</a>
                                                 <a href="https://vas.atsbd.net" class="btn btn-info w-50 m-1" type="submit"><i class="fa fa-television me-1"></i>VAS</a>
                                             </div>
                                         </form>

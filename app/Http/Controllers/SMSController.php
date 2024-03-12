@@ -86,4 +86,39 @@ class SMSController extends Controller
                 ->message($request->sms_body)
                 ->send();
     }
+
+    public function viewGroupSms(){
+        return view('admin.sms.group-sms',[
+            'service_areas' => ServiceArea::all(),
+            'templates' => SmsTemplate::all()
+        ]);
+    }
+    public function fetchGroupSmsUsers(Request $request){
+        $area = request('selectedArea','all');
+        if($area != 'all'){
+            $users = User::where('service_area_id', $area)->where('mobile_no','!=',null)->get();
+        }else{
+            $users = User::where('mobile_no','!=',null)->get();
+        }
+        return response()->json([
+            'html' => view('admin.sms.fetch-group-sms-users',[
+                'users' => $users
+                ])->render()
+            ]);
+    }
+
+    public function sendGroupSms(Request $request){
+        foreach($request->id as $user_id){
+            $user = User::where('id',$user_id)->first();
+            $username = $user->username;
+            $response = AdnSms::to($user->mobile_no)
+            ->message($request->smsBody)
+            ->send();
+            SystemLog::create([
+                'module' => 'Accounts',
+                'action_by' => Auth::guard('admin')->user()->id,
+                'description' => "Group SMS Sent to $username."
+            ]);
+        }    
+    }
 }

@@ -82,14 +82,14 @@
                 <div class="col-lg-12">
                     <div class="card mt-0">
                         <div class="card-header">
-                            <h5><i class="fa fa-users me-2"></i>Users</h5>
-                            <div class="d-flex flex-wrap justify-content-end gap-2">
-                                <a href="#" id="add-new-package" data-bs-toggle="modal" data-bs-target="#addEditResellerUserModal"><button type="button" class="btn btn-success"><i class="fa fa-plus me-1"></i> Add New Package</button></a>
+                            <div class="d-flex justify-content-between">
+                                <h5><i class="fa fa-users me-2"></i>Users</h5>
+                                <a href="#" id="add-new-package" data-bs-toggle="modal" data-bs-target="#addEditResellerUserModal"><button type="button" class="btn btn-success"><i class="fa fa-plus me-1"></i> Add New User</button></a>
                             </div>
                         </div>
                        
                         <div class="card-body">
-                            <div class="card-body table-responsive mt-xl-0">
+                            <div class="card-body table-responsive">
                                 <table id="users-table" class="table nowrap align-middle" style="width:100%">
                                     <thead>
                                         <tr>
