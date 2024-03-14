@@ -144,6 +144,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('group-sms/fetch-users',[App\Http\Controllers\SMSController::class, 'fetchGroupSmsUsers'])->name('fetchGroupSmsUsers');
         Route::post('group-sms/send-sms',[App\Http\Controllers\SMSController::class, 'sendGroupSms'])->name('sendGroupSms');
     });
+    //SMS Module Routes
+    Route::prefix('reports')->group(function(){
+        Route::get('monthly-report',[App\Http\Controllers\ReportController::class, 'viewMonthlyReport'])->name('viewMonthlyReport');
+       
+    });
 
     //Settings Module Routes
     Route::prefix('settings')->group(function(){

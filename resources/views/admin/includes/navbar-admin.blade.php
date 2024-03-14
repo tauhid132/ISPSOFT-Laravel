@@ -167,6 +167,21 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#reports" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                        <i class="fa fa-bar-chart"></i> <span>Report & Analytics</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="reports">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('viewMonthlyReport') }}" class="nav-link">Monthly Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">BTRC Report</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#stakeholders" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="fa fa-sitemap"></i> <span>Vendors</span>
                     </a>

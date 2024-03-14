@@ -80,11 +80,13 @@ class MonthlyBillController extends Controller
             }else{
                 $btn = ''; 
             }
+            $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-info-circle text-info view_user_info m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View User Info"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-envelope text-warning send_reminder_sms m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Reminder SMS"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-history text-info view_bill_history m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View Bill History"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-comment text-primary add_comment m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Comment"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-calendar text-info change_expiry_date m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Comment"></i></a>';
-            $btn = $btn.'<a href="'.route('downloadMoneyReceipt', $row->id).'"><i class="fa fa-link text-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Receipt"></i></a>';
+            
+            //$btn = $btn.'<a href="'.route('downloadMoneyReceipt', $row->id).'"><i class="fa fa-link text-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Receipt"></i></a>';
             return $btn;
         })
         ->addColumn('userStatus', function($row){

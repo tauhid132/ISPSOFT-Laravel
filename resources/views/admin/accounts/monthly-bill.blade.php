@@ -295,7 +295,7 @@
         </div>
     </div>
 </div>
-
+  
 <div class="modal fade zoomIn" id="billHistoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
@@ -401,6 +401,52 @@
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success" id="edit-btn">Generate</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade zoomIn" id="userInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-soft-info">
+                <h5 class="modal-title" id="exampleModalLabel">Customer Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="first_name" class="form-label">Username</label>
+                                <input type="text" id="username3" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="first_name" class="form-label">Customer Name</label>
+                                <input type="text"  id="customer_name3" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="first_name" class="form-label">Address</label>
+                                <input type="text" id="billing_address3" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="first_name" class="form-label">Mobile</label>
+                                <input type="text" id="mobile_no3" class="form-control" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </form>
@@ -708,5 +754,20 @@
             }
         })
     });
+    $(document).on('click', '.view_user_info', function(){
+        var id = $(this).attr("id");  
+        $.ajax({  
+            url:"{{ route('fetchSingleBill') }}",  
+            method:"post",  
+            data:{id:id},  
+            success:function(data){ 
+                $('#username3').val(data.user.username);
+                $('#customer_name3').val(data.user.customer_name);
+                $('#billing_address3').val(data.user.billing_address);
+                $('#mobile_no3').val(data.user.mobile_no);
+                $('#userInfoModal').modal("show");  
+            }  
+        });  
+    }); 
 </script>
 @endsection
