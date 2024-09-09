@@ -122,6 +122,9 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         
         Route::get('monthly-income-statement',[App\Http\Controllers\AccountsController::class, 'viewMonthlyIncomeStatement'])->name('viewMonthlyIncomeStatement');
         Route::post('monthly-income-statement/update-bkash-withdraw',[App\Http\Controllers\AccountsController::class, 'updateBkashWithdraw'])->name('updateBkashWithdraw');
+
+        Route::get('pass-comment',[App\Http\Controllers\AccountsController::class, 'passComment'])->name('passComment');
+
     });
 
     //SMS Module Routes

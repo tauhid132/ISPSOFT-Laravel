@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\ExpenseType;
 use App\Models\MonthlyBill;
+use App\Models\OtherInvoice;
 use Illuminate\Http\Request;
 use App\Models\MonthlySalary;
 use App\Models\ServiceCharge;
@@ -11,9 +13,8 @@ use App\Models\MonthlyExpense;
 use Illuminate\Support\Facades\DB;
 use App\Models\MonthlyUpstreamBill;
 use App\Models\MonthlyDownstreamBill;
-use App\Models\MonthlyUpstreamDownstreamBill;
-use App\Models\OtherInvoice;
 use App\Models\PaymentGatewayWithdraw;
+use App\Models\MonthlyUpstreamDownstreamBill;
 
 class AccountsController extends Controller
 {
@@ -110,5 +111,25 @@ class AccountsController extends Controller
             'bkash_withdraw' => $request->bkash_withdraw
         ]);
         return back();
+    }
+
+
+    public function passComment(){
+        $current_month = Carbon::now()->format('F');
+        $current_year = Carbon::now()->format('Y');
+        $prev_month = Carbon::now()->subMonth(1)->format('F');
+
+        $prev_due_bills = MonthlyBill::where('billing_month', $prev_month)->where('billing_year', $current_year);
+        $prev_due_bills = $prev_due_bills->whereRaw('paid_monthly_bill < monthly_bill')
+        ->orWhereRaw('paid_due_bill < due_bill')->where('billing_year', $current_year)
+        ->where('billing_month',$prev_month)->get();
+        foreach($prev_due_bills as $due_bill){
+            $current_invoice = MonthlyBill::where('billing_month', $current_month)->where('billing_year', $current_year)->where('user_id', $due_bill->user_id)->first();
+            $current_invoice->update([
+                'comment' => $due_bill->comment
+            ]);
+            dump($current_invoice->comment);
+        }
+        dd($prev_due_bills);
     }
 }

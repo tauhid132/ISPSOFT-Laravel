@@ -105,7 +105,7 @@ class MikrotikController extends Controller
     }
     
     public function getApiUsers(Request $request){
-        $data = User::with('server')->where('api_status', 1)->get();
+        $data = User::with('server')->where('api_status', 1)->where('status', '!=', 0)->get();
         $mikrotiks = Mikrotik::all();
         foreach($mikrotiks as $mikrotik){
             try{

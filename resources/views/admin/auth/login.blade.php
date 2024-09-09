@@ -20,7 +20,7 @@
                                 <div class="mb-4">
                                     <center>
                                         <h1 class="text-primary ">LOGIN</h1>
-                                        <p class="mt-0 fs-16">ATS Technology Management Portal</p>
+                                        <p class="mt-0 fs-16">ATS Technology Management System</p>
                                     </center>
                                 </div>
                                 @if(Session::has('status'))
@@ -59,7 +59,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-4">
-                                        <button class="btn btn-primary w-100 fs-14" type="submit"><i class="fa fa-sign-in me-1"></i>LOGIN</button>
+                                        <button class="btn btn-primary w-100 fs-14" type="submit">LOGIN</button>
                                     </div>
                                 </form>
                             </div>

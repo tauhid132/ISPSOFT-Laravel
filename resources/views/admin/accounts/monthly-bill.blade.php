@@ -295,7 +295,7 @@
         </div>
     </div>
 </div>
-  
+
 <div class="modal fade zoomIn" id="billHistoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
@@ -538,7 +538,7 @@
             }  
         });  
     }); 
-
+    
     $('#edit_bill_form').on("submit", function(event){  
         event.preventDefault();  
         $.ajax({  
@@ -592,7 +592,7 @@
             }  
         });  
     });
-
+    
     $('#pay_bill_form').on("submit", function(event){  
         event.preventDefault();  
         $.ajax({  
@@ -654,7 +654,7 @@
             }  
         });  
     });  
-
+    
     $(document).on('click', '.add_comment', function(){
         var id = $(this).attr("id");  
         $.ajax({  
@@ -668,7 +668,7 @@
             }  
         });  
     }); 
-
+    
     $('#add_comment_form').on("submit", function(event){  
         event.preventDefault();  
         $.ajax({  
@@ -730,7 +730,7 @@
             } 
         });  
     }); 
-
+    
     $(document).on('click', '.delete_bill', function(){
         var id = $(this).attr("id");
         Swal.fire({
@@ -769,5 +769,12 @@
             }  
         });  
     }); 
+    $('#payment_method').change(function(){
+        if($('#payment_method').val() == 'Bkash' || $('#payment_method').val() == 'Nagad' || $('#payment_method').val() == 'Bank'){
+            $('#trx-id-field').show();
+        }else{
+            $('#trx-id-field').hide();
+        }
+    });
 </script>
 @endsection
