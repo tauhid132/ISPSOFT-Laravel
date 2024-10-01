@@ -334,6 +334,7 @@
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#billingHistoryModal"><i class="fa fa-dollar"></i> Billing</button>
                             <button type="button" class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#ticketsModal"><i class="fa fa-ticket"></i> Ticketing</button>
                             <a href="{{ route('viewSingleSmsSender') }}?mobile={{ $user->mobile_no }}" class="btn btn-success waves-effect waves-light"><i class="fa fa-message"></i> SMS</a>
+                            <a href="{{ route('downloadBillStatement', $user->id) }}" class="btn btn-info waves-effect waves-light"><i class="fa fa-download"></i> Bill Statement</a>
                         </div>
                     </div>
                 </div>
@@ -367,6 +368,7 @@
                             <th scope="col">Payment Date</th>
                             <th scope="col">Method</th>
                             <th scope="col">Invoice</th>
+                            <th scope="col">Receipt</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -381,6 +383,7 @@
                             <td>{{ $bill->payment_date }}</td>
                             <td>{{ $bill->payment_method }}</td>
                             <td><a href="{{ route('generateInvoice', $bill->id) }}"><i class="fa fa-link"></i></a></td>
+                            <td><a href="{{ route('downloadMoneyReceipt', $bill->id) }}"><i class="fa fa-link"></i></a></td>
                         </tr>   
                         @endforeach
                     </tbody>

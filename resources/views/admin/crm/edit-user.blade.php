@@ -419,6 +419,7 @@
                             <th scope="col">Payment Date</th>
                             <th scope="col">Method</th>
                             <th scope="col">Invoice</th>
+                            <th scope="col">Receipt</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -433,6 +434,7 @@
                             <td>{{ $bill->payment_date }}</td>
                             <td>{{ $bill->payment_method }}</td>
                             <td><a href="{{ route('generateInvoice', $bill->id) }}"><i class="fa fa-link"></i></a></td>
+                            <td><a href="{{ route('downloadMoneyReceipt', $bill->id) }}"><i class="fa fa-link"></i></a></td>
                         </tr>   
                         @endforeach
                     </tbody>

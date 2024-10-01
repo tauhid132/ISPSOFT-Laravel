@@ -91,6 +91,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('change-expiry-date',[App\Http\Controllers\MonthlyBillController::class, 'changeExpiryDate'])->name('changeExpiryDate');
         Route::post('delete-bill-single',[App\Http\Controllers\MonthlyBillController::class, 'deleteBillSingle'])->name('deleteBillSingle');
         Route::get('download-money-receipt/{invoice_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadMoneyReceipt'])->name('downloadMoneyReceipt');
+        Route::get('download-bill-statement/{user_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadBillStatement'])->name('downloadBillStatement');
         
         Route::get('monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'viewMonthlyExpenses'])->name('viewMonthlyExpenses');
         Route::post('get-monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'getMonthlyExpenses'])->name('getMonthlyExpenses');

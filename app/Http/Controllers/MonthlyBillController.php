@@ -86,7 +86,7 @@ class MonthlyBillController extends Controller
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-comment text-primary add_comment m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Comment"></i></a>';
             $btn = $btn.'<a><i id="'.$row->id.'" class="fa fa-calendar text-info change_expiry_date m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Comment"></i></a>';
             
-            //$btn = $btn.'<a href="'.route('downloadMoneyReceipt', $row->id).'"><i class="fa fa-link text-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Receipt"></i></a>';
+            $btn = $btn.'<a href="'.route('downloadMoneyReceipt', $row->id).'"><i class="fa fa-link text-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Receipt"></i></a>';
             return $btn;
         })
         ->addColumn('userStatus', function($row){
@@ -208,6 +208,13 @@ class MonthlyBillController extends Controller
     public function downloadMoneyReceipt($invoice_id){
         $invoice = MonthlyBill::find($invoice_id);
         $pdf = Pdf::loadView('admin.pdfs.money-receipt', compact('invoice') )->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    
+    }
+
+    public function downloadBillStatement($user_id){
+        $user = User::with('bills')->where('id', $user_id)->first();
+        $pdf = Pdf::loadView('admin.pdfs.bill-statement', compact('user') )->setPaper('a4');
         return $pdf->stream();
     
     }
