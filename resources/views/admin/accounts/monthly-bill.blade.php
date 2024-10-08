@@ -30,6 +30,7 @@
                             </div>
                             <div class="col-sm-auto">
                                 <div class="d-flex flex-wrap align-items-start gap-2">
+                                    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#billingSettings"><i class="fa fa-cog"></i> Billing Settings</button>
                                     <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#billingSheetModal"><i class="fa fa-file-pdf"></i> Billing Sheet</button>
                                     <a href="{{ route('monthlyInvoicesPdf') }}" class="btn btn-secondary btn-sm"><i class="fa fa-file-pdf"></i> Monthly Invoices</a>
                                 </div>
@@ -139,7 +140,18 @@
     @include('footer')
 </div>
 
-
+@php
+    $billing_settings = session()->get('billing_settings');
+    if($billing_settings == null){
+        $payment_date = '';
+        $payment_method = '';
+        $received_by = '';
+    }else{
+        $payment_date = $billing_settings['payment_date'];
+        $payment_method = $billing_settings['payment_method'];
+        $received_by = $billing_settings['received_by'];
+    }
+@endphp
 
 <div class="modal fade zoomIn" id="editBillModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -181,7 +193,7 @@
                 <div class="modal-footer">
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" id="edit-btn">Update</button>
+                        <button type="submit" class="btn btn-success" id="edit-btn-edit-bill-form">Update</button>
                     </div>
                 </div>
             </form>
@@ -250,7 +262,7 @@
                         <div class="col-lg-3">
                             <div>
                                 <label for="first_name" class="form-label">Payment Date</label>
-                                <input type="date" name="payment_date" id="payment_date" class="form-control" required />
+                                <input type="date" value="{{ session()->get('billing_settings') != null ? $billing_settings['payment_date'] : '' }}" name="payment_date" id="payment_date" class="form-control" required />
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -326,6 +338,61 @@
                             <div>
                                 <label for="first_name" class="form-label">Comment</label>
                                 <input type="text" name="comment" id="comment" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" id="edit-btn">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@php
+    $billing_settings = session()->get('billing_settings');
+@endphp
+<div class="modal fade zoomIn" id="billingSettings" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-soft-info">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-cog"></i> Billing Settings</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form method="POST" action="{{ route('setBillingSettings') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-lg-4">
+                            <div>
+                                <label for="first_name" class="form-label">Billing Date</label>
+                                <input type="date" value="{{ session()->get('billing_settings') != null ? $billing_settings['payment_date'] : '' }}" name="payment_date" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div>
+                                <label for="first_name" class="form-label">Payment Method</label>
+                                <select class="custom-select form-control" name="payment_method" required>
+                                    <option value="">Select Payment</option>
+                                    <option {{ (session()->get('billing_settings') != null && $billing_settings['payment_method'] == 'Cash' )  ? 'selected' : '' }} value="Cash">Cash</option>
+                                    <option value="Bkash">Bkash</option>
+                                    <option value="Nagad">Nagad</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div>
+                                <label for="first_name" class="form-label">Received By</label>
+                                <select class="custom-select form-control" name="received_by">
+                                    <option value="">None</option>
+                                    @foreach ($employees as $employee )
+                                    <option {{ (session()->get('billing_settings') != null && $billing_settings['received_by'] == $employee->id )  ? 'selected' : '' }} value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -546,7 +613,7 @@
             method:"POST",  
             data:$('#edit_bill_form').serialize(),  
             beforeSend:function(){  
-                $('#edit-btn').val("Updating");  
+                $('#edit-btn-edit-bill-form').val("Updaggggting");  
             },  
             success:function(data){  
                 $('#edit_bill_form')[0].reset();  
@@ -578,9 +645,25 @@
                 $('#due_bill2').val(data.due_bill);
                 $('#paid_monthly_bill').val(data.paid_monthly_bill);
                 $('#paid_due_bill').val(data.paid_due_bill);
-                $('#payment_method').val(data.payment_method);
-                $('#payment_date').val(data.payment_date);
-                $('#received_by').val(data.received_by);
+                if(data.payment_date == null){
+                    $('#payment_method').val("{{ $payment_method }}")
+                }else{
+                    $('#payment_method').val(data.payment_method);
+                }
+                
+                if(data.payment_date == null){
+                    $('#payment_date').val("{{ $payment_date }}")
+                }else{
+                    $('#payment_date').val(data.payment_date);
+                }
+                
+                if(data.received_by == null){
+                    $('#received_by').val("{{ $received_by }}")
+                }else{
+                    $('#received_by').val(data.received_by);
+                }
+
+                
                 if(data.payment_method == 'Bkash' || data.payment_method == 'Nagad'){
                     $('#trx-id-field').show(); 
                     $('#trx_id').val(data.trx_id);

@@ -59,13 +59,13 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Connection Address</label>
-                                                        <input type="text" class="form-control" name="connection_address" value="{{ $user->connection_address }}">
+                                                        <input type="text" class="form-control" name="connection_address" id="connection_address" onkeyup="fillBillingAddress()" value="{{ $user->connection_address }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Billing Address</label>
-                                                        <input type="text" class="form-control" name="billing_address" value="{{ $user->billing_address }}" >
+                                                        <input type="text" class="form-control" id="biling_address" name="billing_address" value="{{ $user->billing_address }}" >
                                                     </div>
                                                 </div>
                                                 
@@ -651,6 +651,11 @@
             $('#ip-address').show();
         }
     });
+
+    function fillBillingAddress(){
+        let connection_address = document.getElementById('connection_address').value;
+        document.getElementById('billing_address').value =connection_address
+    }
     
 </script>
 @endsection

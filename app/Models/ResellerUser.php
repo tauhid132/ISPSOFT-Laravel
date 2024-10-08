@@ -15,11 +15,11 @@ class ResellerUser extends Model
         'status',
         'api_status',
         'api_server',
-        'reseller_package_id',
+        'reseller_user_package_id',
         'price',
     ];
 
     public function package(){
-        return $this->belongsTo(ResellerPackage::class,'reseller_package_id','id');
+        return $this->belongsTo(ResellerUserPackage::class,'reseller_user_package_id','id');
     }
 }

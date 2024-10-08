@@ -62,13 +62,13 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Connection Address</label>
-                                                        <input type="text" class="form-control" name="connection_address" >
+                                                        <input type="text" class="form-control" id="connection_address" onkeyup="fillBillingAddress()" name="connection_address">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Billing Address</label>
-                                                        <input type="text" class="form-control" name="billing_address"  >
+                                                        <input type="text" class="form-control" id="billing_address" name="billing_address">
                                                     </div>
                                                 </div>
                                                 
@@ -218,7 +218,7 @@
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
                                                         <label class="form-label">Current Due</label>
-                                                        <input type="text" value="0" class="form-control" name="current_due"  >
+                                                        <input type="text" value="0" class="form-control" name="current_due">
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,8 +226,7 @@
                                                 <div class="col-lg-2">
                                                     <div class="mb-3">
                                                         <label for="intType1">Billing Cycle</label>
-                                                        <select class="custom-select form-control" name="billing_cycle" >
-                                                            <option>Select One</option>
+                                                        <select class="custom-select form-control" name="billing_cycle">
                                                             <option value="Prepaid">Prepaid</option>
                                                             <option value="Postpaid">Postpaid</option>
                                                         </select>
@@ -237,7 +236,7 @@
                                                     <div class="mb-3">
                                                         <label for="intType1">Expire Day</label>
                                                         <select class="custom-select form-control" name="expiry_day" >
-                                                            <option>Select One</option>
+                                                            <option value="10">10</option>
                                                             @for ($i=1; $i<=31; $i++)
                                                             <option value="{{ $i }}">{{ $i }}</option> 
                                                             @endfor
@@ -294,7 +293,7 @@
                                                     <div class="form-group">
                                                         <div class="form-group mb-3 d-flex" style="justify-content: space-evenly;">
                                                             <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="send_sms">
+                                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="send_sms" checked>
                                                                 <label class="form-check-label" for="inlineCheckbox2">SMS Notification</label>
                                                             </div>
                                                             <div class="form-check form-check-inline">
@@ -426,6 +425,12 @@
             $('#ip-address').show();
         }
     });
+
+
+    function fillBillingAddress(){
+        let connection_address = document.getElementById('connection_address').value;
+        document.getElementById('billing_address').value =connection_address
+    }
     
 </script>
 @endsection

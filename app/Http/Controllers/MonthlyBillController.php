@@ -218,5 +218,16 @@ class MonthlyBillController extends Controller
         return $pdf->stream();
     
     }
+
+    public function setBillingSettings(Request $request){
+        session()->forget('billing_settings');
+        $billing_settings = [
+            'payment_date' => $request->payment_date,
+            'payment_method' => $request->payment_method,
+            'received_by' => $request->received_by
+        ];
+        session()->put('billing_settings', $billing_settings);
+        return back();
+    }
         
 }  

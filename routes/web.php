@@ -56,6 +56,12 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
             Route::get('reseller-users/{reseller_id}',[App\Http\Controllers\ResellerController::class, 'viewResellerUsers'])->name('viewResellerUsers');
             Route::get('reseller-users/{reseller_id}/get-users',[App\Http\Controllers\ResellerController::class, 'getResellerUsers'])->name('getResellerUsers');
             Route::post('reseller-users/{reseller_id}/add-edit-user',[App\Http\Controllers\ResellerController::class, 'addEditResellerUser'])->name('addEditResellerUser');
+            Route::post('fetch-reseller-user',[App\Http\Controllers\ResellerController::class, 'fetchResellerUser'])->name('fetchResellerUser');
+            Route::post('delete-reseller-user',[App\Http\Controllers\ResellerController::class, 'deleteResellerUser'])->name('deleteResellerUser');
+
+            Route::post('block-reseller-user',[App\Http\Controllers\ResellerController::class, 'blockResellerUser'])->name('blockResellerUser');
+            Route::post('unblock-reseller-user',[App\Http\Controllers\ResellerController::class, 'unblockResellerUser'])->name('unblockResellerUser');
+            Route::get('sync',[App\Http\Controllers\ResellerController::class, 'syncMikrotik'])->name('sync');
             
         });
     });
@@ -92,6 +98,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('delete-bill-single',[App\Http\Controllers\MonthlyBillController::class, 'deleteBillSingle'])->name('deleteBillSingle');
         Route::get('download-money-receipt/{invoice_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadMoneyReceipt'])->name('downloadMoneyReceipt');
         Route::get('download-bill-statement/{user_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadBillStatement'])->name('downloadBillStatement');
+
+        Route::post('set-billing-settings',[App\Http\Controllers\MonthlyBillController::class, 'setBillingSettings'])->name('setBillingSettings');
         
         Route::get('monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'viewMonthlyExpenses'])->name('viewMonthlyExpenses');
         Route::post('get-monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'getMonthlyExpenses'])->name('getMonthlyExpenses');
@@ -283,4 +291,21 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
     Route::get('/bkash/search/{trxID}', [App\Http\Controllers\BkashTokenizePaymentController::class,'searchTnx'])->name('bkash-serach');
     Route::get('/bkash/refund', [App\Http\Controllers\BkashTokenizePaymentController::class,'refund'])->name('bkash-refund');
     Route::get('/bkash/refund/status', [App\Http\Controllers\BkashTokenizePaymentController::class,'refundStatus'])->name('bkash-refund-status');
+
+
+    Route::prefix('reseller')->group(function(){
+        Route::get('/',[App\Http\Controllers\ResellerController::class, 'viewLogin']);
+        Route::get('login',[App\Http\Controllers\ResellerController::class, 'viewLogin'])->name('resellerLogin');
+        Route::post('login',[App\Http\Controllers\ResellerController::class, 'login']);
+        Route::get('logout',[App\Http\Controllers\ResellerController::class, 'logout'])->name('logout');
+       
+        Route::get('/dashboard',[App\Http\Controllers\ResellerController::class, 'viewResellerDashboard'])->name('viewResellerDashboard');
+        Route::get('/my-users',[App\Http\Controllers\ResellerController::class, 'viewMyUsers'])->name('viewMyUsers');
+        Route::get('/my-users/get-users/{reseller_id}',[App\Http\Controllers\ResellerController::class, 'getMyUsers'])->name('getMyUsers');
+
+        Route::post('block-reseller-user',[App\Http\Controllers\ResellerController::class, 'blockResellerUser'])->name('blockResellerUserByReseller');
+        Route::post('unblock-reseller-user',[App\Http\Controllers\ResellerController::class, 'unblockResellerUser'])->name('unblockResellerUserByReseller');
+        Route::post('change-reseller-user-password',[App\Http\Controllers\ResellerController::class, 'changeResellerUserPassword'])->name('changeResellerUserPassword');
+        
+    });
 });
