@@ -29,7 +29,7 @@ class SMSController extends Controller
             });
         }
         $users = $users->whereHas('user', function($query2) use ($area){
-            $query2->where('mobile_no',null)->orWhere('mobile_no', '!=', '');
+            $query2->where('mobile_no', '!=', null)->orWhere('mobile_no', '!=', '');
         });
         $users = $users->get();
         return response()->json([
@@ -50,7 +50,7 @@ class SMSController extends Controller
                 $user = User::where('id',$user_id)->first();
                 $username = $user->username;
                 $response = AdnSms::to($user->mobile_no)
-                ->message("Dear user, Please pay your Internet Bill. bKash Payment: 01304779899. Reference:$username - ATS Technology ")
+                ->message("Dear user,\nPlease pay your Internet Bill\nbKash Payment - 01304779899\nRefercence - $username\nOnline Payment - selfcare.atsbd.net/quick-pay\nHelpline - 09614232323")
                 ->send();
                 SystemLog::create([
                     'module' => 'Accounts',
@@ -63,7 +63,7 @@ class SMSController extends Controller
                 $user = User::where('id',$user_id)->first();
                 $username = $user->username;
                 $response = AdnSms::to($user->mobile_no)
-                ->message("প্রিয় গ্রাহক, আজ বিল প্রদানের শেষ দিন। নিরবিচ্ছিন্ন ইন্টারনেট ব্যাবহারে আপনার ইন্টারনেট বিল পরিশোধ করুন। বিকাশ পেমেন্টঃ 01304779899. ধন্যবাদ - ATS Technology")
+                ->message("Dear user,\nToday is the last day of bill payment.\nPlease pay your Internet Bill.\nBkash Payment - 01304779899\nReference - $username\nHelpline - 09614232323")
                 ->send();
                 SystemLog::create([
                     'module' => 'Accounts',

@@ -88,6 +88,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
     Route::prefix('accounts')->group(function(){
         Route::get('monthly-bill',[App\Http\Controllers\MonthlyBillController::class, 'viewMonthlyBill'])->name('viewMonthlyBill');
         Route::post('get-monthly-bills',[App\Http\Controllers\MonthlyBillController::class, 'getMonthlyBills'])->name('getMonthlyBills');
+        Route::post('get-billing-data',[App\Http\Controllers\MonthlyBillController::class, 'getBillingData'])->name('getBillingData');
         Route::post('fetch-single-bill',[App\Http\Controllers\MonthlyBillController::class, 'fetchSingleBill'])->name('fetchSingleBill');
         Route::post('update-bill',[App\Http\Controllers\MonthlyBillController::class, 'updateBill'])->name('updateBill');
         Route::post('pay-bill',[App\Http\Controllers\MonthlyBillController::class, 'payBill'])->name('payBill');
@@ -292,6 +293,7 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
     Route::get('/bkash/refund', [App\Http\Controllers\BkashTokenizePaymentController::class,'refund'])->name('bkash-refund');
     Route::get('/bkash/refund/status', [App\Http\Controllers\BkashTokenizePaymentController::class,'refundStatus'])->name('bkash-refund-status');
 
+    Route::get('/receipt/{invoice_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadMoneyReceipt']);
 
     Route::prefix('reseller')->group(function(){
         Route::get('/',[App\Http\Controllers\ResellerController::class, 'viewLogin']);

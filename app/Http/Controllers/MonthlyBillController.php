@@ -102,6 +102,45 @@ class MonthlyBillController extends Controller
         ->rawColumns(['action' => 'action','userStatus' => 'userStatus'])
         ->make(true);
     }
+    public function getBillingData(Request $request){
+        $year = request('year',date('Y'));
+        $month = request('month',date('F'));
+        $area = request('area','all');
+        $payment_status = request('payment_status','all');
+        $payment_method = request('payment_method','all');
+        
+        $data = MonthlyBill::with('user')->where('billing_year', $year)
+        ->where('billing_month',$month);
+        
+        if($area != 'all'){
+            $data = $data->whereHas('user', function($query2) use ($area){
+                $query2->where('service_area_id',$area);
+            });
+        }
+        if($payment_status != 'all'){
+            if($payment_status == 'Paid'){
+                $data = $data->whereRaw('paid_monthly_bill = monthly_bill')
+                ->WhereRaw('paid_due_bill = due_bill');
+            }else if($payment_status == 'Unpaid'){
+                $data = $data->where('paid_monthly_bill',0)
+                ->where('paid_due_bill', 0);
+            }else if($payment_status == 'Due'){
+                $data = $data->whereRaw('paid_monthly_bill < monthly_bill')
+                ->orWhereRaw('paid_due_bill < due_bill')->where('billing_year', $year)
+                ->where('billing_month',$month);
+            }
+        }
+        
+        if($payment_method != 'all'){
+            $data = $data->where('payment_method',$payment_method);
+        }
+        
+        $data = $data->get();
+        return response()->json([
+            'total_invoices' => $data->count()
+        ]);
+
+    }
     public function fetchSingleBill(Request $request){
         $bill = MonthlyBill::with('user')->where('id', $request->id)->first();
         return response()->json($bill);
@@ -156,7 +195,8 @@ class MonthlyBillController extends Controller
         if($request->sendConfirmationSms){
             $total_bill_paid = $bill->paid_monthly_bill + $bill->paid_due_bill;
             $response = AdnSms::to($bill->user->mobile_no)
-            ->message("Dear user, Your payment Tk.$total_bill_paid has been received. Your current due is $current_due - ATS Technology ")
+            
+            ->message("Dear user,\nYour payment $total_bill_paid tk. has been received. Thank you.\nCurrent Due is $current_due tk.\nDownload Receipt: selfcare.atsbd.net/receipt/$bill->id")
             ->send();
 
             SystemLog::create([
@@ -170,7 +210,7 @@ class MonthlyBillController extends Controller
         $bill = MonthlyBill::find($request->id);
         $username = $bill->user->username;
         $response = AdnSms::to($bill->user->mobile_no)
-        ->message("Dear user, Please pay your Internet Bill. bKash Payment: 01304779899. Reference:$username - ATS Technology ")
+        ->message("Dear user,\nPlease pay your Internet Bill\nbKash Payment - 01304779899\nRefercence - $username\nOnline Payment - selfcare.atsbd.net/quick-pay\nHelpline - 09614232323")
         ->send();
         return $response;
     }
