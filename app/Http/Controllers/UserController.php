@@ -258,7 +258,5 @@ class UserController extends Controller
         return $pdf->stream();
     }
     
-    public function viewUserLogin(){
-        return view('selfcare.auth.login');
-    }
+    
 }

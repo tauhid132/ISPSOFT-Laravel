@@ -134,6 +134,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('monthly-income-statement/update-bkash-withdraw',[App\Http\Controllers\AccountsController::class, 'updateBkashWithdraw'])->name('updateBkashWithdraw');
 
         Route::get('pass-comment',[App\Http\Controllers\AccountsController::class, 'passComment'])->name('passComment');
+        Route::get('last-month-unpaid',[App\Http\Controllers\AccountsController::class, 'last_month_unpaid'])->name('last_month_unpaid');
 
     });
 
@@ -276,10 +277,12 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
 Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function(){
     //Auth Routes
-    Route::get('/',[App\Http\Controllers\UserController::class, 'viewUserLogin']);
-    Route::get('login',[App\Http\Controllers\UserController::class, 'viewUserLogin'])->name('userLogin');
-    Route::post('login',[App\Http\Controllers\AdminController::class, 'adminLoginValidate']);
+    Route::get('/',[App\Http\Controllers\SelfcareController::class, 'viewUserLogin']);
+    Route::get('login',[App\Http\Controllers\SelfcareController::class, 'viewUserLogin'])->name('userLogin');
+    Route::post('login',[App\Http\Controllers\SelfcareController::class, 'validateUserLogin']);
     
+
+    Route::get('dashboard',[App\Http\Controllers\SelfcareController::class, 'viewSelfcareDashboard'])->name('viewSelfcareDashboard');
     //QuickPay Routes
     Route::get('quick-pay', [App\Http\Controllers\QuickPayController::class, 'viewQuickPay'])->name('viewQuickPay');
     Route::post('quick-pay', [App\Http\Controllers\QuickPayController::class, 'quickPay']);
@@ -294,6 +297,11 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
     Route::get('/bkash/refund/status', [App\Http\Controllers\BkashTokenizePaymentController::class,'refundStatus'])->name('bkash-refund-status');
 
     Route::get('/receipt/{invoice_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadMoneyReceipt']);
+
+
+
+
+
 
     Route::prefix('reseller')->group(function(){
         Route::get('/',[App\Http\Controllers\ResellerController::class, 'viewLogin']);

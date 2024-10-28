@@ -253,8 +253,8 @@
                                                     <div class="mb-3">
                                                         <label for="intType1">Sales Person</label>
                                                         <select class="custom-select form-control" name="sales_person" >
-                                                            <option value="Advertisement">Advertisement</option>
-                                                            <option value="Campain">Campain</option>
+                                                            <option value="Advertisement">Advertisement/Banner/Leaflet</option>
+                                                            <option value="Campain">Marketing Campain</option>
                                                             <option value="User Reference">User Reference</option>
                                                             @foreach ($employees as $employee )
                                                             <option value="{{ $employee->name  }}">{{ $employee->name }}</option>

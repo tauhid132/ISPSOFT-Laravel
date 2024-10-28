@@ -17,11 +17,11 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        if(Auth::guard('admin')->check()){
-            return redirect('/dashboard');
-        }else if(Auth::guard('web')->check()){
-            dd("Client");
-        }
+        // if(Auth::guard('admin')->check()){
+        //     return redirect('/dashboard');
+        // }else if(Auth::guard('web')->check()){
+        //     return redirect('');
+        // }
 
         return $next($request);
     }

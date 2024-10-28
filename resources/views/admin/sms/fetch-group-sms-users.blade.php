@@ -12,7 +12,7 @@
         <div class="hstack gap-2 flex-wrap">
             @foreach ($users as $u )
             <div class="form-check form-check-inline">
-                <input class="form-check-input link_checkbox" type="checkbox" name="link_checkbox[]" value="{{ $u->id }}">
+                <input class="form-check-input link_checkbox" type="checkbox" 8name="link_checkbox[]" value="{{ $u->id }}">
                 <label class="form-check-label" for="inlineCheckbox6">{{ $u->username }}</label>
             </div>
             @endforeach

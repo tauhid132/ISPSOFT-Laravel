@@ -78,7 +78,6 @@
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('viewMyProfileAdmin') }}"><i class="fa fa-user-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">My Profile</span></a>
                         <a class="dropdown-item" href="{{ route('logout') }}"><i class="fa fa-power-off text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Logout</span></a>
                     </div>
                 </div>

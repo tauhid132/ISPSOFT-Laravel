@@ -22,6 +22,7 @@ class MonthlyBill extends Model
         'trx_id',
         'billing_month',
         'billing_year',
+        'is_last_month_unpaid',
     ];
 
     public function user(){

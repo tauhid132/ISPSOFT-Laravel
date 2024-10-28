@@ -107,49 +107,6 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="row g-0 text-center">
-                            <div class="col-md-2">
-                                <div class="p-3 border border-dashed border-start-0">
-                                    <h5 class="mb-1 text-info"><span id="total_invoices">0</span></h5>
-                                    <p class="text-muted mb-0">Total Invoices</p>
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-2">
-                                <div class="p-3 border border-dashed border-start-0">
-                                    <h5 class="mb-1 text-primary"><span id="f">0</span></h5>
-                                    <p class="text-muted mb-0">Total Billing Amount</p>
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-2">
-                                <div class="p-3 border border-dashed border-start-0">
-                                    <h5 class="mb-1 text-success"><span id="g">0</span></h5>
-                                    <p class="text-muted mb-0">Paid Invoices</p>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="p-3 border border-dashed border-start-0">
-                                    <h5 class="mb-1 text-danger"><span id="g">0</span></h5>
-                                    <p class="text-muted mb-0">Unpaid Invoices</p>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="p-3 border border-dashed border-start-0">
-                                    <h5 class="mb-1 text-warning"><span id="hs">0</span></h5>
-                                    <p class="text-muted mb-0">Due Invoices</p>
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-2">
-                                <div class="p-3 border border-dashed border-start-0 border-end-0">
-                                    <h5 class="mb-1 text-success"><span id="h">0</span></h5>
-                                    <p class="text-muted mb-0">Paid Percentage</p>
-                                </div>
-                            </div>
-                            
-                            <!--end col-->
-                        </div>
                     </div>
                     
                 </div>
@@ -614,49 +571,44 @@
         ],
 
     });
-    $('#scroll-horizontal').on('draw.dt', function() {
-        getBillingData()
-    });
-    function getBillingData(){
-        $.ajax({  
-            url:"{{ route('getBillingData') }}",  
-            method:"post",  
-            data:{
-                month:current_month,
-                year:current_year,
-                area:area,
-                payment_status:payment_status,
-                payment_method:payment_method,
-            },  
-            success:function(d){ 
-                document.getElementById("total_invoices").innerHTML = d.total_invoices
-            }  
-        });  
-    }
+    // $('#scroll-horizontal').on('draw.dt', function() {
+    //     getBillingData()
+    // });
+    // function getBillingData(){
+    //     $.ajax({  
+    //         url:"{{ route('getBillingData') }}",  
+    //         method:"post",  
+    //         data:{
+    //             month:current_month,
+    //             year:current_year,
+    //             area:area,
+    //             payment_status:payment_status,
+    //             payment_method:payment_method,
+    //         },  
+    //         success:function(d){ 
+    //             document.getElementById("total_invoices").innerHTML = d.total_invoices
+    //         }  
+    //     });  
+    // }
     function onYearChange(sel){
         current_year = sel.value
         dataTable.ajax.reload();
-        getBillingData()
     }
     function onMonthChange(sel){
         current_month = sel.value
         dataTable.ajax.reload();
-        getBillingData()
     }
     function onAreaChange(sel){
         area = sel.value
         dataTable.ajax.reload();
-        getBillingData()
     }
     function onPaymentStatusChange(sel){
         payment_status = sel.value
         dataTable.ajax.reload();
-        getBillingData()
     }
     function onPaymentMethodChange(sel){
         payment_method = sel.value
         dataTable.ajax.reload();
-        getBillingData()
     }
     
     $(document).on('click', '.edit_bill', function(){

@@ -132,4 +132,25 @@ class AccountsController extends Controller
         }
         dd($prev_due_bills);
     }
+    public function last_month_unpaid(){
+        $current_month = Carbon::now()->format('F');
+        $current_year = Carbon::now()->format('Y');
+        $prev_month = Carbon::now()->subMonth(1)->format('F');
+
+        $prev_due_bills = MonthlyBill::where('billing_month', $prev_month)->where('billing_year', $current_year);
+        $prev_due_bills = $prev_due_bills->where('paid_monthly_bill', 0)
+        ->where('billing_year', $current_year)
+        ->where('billing_month',$prev_month)->get();
+        foreach($prev_due_bills as $due_bill){
+            $current_invoice = MonthlyBill::where('billing_month', $current_month)->where('billing_year', $current_year)->where('user_id', $due_bill->user_id)->first();
+            if($current_invoice){
+                $current_invoice->update([
+                    'is_last_month_unpaid' => 1
+                ]);
+                dump($current_invoice->is_last_month_unpaid);
+            }
+            
+        }
+        dd($prev_due_bills);
+    }
 }

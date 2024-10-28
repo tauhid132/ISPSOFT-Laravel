@@ -39,6 +39,7 @@ class MonthlyBillController extends Controller
     public function getMonthlyBills(Request $request){
         $year = request('year',date('Y'));
         $month = request('month',date('F'));
+        $last_month = Carbon::parse($month)->subMonth(1)->format('F');
         $area = request('area','all');
         $payment_status = request('payment_status','all');
         $payment_method = request('payment_method','all');
@@ -90,12 +91,16 @@ class MonthlyBillController extends Controller
             return $btn;
         })
         ->addColumn('userStatus', function($row){
+            
             if(($row->monthly_bill == $row->paid_monthly_bill) && ($row->due_bill == $row->paid_due_bill) ){
                 $btn = '<span class="badge bg-success">PAID</span>';
             }else if(($row->paid_monthly_bill == 0) && ($row->paid_due_bill == 0)){
                 $btn = '<span class="badge bg-danger">UNPAID</span>';
             }else{
                 $btn = '<span class="badge bg-warning">DUE</span>';
+            }
+            if($row->is_last_month_unpaid){
+                $btn = $btn.'<br> <span class="badge bg-danger">UNPAID Last Month</span>';
             }
             return $btn;
         })

@@ -34,8 +34,18 @@
 
 
 <body>
-  @include('selfcare.includes.header')
+  @if(Auth::guard('reseller')->check())
+  @include('selfcare.includes.header-reseller')
+  @elseif (Auth::guard('web')->check())
+  @include('selfcare.includes.header-user')
+  @endif
+
+  @if(Auth::guard('reseller')->check())
   @include('selfcare.includes.navbar-reseller')
+  @elseif (Auth::guard('web')->check())
+  @include('selfcare.includes.navbar-user')
+  @endif
+  
   
   @yield('main-body')
   
