@@ -23,7 +23,7 @@
                                         <p class="mt-0 fs-16">Reseller Management Panel</p>
                                     </center>
                                 </div>
-                                @if(Session::has('status'))
+                                @if(Session::has('status')) 
                                 <div class="alert alert-danger text-center alert-dismissible fade show mb-4 mx-2" role="alert">
                                     <i class="ri-error-warning-line me-3 align-middle fs-16"></i>
                                     <strong>{{ Session::get('status') }}</strong> 

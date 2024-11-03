@@ -254,6 +254,7 @@
                                                         <label for="intType1">Sales Person</label>
                                                         <select class="custom-select form-control" name="sales_person" >
                                                             <option value="Advertisement">Advertisement/Banner/Leaflet</option>
+                                                            <option value="Called Hotline">Called Hotline</option>
                                                             <option value="Campain">Marketing Campain</option>
                                                             <option value="User Reference">User Reference</option>
                                                             @foreach ($employees as $employee )
