@@ -288,6 +288,9 @@
 
     $(document).on('click', '#add-new-user', function(){
         $('#submitBtn').html('Add');
+        $('#add_edit_reseller_user_form')[0].reset();
+        $('#modalHeader').html("Add New User"); 
+        $('#id').val(""); 
     }); 
 
     $(document).on('click', '.delete_reseller_user', function(){

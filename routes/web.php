@@ -141,6 +141,11 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('pass-comment',[App\Http\Controllers\AccountsController::class, 'passComment'])->name('passComment');
         Route::get('last-month-unpaid',[App\Http\Controllers\AccountsController::class, 'last_month_unpaid'])->name('last_month_unpaid');
 
+        Route::get('reseller-invoices',[App\Http\Controllers\ResellerInvoiceController::class, 'viewResellerInvoices'])->name('viewResellerInvoices');
+        Route::get('reseller-invoices/get-reseller-invoices',[App\Http\Controllers\ResellerInvoiceController::class, 'getResellerInvoices'])->name('getResellerInvoices');
+        Route::get('reseller-invoices/get-single-invoice',[App\Http\Controllers\ResellerInvoiceController::class, 'getSingleInvoice'])->name('getSingleInvoice');
+        Route::post('reseller-invoices/pay-reseller-invoice',[App\Http\Controllers\ResellerInvoiceController::class, 'payResellerInvoice'])->name('payResellerInvoice');
+        Route::post('reseller-invoices/update-reseller-invoice',[App\Http\Controllers\ResellerInvoiceController::class, 'updateResellerInvoice'])->name('updateResellerInvoice');
     });
 
     //SMS Module Routes
@@ -191,6 +196,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('manual-generator/generate-monthly-bill-invoices',[App\Http\Controllers\SettingsController::class, 'generateMonthlyBillInvoices'])->name('generateMonthlyBillInvoices');
         Route::post('manual-generator/generate-monthly-salary',[App\Http\Controllers\SettingsController::class, 'generateMonthlySalary'])->name('generateMonthlySalary');
         Route::post('manual-generator/generate-upstream-downstream-bills',[App\Http\Controllers\SettingsController::class, 'generateMonthlyUpstreamDownstreamBills'])->name('generateMonthlyUpstreamDownstreamBills');
+        Route::post('manual-generator/generate-reseller-invoices',[App\Http\Controllers\SettingsController::class, 'generateResellerInvoices'])->name('generateResellerInvoices');
         Route::get('manual-generator/billing-sheet-pdf',[App\Http\Controllers\SettingsController::class, 'generateBillingSheetPdf'])->name('generateBillingSheet');
         Route::get('manual-generator/monthly-invoices-pdf',[App\Http\Controllers\SettingsController::class, 'monthlyInvoicesPdf'])->name('monthlyInvoicesPdf');
         

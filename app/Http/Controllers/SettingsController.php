@@ -11,6 +11,10 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\UpstreamDownstream;
 use App\Models\PaymentGatewayWithdraw;
 use App\Models\MonthlyUpstreamDownstreamBill;
+use App\Models\Reseller;
+use App\Models\ResellerInvoice;
+use App\Models\ResellerUser;
+use App\Models\ResellerUserInvoice;
 use App\Models\ServiceArea;
 
 class SettingsController extends Controller
@@ -70,6 +74,38 @@ class SettingsController extends Controller
                 'current_account' => $stream->bill + $stream->current_account,
             ]);
         }
+    }
+
+    public function generateResellerInvoices(){
+        $active_users = Reseller::where('status',1)->get();
+        foreach($active_users as $reseller){
+            $reseller_invoice = ResellerInvoice::create([
+                'reseller_id' => $reseller->id,
+                'monthly_bill' => 0,
+                'due_bill' => $reseller->current_due,
+                'billing_month' => date('F'),
+                'billing_year' => date('Y')
+            ]);
+
+            $reseller_users = ResellerUser::with('package')->where('reseller_id', $reseller->id)->where('status', 1)->get();
+            $monthly_bill = 0;
+            foreach($reseller_users as $reseller_user){
+                ResellerUserInvoice::create([
+                    'reseller_user_id' => $reseller_user->id,
+                    'reseller_invoice_id' => $reseller_invoice->id,
+                    'bill' => $reseller_user->package->bill
+                ]);
+                $monthly_bill = $monthly_bill + $reseller_user->package->bill;
+            }
+            $reseller_invoice->update([
+                'monthly_bill' => $monthly_bill
+            ]);
+            $reseller->update([
+                'current_due' => $reseller->curent_due + $monthly_bill
+            ]);
+            
+        }
+       
     }
 
     public function generateBillingSheetPdf(Request $request){

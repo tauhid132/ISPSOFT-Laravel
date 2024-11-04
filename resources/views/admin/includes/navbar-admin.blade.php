@@ -103,6 +103,9 @@
                                 <a href="{{ route('viewMonthlyBill') }}"  class="nav-link">Bill Invoices</a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('viewResellerInvoices') }}"  class="nav-link">Reseller Invoices</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('viewOtherInvoices') }}"  class="nav-link">Other Invoices</a>
                             </li>
                             <li class="nav-item">

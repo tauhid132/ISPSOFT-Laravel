@@ -171,53 +171,53 @@
                                 <tbody>
                                     <tr>
                                         <td>Monthly Bill</td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_monthly_bill }}</td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Due Bill</td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_due_bill }}</td>
                                         <td></td>
                                     </tr> 
                                     <tr>
                                         <td><b>Total Generated Bill</b> </td>
                                         <td></td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_total_generated }}</td>
                                     </tr>
                                     <tr>
                                         <td>Collected Monthly Bill</td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_collected_monthly_bill }}</td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Collected Due Bill</td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_collected_due_bill }}</td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td><b>Total Collected Bill</b> </td>
                                         <td></td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_collected_due_bill }}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Total Collected Percentage</b> </td>
                                         <td></td>
-                                        <td>0%</td>
+                                        <td>{{ $resellers_collected_bill_percentage }}%</td>
                                     </tr>
                                     <tr>
                                         <td>Remaining Monthly Bill</td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_remaining_monthly_bill }}</td>
                                         <td></td>
                                     </tr> 
                                     <tr>
                                         <td>Remaining Due Bill</td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_remaining_due_bill }}</td>
                                         <td></td>
                                     </tr> 
                                     <tr>
                                         <td><b>Total Remaining Bill</b> </td>
                                         <td></td>
-                                        <td>0</td>
+                                        <td>{{ $resellers_total_remaining_bill }}</td>
                                     </tr>
                                 </tbody>
                             </table>

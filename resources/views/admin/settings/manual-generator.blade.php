@@ -29,6 +29,7 @@
                             <button type="button" class="btn btn-primary" onclick="generateMonthlyBillInvoices()"><i class="fa fa-file"></i> Generate Bill Invoices</button>
                             <button type="button" class="btn btn-secondary" onclick="generateMonthlySalary()"><i class="fa fa-file"></i> Generate Monthly Salary</button>
                             <button type="button" class="btn btn-success" onclick="generateMonthlyUpstreamDownstreamBills()"><i class="fa fa-file"></i> Generate Upstream & Downstream Bill</button>
+                            <button type="button" class="btn btn-info" onclick="generateResellerInvoices()"><i class="fa fa-file"></i> Generate Reseller Invoice</button>
                         </div>
                     </div>
                 </div>
@@ -156,6 +157,31 @@
                     method:"POST",
                     success:function(data){
                         toastr["success"]("Bills Generated Successfully!")
+                        dataTable.ajax.reload();
+                    }
+                })
+                
+                
+            }
+        })
+    }
+
+
+    function generateResellerInvoices(){
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{ route('generateResellerInvoices') }}",
+                    method:"POST",
+                    success:function(data){
+                        toastr["success"]("Reseller Invoices Generated Successfully!")
                         dataTable.ajax.reload();
                     }
                 })

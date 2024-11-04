@@ -15,6 +15,7 @@ use App\Models\MonthlyUpstreamBill;
 use App\Models\MonthlyDownstreamBill;
 use App\Models\PaymentGatewayWithdraw;
 use App\Models\MonthlyUpstreamDownstreamBill;
+use App\Models\ResellerInvoice;
 
 class AccountsController extends Controller
 {
@@ -40,6 +41,19 @@ class AccountsController extends Controller
         $remaining_service_charge = $service_charges - $collected_service_charge;
         $users_total_remaining_bill = $users_remaining_monthly_bill +  $users_remaining_due_bill + $remaining_service_charge;
 
+        //Reseller Revenue
+        $resellers_monthly_bill = ResellerInvoice::where('billing_month', $month)->where('billing_year', $year)->sum('monthly_bill');
+        $resellers_due_bill = ResellerInvoice::where('billing_month', $month)->where('billing_year', $year)->sum('due_bill');
+        $resellers_total_generated_bill = $resellers_monthly_bill + $resellers_due_bill;
+        $resellers_collected_monthly_bill =  ResellerInvoice::where('billing_month', $month)->where('billing_year', $year)->sum('paid_monthly_bill');
+        $resellers_collected_due_bill =  ResellerInvoice::where('billing_month', $month)->where('billing_year', $year)->sum('paid_due_bill');
+        $resellers_total_collected_bill = $resellers_collected_monthly_bill + $resellers_collected_due_bill;
+        $resellers_collected_bill_percentage = $resellers_total_generated_bill == 0 ? 0 : round(($resellers_collected_monthly_bill / $resellers_monthly_bill) * 100,2);
+
+        $resellers_remaining_monthly_bill = $resellers_monthly_bill - $resellers_collected_monthly_bill;
+        $resellers_remaining_due_bill = $resellers_due_bill - $resellers_collected_due_bill;
+        $resellers_total_remaining_bill = $resellers_remaining_monthly_bill +  $resellers_remaining_due_bill;
+
 
         //Expenses
         $expense_types = ExpenseType::all();
@@ -50,7 +64,7 @@ class AccountsController extends Controller
         $total_expenses = $expenses + $salary_expense + $upstream_downstream_bill;
 
 
-        $total_profit = $user_total_collected_bill - $total_expenses; 
+        $total_profit = $user_total_collected_bill + $resellers_total_collected_bill - $total_expenses; 
 
         //Online Payment
         $reveived_bkash_monthly = MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->where('payment_method','Bkash')->sum('paid_monthly_bill');
@@ -102,6 +116,18 @@ class AccountsController extends Controller
             'nagad_balance' => $nagad_balance,
             'bank_balance' => $bank_balance,
             'total_payment_gateway_balance' => $total_payment_gateway_balance,
+
+
+            'resellers_monthly_bill' => $resellers_monthly_bill,
+            'resellers_due_bill' => $resellers_due_bill,
+            'resellers_total_generated' => $resellers_total_generated_bill,
+            'resellers_collected_monthly_bill' => $resellers_collected_monthly_bill,
+            'resellers_collected_due_bill' => $resellers_collected_due_bill,
+            'resellers_total_collected_bill' => $resellers_total_collected_bill,
+            'resellers_collected_bill_percentage' => $resellers_collected_bill_percentage,
+            'resellers_remaining_monthly_bill' => $resellers_remaining_monthly_bill,
+            'resellers_remaining_due_bill' => $resellers_remaining_due_bill,
+            'resellers_total_remaining_bill' => $resellers_total_remaining_bill,
         ]);
     }
 
