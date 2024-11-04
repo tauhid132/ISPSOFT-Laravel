@@ -36,6 +36,9 @@
                                         <li class="nav-item">
                                             <a href="{{ route('viewResellers') }}" class="nav-link">Resellers List</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('viewResellerPackages') }}" class="nav-link">Reseller Packages</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -162,6 +165,18 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewApiUsers') }}" class="nav-link">API Users</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#network" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                        <i class="fa fa-ethernet"></i> <span>Network</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="network">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('viewDistributionPoints') }}" class="nav-link">Distribution Points</a>
                             </li>
                         </ul>
                     </div>

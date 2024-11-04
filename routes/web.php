@@ -62,7 +62,12 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
             Route::post('block-reseller-user',[App\Http\Controllers\ResellerController::class, 'blockResellerUser'])->name('blockResellerUser');
             Route::post('unblock-reseller-user',[App\Http\Controllers\ResellerController::class, 'unblockResellerUser'])->name('unblockResellerUser');
             Route::get('sync',[App\Http\Controllers\ResellerController::class, 'syncMikrotik'])->name('sync');
-            
+
+            Route::get('reseller-packages',[App\Http\Controllers\ResellerUserPackageController::class, 'viewResellerPackages'])->name('viewResellerPackages');
+            Route::get('reseller-packages/get-packages',[App\Http\Controllers\ResellerUserPackageController::class, 'getResellerPackages'])->name('getResellerPackages');
+            Route::post('reseller-packages/add-edit-package',[App\Http\Controllers\ResellerUserPackageController::class, 'addEditPackage'])->name('addEditResellerPackage');
+            Route::post('reseller-packages/fetch-package',[App\Http\Controllers\ResellerUserPackageController::class, 'fetchPackage'])->name('fetchResellerPackage');
+            Route::post('reseller-packages/delete-package',[App\Http\Controllers\ResellerUserPackageController::class, 'deletePackage'])->name('deleteResellerPackage');
         });
     });
 
@@ -162,6 +167,16 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
     Route::prefix('reports')->group(function(){
         Route::get('monthly-report',[App\Http\Controllers\ReportController::class, 'viewMonthlyReport'])->name('viewMonthlyReport');
        
+    });
+
+
+
+    Route::prefix('network')->group(function(){
+        Route::get('distribution-points',[App\Http\Controllers\DistributionPointController::class, 'viewDistributionPoints'])->name('viewDistributionPoints');
+        Route::get('distribution-points/get-distribution-points',[App\Http\Controllers\DistributionPointController::class, 'getDistributionPoints'])->name('getDistributionPoints');
+        Route::post('distribution-points/add-edit-distribution-point',[App\Http\Controllers\DistributionPointController::class, 'addEditDistributionPoint'])->name('addEditDistributionPoint');
+        Route::post('distribution-points/fetch-distribution-point',[App\Http\Controllers\DistributionPointController::class, 'fetchDistributionPoint'])->name('fetchDistributionPoint');
+        Route::post('distribution-points/delete-distribution-point',[App\Http\Controllers\DistributionPointController::class, 'deleteDistributionPoint'])->name('deleteDistributionPoint');
     });
 
     //Settings Module Routes

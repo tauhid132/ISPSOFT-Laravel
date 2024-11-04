@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class DistributionPoint extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'distribution_point_name',
+        'latitude',
+        'longitude',
+    ];
 }
