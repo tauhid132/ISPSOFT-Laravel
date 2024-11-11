@@ -17,11 +17,13 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        // if(Auth::guard('admin')->check()){
-        //     return redirect('/dashboard');
-        // }else if(Auth::guard('web')->check()){
-        //     return redirect('');
-        // }
+        if(Auth::guard('admin')->check()){
+            return redirect()->route('viewAdminDashboard');
+        }else if(Auth::guard('web')->check()){
+            return redirect()->route('viewSelfcareDashboard');
+        }else if(Auth::guard('reseller')->check()){
+            return redirect()->route('viewResellerDashboard');
+        }
 
         return $next($request);
     }

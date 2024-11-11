@@ -78,7 +78,7 @@
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('logout') }}"><i class="fa fa-power-off text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Logout</span></a>
+                        <a class="dropdown-item" href="{{ route('resellerlogout') }}"><i class="fa fa-power-off text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Logout</span></a>
                     </div>
                 </div>
             </div>

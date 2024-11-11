@@ -331,7 +331,7 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
         Route::get('/',[App\Http\Controllers\ResellerController::class, 'viewLogin']);
         Route::get('login',[App\Http\Controllers\ResellerController::class, 'viewLogin'])->name('resellerLogin');
         Route::post('login',[App\Http\Controllers\ResellerController::class, 'login']);
-        Route::get('logout',[App\Http\Controllers\ResellerController::class, 'logout'])->name('logout');
+        Route::get('logout',[App\Http\Controllers\ResellerController::class, 'logout'])->name('resellerlogout');
        
         Route::get('/dashboard',[App\Http\Controllers\ResellerController::class, 'viewResellerDashboard'])->name('viewResellerDashboard');
         Route::get('/my-users',[App\Http\Controllers\ResellerController::class, 'viewMyUsers'])->name('viewMyUsers');
