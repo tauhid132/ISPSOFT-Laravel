@@ -120,6 +120,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('viewMonthlyIncomeStatement') }}?month={{ date('F') }}&year={{ date('Y') }}" class="nav-link">Income Statement</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('viewPaymentGatewayPayments') }}"  class="nav-link">Payment Gateway Payments</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

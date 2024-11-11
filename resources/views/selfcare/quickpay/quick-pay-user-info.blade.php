@@ -52,7 +52,7 @@ background-size: cover">
                                     </div>
                                     <div class="col-md-6 d-flex gap-4">
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input" type="radio" name="payment_method" id="bkash_checkbox" value="bkash" required>
+                                            <input class="form-check-input" type="radio" name="payment_method" id="bkash_checkbox" value="bkash" checked required>
                                             <label class="form-check-label" for="bkash_checkbox">
                                                 <img style="height: 70px" src="{{ asset('images/bkash.png') }}">
                                             </label>

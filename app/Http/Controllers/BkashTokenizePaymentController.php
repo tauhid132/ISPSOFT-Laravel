@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\SystemLog;
 use App\Models\MonthlyBill;
+use App\Models\PaymentGatewayPayment;
 use Illuminate\Http\Request;
 use RahulHaque\AdnSms\Facades\AdnSms;
 use Karim007\LaravelBkashTokenize\Facade\BkashRefundTokenize;
@@ -15,7 +16,7 @@ class BkashTokenizePaymentController extends Controller
     public function index()
     {
         return view('bkashT::bkash-payment');
-    }
+    } 
     public function createPayment(Request $request)
     {
         $inv = uniqid();
@@ -63,17 +64,27 @@ class BkashTokenizePaymentController extends Controller
                     'current_due' => $current_due
                 ]);
                 $total_bill_paid = $invoice->paid_monthly_bill + $invoice->paid_due_bill;
-                if($invoice->user->mobile_no != null){
-                    $responseSms = AdnSms::to($invoice->user->mobile_no)
-                    ->message("Dear user, Your payment Tk.$total_bill_paid has been received. Your current due is $current_due - ATS Technology ")
-                    ->send();
-                }
-                
                 SystemLog::create([
                     'module' => 'QuickPay',
                     'action_by' => null,
                     'description' => "Payment Added to $username for Invoice No: $merchantInvoiceNumber by Bkash Quickpay"
                 ]);
+                PaymentGatewayPayment::create([
+                    'marchant_name' => 'bkash',
+                    'payment_method' => 'QuickPay/Bkash API',
+                    'invoice_id' => $merchantInvoiceNumber,
+                    'amount' => $response['amount'],
+                    'payment_timestamp' => Carbon::now(),
+                    'trx_id' => $response['trxID']
+                ]);
+                if($invoice->user->mobile_no != null){
+                    $response = AdnSms::to($invoice->user->mobile_no)
+                    ->message("Dear user,\nYour payment $total_bill_paid tk. has been received. Thank you.\nCurrent Due is $current_due tk.\nDownload Receipt: selfcare.atsbd.net/receipt/$invoice->id")
+                    ->send();
+                    
+                }
+                
+                
                 return redirect()->route('viewQuickPayPaymentSuccess')->with(['invoice_id' => $merchantInvoiceNumber]);
                 //return BkashPaymentTokenize::success('Thank you for your payment', $response['trxID']);
             }

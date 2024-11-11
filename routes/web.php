@@ -146,6 +146,9 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('reseller-invoices/get-single-invoice',[App\Http\Controllers\ResellerInvoiceController::class, 'getSingleInvoice'])->name('getSingleInvoice');
         Route::post('reseller-invoices/pay-reseller-invoice',[App\Http\Controllers\ResellerInvoiceController::class, 'payResellerInvoice'])->name('payResellerInvoice');
         Route::post('reseller-invoices/update-reseller-invoice',[App\Http\Controllers\ResellerInvoiceController::class, 'updateResellerInvoice'])->name('updateResellerInvoice');
+
+        Route::get('payment-gateway-payment',[App\Http\Controllers\PaymentGatewayPaymentController::class, 'viewPaymentGatewayPayments'])->name('viewPaymentGatewayPayments');
+        Route::get('payment-gateway-payment/get-payment-gateway-payment',[App\Http\Controllers\PaymentGatewayPaymentController::class, 'getPaymentGatewayPayments'])->name('getPaymentGatewayPayments');
     });
 
     //SMS Module Routes
@@ -302,7 +305,7 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
     Route::get('login',[App\Http\Controllers\SelfcareController::class, 'viewUserLogin'])->name('userLogin');
     Route::post('login',[App\Http\Controllers\SelfcareController::class, 'validateUserLogin']);
     
-
+  
     Route::get('dashboard',[App\Http\Controllers\SelfcareController::class, 'viewSelfcareDashboard'])->name('viewSelfcareDashboard');
     //QuickPay Routes
     Route::get('quick-pay', [App\Http\Controllers\QuickPayController::class, 'viewQuickPay'])->name('viewQuickPay');
