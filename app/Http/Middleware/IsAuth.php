@@ -21,6 +21,8 @@ class IsAuth
             return $next($request);
         }else if(Auth::guard('web')->check()){
             return $next($request);
+        }else if(Auth::guard('reseller')->check()){
+            return $next($request);
         }else{
             return redirect('/login');
         }

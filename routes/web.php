@@ -305,7 +305,17 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
     Route::get('login',[App\Http\Controllers\SelfcareController::class, 'viewUserLogin'])->name('userLogin');
     Route::post('login',[App\Http\Controllers\SelfcareController::class, 'validateUserLogin']);
     
-  
+    Route::prefix('reseller')->group(function(){
+        Route::get('/',[App\Http\Controllers\ResellerController::class, 'viewLogin']);
+        Route::get('login',[App\Http\Controllers\ResellerController::class, 'viewLogin'])->name('resellerLogin');
+        Route::post('login',[App\Http\Controllers\ResellerController::class, 'login']);
+      
+        
+    });
+    
+});
+
+Route::middleware('isauth')->domain('selfcare.' . env('APP_URL'))->group(function(){
     Route::get('dashboard',[App\Http\Controllers\SelfcareController::class, 'viewSelfcareDashboard'])->name('viewSelfcareDashboard');
     //QuickPay Routes
     Route::get('quick-pay', [App\Http\Controllers\QuickPayController::class, 'viewQuickPay'])->name('viewQuickPay');
@@ -328,9 +338,7 @@ Route::middleware('guest')->domain('selfcare.' . env('APP_URL'))->group(function
 
 
     Route::prefix('reseller')->group(function(){
-        Route::get('/',[App\Http\Controllers\ResellerController::class, 'viewLogin']);
-        Route::get('login',[App\Http\Controllers\ResellerController::class, 'viewLogin'])->name('resellerLogin');
-        Route::post('login',[App\Http\Controllers\ResellerController::class, 'login']);
+        
         Route::get('logout',[App\Http\Controllers\ResellerController::class, 'logout'])->name('resellerlogout');
        
         Route::get('/dashboard',[App\Http\Controllers\ResellerController::class, 'viewResellerDashboard'])->name('viewResellerDashboard');
