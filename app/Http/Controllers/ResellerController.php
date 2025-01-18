@@ -41,10 +41,15 @@ class ResellerController extends Controller
         return redirect()->route('resellerLogin');
     }
     public function viewResellerDashboard(){
-        return view('selfcare.resellers.dashboard');
+        return view('selfcare.resellers.dashboard',[
+            'total_users' => ResellerUser::where('reseller_id', Auth::guard('reseller')->user()->id)->count(),
+            'total_active_users' => ResellerUser::where('reseller_id', Auth::guard('reseller')->user()->id)->where('status', 1)->count(),
+            'total_inactive_users' => ResellerUser::where('reseller_id', Auth::guard('reseller')->user()->id)->where('status', 0)->count(),
+            'total_expired_users' => ResellerUser::where('reseller_id', Auth::guard('reseller')->user()->id)->where('status', 2)->count()
+        ]);
     }
-
-
+    
+    
     public function viewResellers(){
         return view('admin.crm.reseller.resellers');
     }
@@ -75,7 +80,7 @@ class ResellerController extends Controller
         ->rawColumns(['action' => 'action', 'status' => 'status'])
         ->make(true);
     }
-
+    
     public function viewAddNewReseller(){
         return view('admin.crm.reseller.add-new-reseller');
     }
@@ -132,7 +137,7 @@ class ResellerController extends Controller
             'mikrotiks' => Mikrotik::all()
         ]);
     }
-
+    
     public function getResellerUsers(Request $request, $reseller_id){
         $data = ResellerUser::with('package')->where('reseller_id', $reseller_id)->get();
         
@@ -155,9 +160,9 @@ class ResellerController extends Controller
             $api_users[$mikrotik->id] = $client->query($query)->read();
             $api_users_secrets[$mikrotik->id] = $client->query($query2)->read();
         }
-
         
-
+        
+        
         
         return datatables($data)
         ->addIndexColumn()
@@ -169,11 +174,18 @@ class ResellerController extends Controller
             $btn = '<a class="btn btn-info btn-sm me-1 edit_reseller_user" id="'.$row->id.'"><i class="fa fa-edit me-1"></i>Edit</a>';
             $btn = $btn.'<a class="btn btn-danger btn-sm me-1 delete_reseller_user" id="'.$row->id.'"><i class="fa fa-trash me-1"></i>Delete</a>';
             if($row->status == 1){
-                $btn = $btn.'<a class="btn btn-danger btn-sm me-1 block_reseller_user" id="'.$row->id.'"><i class="fa fa-ban me-1"></i>Block</a>';
+                $btn = $btn.'<a class="btn btn-warning btn-sm me-1 block_reseller_user" id="'.$row->id.'"><i class="fa fa-ban me-1"></i>Block</a>';
             }else if($row->status == 2){
                 $btn = $btn.'<a class="btn btn-success btn-sm me-1 unblock_reseller_user" id="'.$row->id.'"><i class="fa fa-check me-1"></i>Unblock</a>';
             }
-            
+            $btn = $btn.'    <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            MAC
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <li><button class="dropdown-item bind_mac" id="'.$row->id.'">Bind MAC</button></li>
+                                                            <li><button class="dropdown-item unbind_mac" id="'.$row->id.'">Unbind MAC</button></li>
+                                                        </ul>
+                                                    </div>';
             
             return $btn;
         })
@@ -205,6 +217,15 @@ class ResellerController extends Controller
             }
             return '0';
         })
+        ->addColumn('mac', function($row) use ($api_users_secrets){
+            foreach($api_users_secrets[$row->api_server] as $api_user){
+                if($api_user['name'] == $row->username){
+                    return $api_user['caller-id'];
+                    break;
+                }
+            }
+            return 'No Binded';
+        })
         ->addColumn('mik_password', function($row) use ($api_users_secrets){
             foreach($api_users_secrets[$row->api_server] as $api_user){
                 if($api_user['name'] == $row->username){
@@ -218,8 +239,8 @@ class ResellerController extends Controller
         ->rawColumns(['action' => 'action', 'status' => 'status', 'online_status' => 'online_status', 'uptime' => 'uptime', 'mik_password' => 'mik_password'])
         ->make(true);
     }
-
-
+    
+    
     public function addEditResellerUser(Request $request, $reseller_id){
         if(empty($request->id)){
             ResellerUser::create([
@@ -244,7 +265,7 @@ class ResellerController extends Controller
             ]);
         }
     }
-
+    
     public function fetchResellerUser(Request $request){
         $reseller_user = ResellerUser::with('package')->where('id', $request->id)->first();
         return response()->json($reseller_user);
@@ -257,8 +278,8 @@ class ResellerController extends Controller
             'description' => "Reseller User: $request->id Deleted."
         ]);
     }
-
-
+    
+    
     public function blockResellerUser(Request $request){
         $user = ResellerUser::find($request->id);
         $mikrotik = Mikrotik::find($user->api_server);
@@ -294,7 +315,7 @@ class ResellerController extends Controller
             'status' => 2
         ]);
     }
-
+    
     public function unblockResellerUser(Request $request){
         $user = ResellerUser::find($request->id);
         $mikrotik = Mikrotik::find($user->api_server);
@@ -320,13 +341,67 @@ class ResellerController extends Controller
         ]);
     }
 
+    public function bindResellerUserMac(Request $request){
+        $user = ResellerUser::find($request->id);
+        $mikrotik = Mikrotik::find($user->api_server);
+        $client = new Client([
+            'host' => $mikrotik->host,
+            'user' => $mikrotik->username,
+            'pass' => $mikrotik->password
+        ]);
+        $mac = '';
+        $query2 = (new Query('/ppp/active/print'));
+        $active_connections = $client->query($query2)->read();
+        for($i=0; $i<sizeof($active_connections); $i++){
+            if($active_connections[$i]['name'] == Str::lower($user->username)){
+                $mac = $active_connections[$i]['caller-id'];
+                break;
+            }
+        }
+
+        $query = (new Query('/ppp/secret/print'));
+        $ppp_secrets = $client->query($query)->read();
+        for($i=0; $i<sizeof($ppp_secrets); $i++){
+            if($ppp_secrets[$i]['name'] == Str::lower($user->username)){
+                $query = (new Query('/ppp/secret/set'));
+                $query->equal('caller-id', $mac);
+                $query->equal('.id', $i);
+                $client->query($query)->read();
+                break;
+            }
+        }
+    }
+
+    public function unbindResellerUserMac(Request $request){
+        $user = ResellerUser::find($request->id);
+        $mikrotik = Mikrotik::find($user->api_server);
+        $client = new Client([
+            'host' => $mikrotik->host,
+            'user' => $mikrotik->username,
+            'pass' => $mikrotik->password
+        ]);
+        
+
+        $query = (new Query('/ppp/secret/print'));
+        $ppp_secrets = $client->query($query)->read();
+        for($i=0; $i<sizeof($ppp_secrets); $i++){
+            if($ppp_secrets[$i]['name'] == Str::lower($user->username)){
+                $query = (new Query('/ppp/secret/set'));
+                $query->equal('caller-id', '');
+                $query->equal('.id', $i);
+                $client->query($query)->read();
+                break;
+            }
+        }
+    }
+    
     public function syncMikrotik(){
         $client = new Client([
             'host' => '103.110.79.1',
             'user' => 'api',
             'pass' => 'atsadmin'
         ]);
-
+        
         $query = (new Query('/ppp/secret/print'));
         $ppp_secrets = $client->query($query)->read();
         // dd($ppp_secrets);
@@ -347,23 +422,24 @@ class ResellerController extends Controller
                     'reseller_user_package_id' => 1
                 ]);
             }
-
+            
             
         }
     }
-
-
-
-
+    
+    
+    
+    
     //Reseller Panel Controllers
     public function viewMyUsers(){
         return view('selfcare.resellers.my-users',[
             'reseller' => Reseller::find(Auth::guard('reseller')->user()->id)
         ]);
     }
-
-    public function getMyUsers(Request $request, $reseller_id){
-        $data = ResellerUser::with('package')->where('reseller_id', $reseller_id)->get();
+    
+    public function getMyUsers(Request $request, $reseller_id){ 
+        $selected_status = $request->status;
+        $data = ResellerUser::with('package')->where('reseller_id', $reseller_id)->where('status','LIKE','%'.$selected_status.'%')->get();
         
         $mikrotiks = Mikrotik::all();
         foreach($mikrotiks as $mikrotik){
@@ -384,9 +460,9 @@ class ResellerController extends Controller
             $api_users[$mikrotik->id] = $client->query($query)->read();
             $api_users_secrets[$mikrotik->id] = $client->query($query2)->read();
         }
-
         
-
+        
+        
         
         return datatables($data)
         ->addIndexColumn()
@@ -396,13 +472,20 @@ class ResellerController extends Controller
         
         ->addColumn('action', function($row){
             $btn = '<a class="btn btn-info btn-sm me-1 change_password" id="'.$row->id.'"><i class="fa fa-lock me-1"></i>Change Password</a>';
-          
+            
             if($row->status == 1){
                 $btn = $btn.'<a class="btn btn-danger btn-sm me-1 block_reseller_user" id="'.$row->id.'"><i class="fa fa-ban me-1"></i>Block</a>';
             }else if($row->status == 2){
                 $btn = $btn.'<a class="btn btn-success btn-sm me-1 unblock_reseller_user" id="'.$row->id.'"><i class="fa fa-check me-1"></i>Unblock</a>';
             }
-            
+            $btn = $btn.'    <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            MAC
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <li><button class="dropdown-item bind_mac" id="'.$row->id.'">Bind MAC</button></li>
+                                                            <li><button class="dropdown-item unbind_mac" id="'.$row->id.'">Unbind MAC</button></li>
+                                                        </ul>
+                                                    </div>';
             
             return $btn;
         })
@@ -424,6 +507,15 @@ class ResellerController extends Controller
                 }
             }
             return '<span class="badge bg-danger"> Offline</span>';
+        })
+        ->addColumn('mac', function($row) use ($api_users_secrets){
+            foreach($api_users_secrets[$row->api_server] as $api_user){
+                if($api_user['name'] == $row->username){
+                    return $api_user['caller-id'];
+                    break;
+                }
+            }
+            return 'No Binded';
         })
         ->addColumn('uptime', function($row) use ($api_users){
             foreach($api_users[$row->api_server] as $api_user){

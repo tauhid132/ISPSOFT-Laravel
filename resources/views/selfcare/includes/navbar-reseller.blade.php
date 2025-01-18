@@ -17,7 +17,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Request::is('dashboard') ? 'active':''  }}" href="{{ route('viewMyUsers') }}" >
-                        <i class="fa fa-user"></i> <span>My Customers</span>
+                        <i class="fa fa-user"></i> <span>Users</span>
                     </a>
                 </li>
 

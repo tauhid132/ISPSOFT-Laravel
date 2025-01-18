@@ -99,6 +99,7 @@
                                             <th>Status</th>
                                             <th>API Status</th>
                                             <th>Uptime</th>
+                                            <th>Mac</th>
                                             <th>Package</th>
                                             <th>Monthly Bill</th>
                                             <th>Action</th>
@@ -113,7 +114,7 @@
                 </div>
     
             </form>
-        </div>
+        </div> 
     </div>
     @include('footer')
 </div>
@@ -232,6 +233,7 @@
         {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
         {"data" : 'online_status', "name" : 'status' , "orderable": false, "searchable": false},
         {"data" : 'uptime', "name" : 'status' , "orderable": false, "searchable": false},
+        {"data" : 'mac', "name" : 'status' , "orderable": false, "searchable": false},
         {"data": "package.package_name"},
         {"data": "package.bill"},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
@@ -341,6 +343,8 @@
         })
     });
 
+
+
     $(document).on('click', '.unblock_reseller_user', function(){
         var id = $(this).attr("id");
         Swal.fire({
@@ -358,6 +362,55 @@
                     data:{id:id},
                     success:function(data){
                         toastr["success"]("UnBlocked Successfully")
+                        dataTable.ajax.reload();
+                    }
+                })
+            }
+        })
+    });
+
+
+    $(document).on('click', '.bind_mac', function(){
+        var id = $(this).attr("id");
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{ route('bindResellerUserMac') }}",
+                    method:"POST",
+                    data:{id:id},
+                    success:function(data){
+                        toastr["success"]("Binded Successfully")
+                        dataTable.ajax.reload();
+                    }
+                })
+            }
+        })
+    });
+
+    $(document).on('click', '.unbind_mac', function(){
+        var id = $(this).attr("id");
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url:"{{ route('unbindResellerUserMac') }}",
+                    method:"POST",
+                    data:{id:id},
+                    success:function(data){
+                        toastr["success"]("Unbinded Successfully")
                         dataTable.ajax.reload();
                     }
                 })

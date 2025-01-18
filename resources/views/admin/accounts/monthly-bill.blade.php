@@ -400,7 +400,8 @@
                 <div class="modal-footer">
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" id="edit-btn">Update</button>
+                        <a href="{{ route('resetBillingSettings') }}" class="btn btn-danger" >Reset</a>
+                        <button type="submit" class="btn btn-success">Set</button>
                     </div>
                 </div>
             </form>

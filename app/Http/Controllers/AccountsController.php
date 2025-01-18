@@ -151,12 +151,14 @@ class AccountsController extends Controller
         ->where('billing_month',$prev_month)->get();
         foreach($prev_due_bills as $due_bill){
             $current_invoice = MonthlyBill::where('billing_month', $current_month)->where('billing_year', $current_year)->where('user_id', $due_bill->user_id)->first();
-            $current_invoice->update([
-                'comment' => $due_bill->comment
-            ]);
-            dump($current_invoice->comment);
+            if($current_invoice != NULL){
+                $current_invoice->update([
+                    'comment' => $due_bill->comment
+                ]);
+                dump($current_invoice->comment);
+            }
+           
         }
-        dd($prev_due_bills);
     }
     public function last_month_unpaid(){
         $current_month = Carbon::now()->format('F');

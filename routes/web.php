@@ -61,6 +61,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
 
             Route::post('block-reseller-user',[App\Http\Controllers\ResellerController::class, 'blockResellerUser'])->name('blockResellerUser');
             Route::post('unblock-reseller-user',[App\Http\Controllers\ResellerController::class, 'unblockResellerUser'])->name('unblockResellerUser');
+            Route::post('bind-reseller-user-mac',[App\Http\Controllers\ResellerController::class, 'bindResellerUserMac'])->name('bindResellerUserMac');
+            Route::post('unbind-reseller-user-mac',[App\Http\Controllers\ResellerController::class, 'unbindResellerUserMac'])->name('unbindResellerUserMac');
             Route::get('sync',[App\Http\Controllers\ResellerController::class, 'syncMikrotik'])->name('sync');
 
             Route::get('reseller-packages',[App\Http\Controllers\ResellerUserPackageController::class, 'viewResellerPackages'])->name('viewResellerPackages');
@@ -106,6 +108,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('download-bill-statement/{user_id}',[App\Http\Controllers\MonthlyBillController::class, 'downloadBillStatement'])->name('downloadBillStatement');
 
         Route::post('set-billing-settings',[App\Http\Controllers\MonthlyBillController::class, 'setBillingSettings'])->name('setBillingSettings');
+        Route::get('reset-billing-settings',[App\Http\Controllers\MonthlyBillController::class, 'resetBillingSettings'])->name('resetBillingSettings');
         
         Route::get('monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'viewMonthlyExpenses'])->name('viewMonthlyExpenses');
         Route::post('get-monthly-expenses',[App\Http\Controllers\MonthlyExpenseController::class, 'getMonthlyExpenses'])->name('getMonthlyExpenses');
@@ -347,6 +350,8 @@ Route::middleware('isauth')->domain('selfcare.' . env('APP_URL'))->group(functio
 
         Route::post('block-reseller-user',[App\Http\Controllers\ResellerController::class, 'blockResellerUser'])->name('blockResellerUserByReseller');
         Route::post('unblock-reseller-user',[App\Http\Controllers\ResellerController::class, 'unblockResellerUser'])->name('unblockResellerUserByReseller');
+        Route::post('bind-reseller-user-mac',[App\Http\Controllers\ResellerController::class, 'bindResellerUserMac'])->name('bindResellerUserMacByReseller');
+            Route::post('unbind-reseller-user-mac',[App\Http\Controllers\ResellerController::class, 'unbindResellerUserMac'])->name('unbindResellerUserMacByReseller');
         Route::post('change-reseller-user-password',[App\Http\Controllers\ResellerController::class, 'changeResellerUserPassword'])->name('changeResellerUserPassword');
         
     });

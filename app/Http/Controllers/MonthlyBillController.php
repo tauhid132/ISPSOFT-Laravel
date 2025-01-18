@@ -57,8 +57,8 @@ class MonthlyBillController extends Controller
                 $data = $data->whereRaw('paid_monthly_bill = monthly_bill')
                 ->WhereRaw('paid_due_bill = due_bill');
             }else if($payment_status == 'Unpaid'){
-                $data = $data->where('paid_monthly_bill',0)
-                ->where('paid_due_bill', 0);
+                $data = $data->where('paid_monthly_bill',0);
+                // ->where('paid_due_bill', 0);
             }else if($payment_status == 'Due'){
                 $data = $data->whereRaw('paid_monthly_bill < monthly_bill')
                 ->orWhereRaw('paid_due_bill < due_bill')->where('billing_year', $year)
@@ -100,7 +100,7 @@ class MonthlyBillController extends Controller
                 $btn = '<span class="badge bg-warning">DUE</span>';
             }
             if($row->is_last_month_unpaid){
-                $btn = $btn.'<br> <span class="badge bg-danger">UNPAID Last Month</span>';
+                $btn = $btn.'<span class="badge bg-warning ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Unpaid Last Month">!</span>';
             }
             return $btn;
         })
@@ -272,6 +272,10 @@ class MonthlyBillController extends Controller
             'received_by' => $request->received_by
         ];
         session()->put('billing_settings', $billing_settings);
+        return back();
+    }
+    public function resetBillingSettings(Request $request){
+        session()->forget('billing_settings');
         return back();
     }
         
