@@ -24,9 +24,14 @@
   <link rel="stylesheet" href="{{ asset('theme/libs/formwizard/jquery-steps.css') }}">
   
   <style>
-    .select2-container .select2-search--inline .select2-search__field {
+    /* .select2-container .select2-search--inline .select2-search__field {
       height: 24px; !important
-    }
+    } */
+    .select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 36px;
+    padding-left: 12px;
+    color: var(--vz-body-color);
+}
   </style>
   @yield('custom-stylesheet')
   

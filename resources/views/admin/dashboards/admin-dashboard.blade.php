@@ -90,12 +90,12 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <p class="fw-medium text-muted mb-0">New Users</p>
+                                    <a href="#"><p class="fw-medium text-muted mb-0">New Users</p></a>
                                     <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="{{ $new_users->count() }}">0</span></h2>
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
-                                        <span class="avatar-title bg-soft-primary rounded-circle fs-2">
+                                        <span class="avatar-title bg-soft-success rounded-circle fs-2">
                                             <i class="fa fa-user-plus fs-20 text-success"></i>
                                         </span>
                                     </div>
@@ -115,7 +115,7 @@
                                 </div>
                                 <div>
                                     <div class="avatar-sm flex-shrink-0">
-                                        <span class="avatar-title bg-soft-primary rounded-circle fs-2">
+                                        <span class="avatar-title bg-soft-danger rounded-circle fs-2">
                                             <i class="fa fa-user-minus fs-20 text-danger"></i>
                                         </span>
                                     </div>
@@ -168,7 +168,7 @@
             
             
             <div class="row">
-                <div class="col-xl-7">
+                {{-- <div class="col-xl-7">
                     <div class="card" style="">
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1"><i class="fa fa-user-plus me-1"></i>New Connections of {{ date('F-Y') }}</h4>
@@ -179,35 +179,90 @@
                             </div>
                         </div>
                         <div data-simplebar style="height: 250px;">
-                        <div class="card-body">
-                            
-                            <div class="table-responsive table-card">
-                                <table class="table table-borderless table-hover table-nowrap align-middle mb-0" >
-                                    <thead class="table-primary">
-                                        <tr class="text-muted">
-                                            <th scope="col">Username</th>
-                                            <th scope="col">Customer Name</th>
-                                            <th scope="col">Monthly Bill</th>
-                                            <th scope="col">Connection Date</th>
-                                            <th scope="col">Sales By</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                        @forelse ($new_users as $new_user )
-                                        <tr>
-                                            <td><a href="{{ route('viewUser', $new_user->id) }}">{{ $new_user->username }}</a></td>
-                                            <td>{{ $new_user->customer_name }}</td>
-                                            <td>{{ $new_user->monthly_bill }}</td>
-                                            <td>{{ $new_user->installation_date }}</td>
-                                            <td>{{ $new_user->sales_person }}</td>
-                                        </tr>
-                                        @empty
+                            <div class="card-body">
+                                
+                                <div class="table-responsive table-card">
+                                    <table class="table table-hover table-borderless table-centered align-middle table-nowrap mb-0">
+                                        <thead class="text-muted bg-soft-light">
+                                            <tr>
+                                                <th>Coin Name</th>
+                                                <th>Price</th>
+                                                <th>24h Change</th>
+                                                <th>Total Balance</th>
+                                                <th>Total Coin</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead><!-- end thead -->
                                         
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                        <tbody>
+                                            @forelse ($new_users as $new_user )
+                                            <tr>
+                                                <td><a href="{{ route('viewUser', $new_user->id) }}">{{ $new_user->username }}</a></td>
+                                                <td>{{ $new_user->customer_name }}</td>
+                                                <td>{{ $new_user->monthly_bill }}</td>
+                                                <td>{{ $new_user->installation_date }}</td>
+                                                <td>{{ $new_user->sales_person }}</td>
+                                            </tr>
+                                            @empty
+                                            
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+
+                <div class="col-xl-7">
+                    <div class="card" style="">
+                        <div class="card-header align-items-center d-flex">
+                            <h4 class="card-title mb-0 flex-grow-1"><i class="fa fa-ticket me-1"></i>Recent Tickets</h4>
+                            <div class="flex-shrink-0">
+                                <div class="dropdown card-header-dropdown">
+                                    <a class="btn btn-sm btn-primary"><i class="fa fa-eye me-1"></i>View All</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-simplebar style="height: 250px;">
+                            <div class="card-body">
+                                
+                                <div class="table-responsive table-card">
+                                    <table class="table table-hover table-borderless table-centered align-middle table-nowrap mb-0">
+                                        <thead class="text-black bg-soft-primary">
+                                            <tr>
+                                                <th>#ID</th>
+                                                <th>Username</th>
+                                                <th>Ticket Type</th>
+                                                <th>Status</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </thead><!-- end thead -->
+                                        
+                                        <tbody>
+                                            @forelse ($tickets as $ticket )
+                                            <tr>
+                                                <td><a href="{{ route('trackTicket', $ticket->id) }}" >{{ $ticket->id }}</a></td>
+                                                <td>{{ $ticket->user == null ? '' : $ticket->user->username }}</td>
+                                                <td>{{ $ticket->type == null ? '' : $ticket->type->ticket_type_name }}</td>
+                                                <td>
+                                                    @if($ticket->status == 0)
+                                                    <span class="badge text-bg-primary">Created</span>
+                                                    @elseif ($ticket->status == 1)
+                                                    <span class="badge text-bg-warining">Processing</span>
+                                                    @elseif ($ticket->status == 2)
+                                                    <span class="badge text-bg-success">Completed</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $ticket->created_at->format('d-M-Y, h:i A') }}</td>
+                                            </tr>
+                                            @empty
+                                            
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -227,39 +282,39 @@
                             </div>
                         </div>
                         <div data-simplebar style="height: 250px;">
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush border-dashed" id="notes">
-                                @forelse (Auth::guard('admin')->user()->notes as $note)
-                                <li class="list-group-item ps-0">
-                                    <div class="row align-items-center g-3">
-                                        <div class="col">
-                                            <h5 class="text-muted mt-0 mb-1 fs-13"><i class="fa fa-calendar me-1"></i> {{ $note->created_at->format('l, j F, Y h:i A') }}</h5>
-                                            <a href="#" class="text-reset fs-14 mb-0">{{ $note->note }}</a>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush border-dashed" id="notes">
+                                    @forelse (Auth::guard('admin')->user()->notes as $note)
+                                    <li class="list-group-item ps-0">
+                                        <div class="row align-items-center g-3">
+                                            <div class="col">
+                                                <h5 class="text-muted mt-0 mb-1 fs-13"><i class="fa fa-calendar me-1"></i> {{ $note->created_at->format('l, j F, Y h:i A') }}</h5>
+                                                <a href="#" class="text-reset fs-14 mb-0">{{ $note->note }}</a>
+                                            </div>
+                                            <div class="col-sm-auto d-flex gap-1">
+                                                <button class="btn btn-sm btn-primary edit_note" id="{{ $note->id }}" ><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-danger delete_note" id="{{ $note->id }}" ><i class="fa fa-trash"></i></button>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-auto d-flex gap-1">
-                                            <button class="btn btn-sm btn-primary edit_note" id="{{ $note->id }}" ><i class="fa fa-edit"></i></button>
-                                            <button class="btn btn-sm btn-danger delete_note" id="{{ $note->id }}" ><i class="fa fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </li>
-                                @empty
-                                <center><h2 class="m-4">There is no notes!</h2></center>
-                                @endforelse
-                                
-                            </ul>
-                        </div>
+                                    </li>
+                                    @empty
+                                    <center><h2 class="m-4">There is no notes!</h2></center>
+                                    @endforelse
+                                    
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
+                
+                
             </div>
-
-            </div>
+            
         </div>
     </div>
-    
-    @include('footer')
+</div>
+
+@include('footer')
 </div>
 
 

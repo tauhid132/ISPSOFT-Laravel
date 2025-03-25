@@ -54,7 +54,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-1">
                                             <div>
                                                 <select class="form-control" onchange="onYearChange(this)">
                                                     <?php
@@ -68,10 +68,20 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div>
-                                                <select class="form-control" onchange="onAreaChange(this)">
-                                                    <option value="all">All Areas</option>
-                                                    @foreach ($areas as $area )
-                                                    <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                                                <select class="form-control" onchange="onZoneChange(this)">
+                                                    <option value="">All Zone</option>
+                                                    @foreach ($zones as $zone )
+                                                    <option value="{{ $zone->id }}">{{ $zone->zone_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div>
+                                                <select class="form-control" onchange="onSubZoneChange(this)">
+                                                    <option value="">All Subzone</option>
+                                                    @foreach ($subzones as $subzone )
+                                                    <option value="{{ $subzone->id }}">{{ $subzone->sub_zone_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -98,9 +108,9 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-1">
                                             <div>
-                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Reset Filters</button>
+                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Reset</button>
                                             </div>
                                         </div>
                                     </div>
@@ -453,10 +463,10 @@
                         <div class="col-lg-12">
                             <div>
                                 <label for="first_name" class="form-label">Month</label>
-                                <select class="custom-select form-control" name="area">
+                                <select class="custom-select form-control" name="zone">
                                     <option value="all">All</option>
-                                    @foreach ($areas as $area )
-                                    <option value="{{ $area->id  }}">{{ $area->area_name }}</option>
+                                    @foreach ($zones as $zone )
+                                    <option value="{{ $zone->id  }}">{{ $zone->zone_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -536,7 +546,8 @@
 <script>
     let current_month;
     let current_year;
-    let area;
+    let zone;
+    let subzone;
     let payment_status;
     let payment_method;
     
@@ -550,7 +561,8 @@
             "data": function(d){
                 d.month = current_month
                 d.year = current_year
-                d.area = area
+                d.zone = zone
+                d.subzone = subzone
                 d.payment_status = payment_status
                 d.payment_method = payment_method
             },
@@ -572,25 +584,7 @@
         ],
 
     });
-    // $('#scroll-horizontal').on('draw.dt', function() {
-    //     getBillingData()
-    // });
-    // function getBillingData(){
-    //     $.ajax({  
-    //         url:"{{ route('getBillingData') }}",  
-    //         method:"post",  
-    //         data:{
-    //             month:current_month,
-    //             year:current_year,
-    //             area:area,
-    //             payment_status:payment_status,
-    //             payment_method:payment_method,
-    //         },  
-    //         success:function(d){ 
-    //             document.getElementById("total_invoices").innerHTML = d.total_invoices
-    //         }  
-    //     });  
-    // }
+   
     function onYearChange(sel){
         current_year = sel.value
         dataTable.ajax.reload();
@@ -599,8 +593,12 @@
         current_month = sel.value
         dataTable.ajax.reload();
     }
-    function onAreaChange(sel){
-        area = sel.value
+    function onZoneChange(sel){
+        zone = sel.value
+        dataTable.ajax.reload();
+    }
+    function onSubZoneChange(sel){
+        subzone = sel.value
         dataTable.ajax.reload();
     }
     function onPaymentStatusChange(sel){

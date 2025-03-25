@@ -30,7 +30,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'mobile_no_alternate',
         'email_address',
         'nid_passport',
-        'service_area_id',
+        'zone_id',
+        'sub_zone_id',
         'installation_date',
         'customer_type',
         'package_id',
@@ -76,8 +77,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function service_area(){
-        return $this->belongsTo(ServiceArea::class);
+    public function zone(){
+        return $this->belongsTo(Zone::class);
     }
     public function bills(){
         return $this->hasMany(MonthlyBill::class,'user_id','id');

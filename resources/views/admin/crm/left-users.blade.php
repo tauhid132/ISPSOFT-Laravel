@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Left Users</h4>
+                        <h4 class="mb-sm-0"><i class="fa fa-user-minus me-2"></i>Left Users</h4>
                         
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -33,24 +33,24 @@
                         </div>
                     </div>
                     <div class="card-body border-bottom">
-                        <form>
+                        <form method="get" action="">
                             <div class="row g-3">
                                 <div class="col-xl-12">
                                     <div class="row g-3">
                                         <div class="col-sm-4">
                                             <div>
-                                                <input type="date" class="form-control" name="from_date" id="from_date">
+                                                <input type="date" class="form-control" name="from_date" value="{{ request('from_date') }}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div>
-                                                <input type="date" class="form-control" name="from_date" id="from_date">
+                                                <input type="date" class="form-control" name="to_date" value="{{ request('to_date') }}">
                                             </div>
                                         </div>
                                         
                                         <div class="col-sm-4">
                                             <div>
-                                                <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Fetch</button>
+                                                <button type="submit" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Fetch</button>
                                             </div>
                                         </div>
                                     </div>
@@ -71,6 +71,7 @@
                                     <th>Left Date</th>
                                     <th>Left Reason</th>
                                     <th>Details</th>
+                                    <th>Equipment</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -100,13 +101,13 @@
                 <input type="hidden" value="" name="id" id="id">
                 <div class="modal-body">
                     <div class="row g-3">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div>
                                 <label for="first_name" class="form-label">Left Date</label>
                                 <input type="date" name="left_date" id="left_date" class="form-control" required />
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div>
                                 <label for="last_name" class="form-label">Left Reason</label>
                                 <select class="custom-select form-control" id="left_reason" name="left_reason">
@@ -115,6 +116,15 @@
                                     <option value="User Not Satisfied">User Not Satisfied</option>
                                     <option value="Service Issue">Service Issue</option>
                                     <option value="Terminated">Terminated</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div>
+                                <label for="last_name" class="form-label">Equipment Status</label>
+                                <select class="custom-select form-control" id="is_equipment_recovered" name="is_equipment_recovered">
+                                    <option value="1">Recovered</option>
+                                    <option value="0">Not Recovered</option>
                                 </select>
                             </div>
                         </div>
@@ -149,8 +159,8 @@
     });
 </script>
 <script>
-    let from_date;
-    let to_date;
+    let from_date = "{{ request('from_date') }}";
+    let to_date = "{{ request('to_date') }}";
     var dataTable = $('#scroll-horizontal').DataTable({
         "processing" : true,
         "serverSide": true,
@@ -159,15 +169,18 @@
             "dataType": "json",
             "type": "POST",
             "data": function(d){
+                d.from_date = from_date
+                d.to_date = to_date
             }
         },
         "columns" : [
         {"data" : 'DT_RowIndex', "name" : 'DT_RowIndex' , "orderable": false, "searchable": false},
-        {"data": "username"},
-        {"data": "customer_name"},
+        {"data": "user.username"},
+        {"data": "user.customer_name"},
         {"data": "left_date"},
         {"data": "left_reason"},
         {"data": "left_reason_details"},
+        {"data": "is_equipment_recovered_status"},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
         ]
     });
@@ -183,6 +196,7 @@
                 $('#left_date').val(data.left_date);
                 $('#left_reason').val(data.left_reason);
                 $('#left_reason_details').val(data.left_reason_details);
+                $('#is_equipment_recovered').val(data.is_equipment_recovered);
                 $('#updateLeftUser').modal("show");  
             }  
         });  

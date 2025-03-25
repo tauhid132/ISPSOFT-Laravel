@@ -36,24 +36,34 @@
                             <div class="row g-3">
                                 <div class="col-xl-12">
                                     <div class="row g-3">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
                                             <div>
-                                                <select class="form-control" onchange="onAreaChange(this)">
-                                                    <option value="">All Areas</option>
-                                                    @foreach ($service_areas as $area )
-                                                    <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                                                <select class="form-control" onchange="onZoneChange(this)">
+                                                    <option value="">All Zone</option>
+                                                    @foreach ($zones as $zone )
+                                                    <option value="{{ $zone->id }}">{{ $zone->zone_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
+                                            <div>
+                                                <select class="form-control" onchange="onSubZoneChange(this)">
+                                                    <option value="">All Subzone</option>
+                                                    @foreach ($subzones as $subzone )
+                                                    <option value="{{ $subzone->id }}">{{ $subzone->sub_zone_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
                                             <div>
                                                 <select class="form-control" onchange="onStatusChange(this)">
                                                     <option value="unpaid_users">Unpaid Users </option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
                                             <div>
                                                 <select class="form-control" onchange="onReminderTypeChange(this)">
                                                     <option value="" selected>Choose SMS Type</option>
@@ -62,7 +72,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             <div>
                                                 <button type="button" class="btn btn-primary w-100 fetch_users"><i class="fa fa-refresh me-1"></i>Fetch</button>
                                             </div>
@@ -111,13 +121,14 @@
     var loader = document.getElementById("elmLoader");
     loader.style.visibility = 'hidden';
     let reminderType = '';
-    let selectedArea = '';
+    let selected_zone = '';
+    let selected_subzone = '';
     
     $(document).on('click', '.fetch_users', function(){
         $.ajax({  
             url:"{{ route('fetchReminderSmsUsers') }}",  
             method:"post",  
-            data:{selectedArea:selectedArea},
+            data:{selected_zone:selected_zone, selected_subzone:selected_subzone},
             dataType: 'json', 
             beforeSend:function(){  
                 loader.style.visibility = 'visible';
@@ -170,9 +181,14 @@
         reminderType = sel.value
         dataTable.ajax.reload();
     }
-    function onAreaChange(sel){
-        selectedArea = sel.value
+    function onZoneChange(sel){
+        selected_zone = sel.value
         dataTable.ajax.reload();
     }
+    function onSubZoneChange(sel){
+        selected_subzone = sel.value
+        dataTable.ajax.reload();
+    }
+    
 </script>
 @endsection

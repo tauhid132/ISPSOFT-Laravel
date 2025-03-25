@@ -11,6 +11,8 @@ Route::middleware('guest')->domain('admin.' . env('APP_URL'))->group(function(){
     Route::get('/',[App\Http\Controllers\AdminController::class, 'viewAdminLoginPage']);
     Route::get('login',[App\Http\Controllers\AdminController::class, 'viewAdminLoginPage'])->name('login');
     Route::post('login',[App\Http\Controllers\AdminController::class, 'adminLoginValidate']);
+
+    
 });
 
 //Admin Routes after Auth
@@ -24,6 +26,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
     Route::post('dashboard/add-edit-note',[App\Http\Controllers\AdminController::class, 'addEditNote'])->name('addEditNote');
     Route::post('dashboard/fetch-note',[App\Http\Controllers\AdminController::class, 'fetchNote'])->name('fetchNote');
     Route::post('dashboard/delete-note',[App\Http\Controllers\AdminController::class, 'deleteNote'])->name('deleteNote');
+
+    Route::get('user-registration',[App\Http\Controllers\UserRegistrationController::class, 'viewUserRegistration'])->name('viewUserRegistration');
     
     //CRM Module Routes
     Route::prefix('crm')->group(function(){
@@ -43,6 +47,8 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('update-left-user',[App\Http\Controllers\UserController::class, 'updateLeftUser'])->name('updateLeftUser');
         Route::post('delete-left-user',[App\Http\Controllers\UserController::class, 'deleteLeftUser'])->name('deleteLeftUser');
         
+        Route::get('new-users',[App\Http\Controllers\UserController::class, 'viewNewUsers'])->name('viewNewUsers');
+        Route::post('getNewUsers',[App\Http\Controllers\UserController::class, 'getNewUsers'])->name('getNewUsers');
         
         Route::prefix('reseller')->group(function(){
             Route::get('resellers',[App\Http\Controllers\ResellerController::class, 'viewResellers'])->name('viewResellers');
@@ -206,6 +212,32 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::get('manual-generator/billing-sheet-pdf',[App\Http\Controllers\SettingsController::class, 'generateBillingSheetPdf'])->name('generateBillingSheet');
         Route::get('manual-generator/monthly-invoices-pdf',[App\Http\Controllers\SettingsController::class, 'monthlyInvoicesPdf'])->name('monthlyInvoicesPdf');
         
+
+
+        Route::get('packages',[App\Http\Controllers\PackageController::class, 'viewPackages'])->name('viewPackages');
+        Route::get('packages/get-packages',[App\Http\Controllers\PackageController::class, 'getPackages'])->name('getPackages');
+        Route::post('packages/add-edit-package',[App\Http\Controllers\PackageController::class, 'addEditPackage'])->name('addEditPackage');
+        Route::post('packages/fetch-package',[App\Http\Controllers\PackageController::class, 'fetchPackage'])->name('fetchPackage');
+        Route::post('packages/delete-package',[App\Http\Controllers\PackageController::class, 'deletePackage'])->name('deletePackage');
+
+        Route::get('zones',[App\Http\Controllers\ZoneController::class, 'viewZones'])->name('viewZones');
+        Route::get('zones/get-zones',[App\Http\Controllers\ZoneController::class, 'getZones'])->name('getZones');
+        Route::post('zones/add-edit-zone',[App\Http\Controllers\ZoneController::class, 'addEditZone'])->name('addEditZone');
+        Route::post('zones/fetch-zone',[App\Http\Controllers\ZoneController::class, 'fetchZone'])->name('fetchZone');
+        Route::post('zones/delete-zone',[App\Http\Controllers\ZoneController::class, 'deleteZone'])->name('deleteZone');
+
+        Route::get('sub-zones',[App\Http\Controllers\SubzoneController::class, 'viewSubzones'])->name('viewSubzones');
+        Route::get('sub-zones/get-sub-zones',[App\Http\Controllers\SubzoneController::class, 'getSubzones'])->name('getSubzones');
+        Route::post('sub-zones/add-edit-sub-zone',[App\Http\Controllers\SubzoneController::class, 'addEditSubzone'])->name('addEditSubzone');
+        Route::post('sub-zones/fetch-sub-zone',[App\Http\Controllers\SubzoneController::class, 'fetchSubzone'])->name('fetchSubzone');
+        Route::post('subzones/delete-sub-zone',[App\Http\Controllers\SubzoneController::class, 'deleteSubzone'])->name('deleteSubzone');
+
+        Route::get('ticket-types',[App\Http\Controllers\TicketTypeController::class, 'viewTicketTypes'])->name('viewTicketTypes');
+        Route::get('ticket-types/get-ticket-types',[App\Http\Controllers\TicketTypeController::class, 'getTicketTypes'])->name('getTicketTypes');
+        Route::post('ticket-types/add-edit-ticket-type',[App\Http\Controllers\TicketTypeController::class, 'addEditTicketType'])->name('addEditTicketType');
+        Route::post('ticket-types/fetch-ticket-type',[App\Http\Controllers\TicketTypeController::class, 'fetchTicketType'])->name('fetchTicketType');
+        Route::post('ticket-types/delete-ticket-type',[App\Http\Controllers\TicketTypeController::class, 'deleteTicketType'])->name('deleteTicketType');
+
         Route::get('system-logs',[App\Http\Controllers\SystemLogController::class, 'viewSystemLogs'])->name('viewSystemLogs');
         Route::get('system-logs/get-system-logs',[App\Http\Controllers\SystemLogController::class, 'getSystemLogs'])->name('getSystemLogs');
     });
@@ -229,11 +261,7 @@ Route::middleware('isauth')->domain('admin.' . env('APP_URL'))->group(function()
         Route::post('products/fetch-product',[App\Http\Controllers\ProductController::class, 'fetchProduct'])->name('fetchProduct');
         Route::post('products/delete-product',[App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('deleteProduct');
         
-        Route::get('packages',[App\Http\Controllers\PackageController::class, 'viewPackages'])->name('viewPackages');
-        Route::get('packages/get-packages',[App\Http\Controllers\PackageController::class, 'getPackages'])->name('getPackages');
-        Route::post('packages/add-edit-package',[App\Http\Controllers\PackageController::class, 'addEditPackage'])->name('addEditPackage');
-        Route::post('packages/fetch-package',[App\Http\Controllers\PackageController::class, 'fetchPackage'])->name('fetchPackage');
-        Route::post('packages/delete-package',[App\Http\Controllers\PackageController::class, 'deletePackage'])->name('deletePackage');
+        
     });
 
     

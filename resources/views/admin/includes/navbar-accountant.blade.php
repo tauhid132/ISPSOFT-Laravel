@@ -17,7 +17,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Request::is('crm/*') ? 'active':''  }}" href="#crm" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="fa fa-user"></i> <span>CRM</span>
+                        <i class="fa fa-user"></i> <span>Customers</span>
                     </a>
                     <div class="collapse menu-dropdown" id="crm">
                         <ul class="nav nav-sm flex-column">
@@ -27,21 +27,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('viewLeftUsers') }}" class="nav-link"> Left Users </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#sidebarResetPass" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarResetPass">
-                                    Resellers
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarResetPass">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{ route('viewResellers') }}" class="nav-link">Resellers List</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-pass-reset-cover.html" class="nav-link">Reseller Mac</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                           
                         </ul>
                     </div>
                 </li>
@@ -53,7 +39,7 @@
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('viewAllTickets') }}" class="nav-link">All Tickets</a>
+                                <a href="{{ route('viewAllTickets') }}" class="nav-link">Support Tickets</a>
                             </li>
                         </ul>
                     </div>
@@ -71,7 +57,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('viewOtherInvoices') }}"  class="nav-link">Other Invoices</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('viewMonthlyExpenses') }}"  class="nav-link">Expenses</a>
                             </li>
                             <li class="nav-item">
@@ -82,7 +68,23 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewMonthlyIncomeStatement') }}?month={{ date('F') }}&year={{ date('Y') }}" class="nav-link">Income Statement</a>
+                            </li> --}}
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#inventory" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                        <i class="fa fa-briefcase"></i> <span>Product Stocks</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="inventory">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('viewProductCategories') }}" class="nav-link">Product Categories</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('viewProducts') }}" class="nav-link">Products</a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </li>

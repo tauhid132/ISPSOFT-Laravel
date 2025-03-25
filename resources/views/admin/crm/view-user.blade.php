@@ -12,7 +12,8 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">CRM</a></li>
-                                <li class="breadcrumb-item active">Update User</li>
+                                <li class="breadcrumb-item"><a href="{{ route('viewUsersPage') }}">Users</a></li>
+                                <li class="breadcrumb-item active">View User</li>
                             </ol>
                         </div>
                     </div>
@@ -91,11 +92,22 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="location1">Area :</label>
-                                                        <select class="custom-select form-control" name="service_area_id" disabled>
+                                                        <label for="location1">Zone</label>
+                                                        <select class="custom-select form-control" name="service_area_id">
                                                             <option selected>Choose Branch or Area</option>
-                                                            @foreach ($service_areas as $area )
-                                                            <option {{ $user->service_area->area_name == $area->area_name ? 'selected' : '' }} value="{{ $area->id  }}">{{ $area->area_name }}</option>
+                                                            @foreach ($zones as $zone )
+                                                            <option {{ $user->zone_id == $zone->id ? 'selected' : '' }} value="{{ $zone->id  }}">{{ $zone->zone_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="location1">Sub Zone</label>
+                                                        <select class="custom-select form-control" name="service_area_id">
+                                                            <option selected>Choose Sub Zone</option>
+                                                            @foreach ($subzones as $subzone )
+                                                            <option {{ $user->sub_zone_id == $subzone->id ? 'selected' : '' }} value="{{ $subzone->id  }}">{{ $subzone->sub_zone_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -106,12 +118,7 @@
                                                         <input class="form-control" type="text" value="{{ $user->nid_passport }}" name="nid_passport" disabled>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="lastName1">Sign Up Soft Copy</label>
-                                                        <input class="form-control" type="file" >
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             
                                         </div>
@@ -195,7 +202,12 @@
                                                 <div class="col-lg-3">
                                                     <div class="mb-3">
                                                         <label class="form-label">Distribution Point</label>
-                                                        <input type="text" class="form-control" name="distribution_point" value="{{ $user->distribution_point }}" disabled>
+                                                        <select class="js-example-basic-single" name="distribution_point">
+                                                            <option selected>Choose Distribution Point</option>
+                                                            @foreach ($distribution_points as $point )
+                                                            <option {{ $user->distribution_point == $point->distribution_point_name ? 'selected' : '' }} value="{{ $point->distribution_point_name  }}">{{ $point->distribution_point_name }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>

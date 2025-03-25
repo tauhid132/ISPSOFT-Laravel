@@ -38,25 +38,35 @@
                     <div class="card-body border-bottom">
                         <form>
                             <div class="row g-3">
-                                <div class="col-xl-6">
+                                <div class="col-xl-4">
                                     <div class="search-box">
                                         <input type="text" class="form-control search" onkeyup="search(this)" placeholder="Search for customer, email, phone, status or something...">
                                         <i class="fa fa-search search-icon"></i>
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
+                                <div class="col-xl-8">
                                     <div class="row g-3">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <div>
-                                                <select class="form-control" onchange="onAreaChange(this)">
-                                                    <option value="">All Areas</option>
-                                                    @foreach ($areas as $area )
-                                                    <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                                                <select class="form-control" onchange="onZoneChange(this)">
+                                                    <option value="">All Zones</option>
+                                                    @foreach ($zones as $zone )
+                                                    <option value="{{ $zone->id }}">{{ $zone->zone_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
+                                            <div>
+                                                <select class="form-control" onchange="onSubzoneChange(this)">
+                                                    <option value="">All Sub Zones</option>
+                                                    @foreach ($subzones as $subzone )
+                                                    <option value="{{ $subzone->id }}">{{ $subzone->sub_zone_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
                                             <div>
                                                 <select class="form-control" onchange="onStatusChange(this)">
                                                     <option value="">All Status</option>
@@ -66,7 +76,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <div>
                                                 <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="fa fa-refresh me-1"></i>Reset Filters</button>
                                             </div>
@@ -88,7 +98,7 @@
                                     <th>Status</th>
                                     <th>Action</th>
                                     <th>Name</th>
-                                    <th>Area</th>
+                                    <th>Zone</th>
                                     <th>Address</th>
                                     <th>Mobile</th>
                                     <th>Monthly Bill</th>
@@ -117,21 +127,21 @@
 </script>
 <script>
     let selectedStatus = '1';
-    let selectedArea = '';
+    let selected_zone = '';
+    let selected_subzone = '';
     let search_keyword = '';
     
     var dataTable = $('#users-table').DataTable({
-        
         "processing" : true,
         "serverSide": true,
-        
         "ajax":{
             "url": "{{ route('getUsersAll') }}",
             "dataType": "json",
             "type": "POST",
             "data": function(d){
                 d.status = selectedStatus
-                d.area = selectedArea
+                d.zone = selected_zone
+                d.subzone = selected_subzone
                 d.search_keyword = search_keyword
             }
         },
@@ -141,25 +151,31 @@
         {"data" : 'status', "name" : 'status' , "orderable": false, "searchable": false},
         {"data" : 'action', "name" : 'action' , "orderable": false, "searchable": false},
         {"data": "customer_name"},
-        {"data": "service_area"},
+        {"data": "zone.zone_name"},
         {"data": "connection_address"},
         {"data": "mobile_no"},
         {"data": "monthly_bill"},
         {"data": "current_due"},
         ]
     });
-
+    
     function search(event){
         search_keyword = event.value
         dataTable.ajax.reload();
     }
-
+    
     function onStatusChange(sel){
         selectedStatus = sel.value
         dataTable.ajax.reload();
     }
-    function onAreaChange(sel){
-        selectedArea = sel.value
+    
+    function onZoneChange(sel){
+        selected_zone = sel.value
+        dataTable.ajax.reload();
+    }
+
+    function onSubzoneChange(sel){
+        selected_subzone = sel.value
         dataTable.ajax.reload();
     }
 </script>

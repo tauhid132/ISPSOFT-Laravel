@@ -6,8 +6,10 @@ use Carbon\Carbon;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Ticket;
 use App\Models\Employee;
 use App\Models\SystemLog;
+use App\Models\MonthlyBill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +22,9 @@ class AdminController extends Controller
     public function viewDashboard(){
         $start_day = Carbon::now()->startOfMonth();
         $end_day = Carbon::now()->endOfMonth();
-
+        $month = Carbon::now()->format('F');
+        $year = Carbon::now()->year;
+        
         $new_users = User::whereBetween('installation_date', [$start_day, $end_day])->get();
         $left_users = DB::table('left_users')->whereBetween('left_date', [$start_day, $end_day])->get();
         
@@ -33,6 +37,12 @@ class AdminController extends Controller
             'left_users' => $left_users,
             'total_employees' => Employee::where('status', 1)->count(),
             'total_employees_salary' => Employee::where('status', 1)->sum('salary'),
+            'tickets' => Ticket::orderBy('created_at', 'desc' )->get(),
+            'total_generated_bill' =>  MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('monthly_bill'),
+            'total_generated_due_bill' =>  MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('due_bill'),
+            'total_collected_monthly_bill' =>MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('paid_monthly_bill'),
+            'total_collected_due_bill' =>MonthlyBill::where('billing_month', $month)->where('billing_year', $year)->sum('paid_due_bill'),
+            
         ]);
     }
 

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\DistributionPoint;
 use App\Models\User;
 use App\Models\Package;
 use App\Models\Employee;
@@ -8,8 +10,11 @@ use App\Models\LeftUser;
 use App\Models\Mikrotik;
 use App\Models\MonthlyBill;
 use App\Models\ServiceArea;
+use App\Models\Subzone;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RahulHaque\AdnSms\Facades\AdnSms;
@@ -25,20 +30,23 @@ class UserController extends Controller
     }
     public function viewUsersPage(){
         return view('admin.crm.all-users',[
-            'areas' => ServiceArea::all()
+            'zones' => Zone::all(),
+            'subzones' => Subzone::all()
         ]);
     }
-    public function viewBkash(){
-        return view('bkash-payment');
-    }
+    
     public function getUsersAll(Request $request){
         $selected_status = $request->status;
-        $selected_area = $request->area;
-        $data = User::where('status','LIKE','%'.$selected_status.'%');
+        $selected_zone = $request->zone;
+        $selected_subzone = $request->subzone;
+        $data = User::with('zone')->where('status','LIKE','%'.$selected_status.'%');
         
         //If Area is selected
-        if($selected_area != ''){
-            $data = $data->where('service_area_id','=',$selected_area);
+        if($selected_zone != ''){
+            $data = $data->where('zone_id','=',$selected_zone);
+        }
+        if($selected_subzone != ''){
+            $data = $data->where('sub_zone_id','=',$selected_subzone);
         }
         if($request->search_keyword != ''){
             $data = $data->where('username','LIKE', '%'.$request->search_keyword.'%')
@@ -50,9 +58,7 @@ class UserController extends Controller
         return datatables($data)
         ->addIndexColumn()
         
-        ->addColumn('service_area' , function($row){
-            return $row->service_area->area_name;
-        })
+        
         
         ->addColumn('action', function($row){
             $btn = '<a href="'.route('viewUser',$row->id).'" class="btn btn-sm btn-info"><i id="'.$row->id.'" class="fa fa-eye m-1"></i>View</a>';
@@ -78,11 +84,13 @@ class UserController extends Controller
     public function viewAddNewUserPage(){
         $user_id = User::count() + 1;
         return view('admin.crm.add-new-user',[
-            'service_areas' => ServiceArea::all(),
+            'zones' => Zone::all(),
+            'subzones' => Subzone::all(),
             'packages' => Package::all(),
             'employees' => Employee::all(),
             'mikrotiks' => Mikrotik::all(),
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'distribution_points' => DistributionPoint::all()
         ]);
     }
     
@@ -97,7 +105,8 @@ class UserController extends Controller
             'mobile_no_alternate' => $request->mobile_no_alternate,
             'email_address' => $request->email_address,
             'nid_passport' => $request->nid_passport,
-            'service_area_id' => $request->service_area_id,
+            'zone_id' => $request->zone_id,
+            'sub_zone_id' => $request->sub_zone_id,
             'installation_date' => $request->installation_date,
             'package_id' => $request->package_id,
             'physical_connectivity_type' => $request->physical_connectivity_type,
@@ -126,11 +135,13 @@ class UserController extends Controller
     public function viewEditUser($id){
         $user = User::find($id);
         return view('admin.crm.edit-user',[
-            'service_areas' => ServiceArea::all(),
+            'zones' => Zone::all(),
+            'subzones' => Subzone::all(),
             'packages' => Package::all(),
             'employees' => Employee::all(),
             'user' => $user,
-            'mikrotiks' => Mikrotik::all()
+            'mikrotiks' => Mikrotik::all(),
+            'distribution_points' => DistributionPoint::all()
         ]);
     }
     public function editUserAction(Request $request, $id){
@@ -145,7 +156,8 @@ class UserController extends Controller
             'mobile_no_alternate' => $request->mobile_no_alternate,
             'email_address' => $request->email_address,
             'nid_passport' => $request->nid_passport,
-            'service_area_id' => $request->service_area_id,
+            'zone_id' => $request->zone_id,
+            'sub_zone_id' => $request->sub_zone_id,
             'installation_date' => $request->installation_date,
             'package_id' => $request->package_id,
             'physical_connectivity_type' => $request->physical_connectivity_type,
@@ -174,29 +186,48 @@ class UserController extends Controller
     
     public function viewViewUser($id){
         return view('admin.crm.view-user',[
-            'service_areas' => ServiceArea::all(),
+            'zones' => Zone::all(),
+            'subzones' => Subzone::all(),
             'packages' => Package::all(),
             'employees' => Employee::all(),
             'user' => User::find($id),
-            'mikrotiks' => Mikrotik::all()
+            'mikrotiks' => Mikrotik::all(),
+            'distribution_points' => DistributionPoint::all()
         ]);
     }
     public function viewLeftUsers(){
         return view('admin.crm.left-users');
     }
-    public function getLeftUsers(){
-        $data = DB::table('left_users')
-        ->join('users', 'left_users.user_id', '=', 'users.id')
-        ->select('*', 'left_users.id as l_id')
-        ->get();
+    public function getLeftUsers(Request $request){
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        if($from_date == null){
+            $from_date = '2016-10-10';
+        }
+        if($to_date == null){
+            $to_date = '2050-10-10';
+        }
+        
+
+        $data = LeftUser::with('user')->where('left_date', '>=', $from_date)->where('left_date', '<=', $to_date);
+        //$data = 
+        $data = $data->orderBy('left_date', 'desc')->get();
         return datatables($data)
         ->addIndexColumn()
+        ->addColumn('is_equipment_recovered_status', function($row){
+            if($row->is_equipment_recovered == 1){
+                $btn = '<span class="badge bg-success"> Recovered</span>';
+            }else if($row->is_equipment_recovered == 0){
+                $btn = '<span class="badge bg-danger"> Not Recovered</span>';
+            }
+            return $btn;
+        })
         ->addColumn('action', function($row){
             $btn ='<a><button id="'.$row->l_id.'" class="btn btn-sm btn-primary edit_left_user m-1"><i class="fa fa-edit"></i> Edit</button></a>';
             $btn = $btn.'<a><button id="'.$row->l_id.'" class="btn btn-sm btn-danger delete m-1"><i class="fa fa-trash"></i> Delete</button></a>';
             return $btn;
         })
-        ->rawColumns(['action' => 'action'])
+        ->rawColumns(['action' => 'action', 'is_equipment_recovered_status' => 'is_equipment_recovered_status'])
         ->make(true);
     }
     public function addToLeftUser(Request $request){
@@ -228,6 +259,7 @@ class UserController extends Controller
             'left_date' => $request->left_date,
             'left_reason' => $request->left_reason,
             'left_reason_details' => $request->left_reason_details,
+            'is_equipment_recovered' => $request->is_equipment_recovered,
         ]);
     }
     public function deleteLeftUser(Request $request){
@@ -256,6 +288,32 @@ class UserController extends Controller
         //$user = User::find($id);
         $pdf = Pdf::loadView('admin.crm.bill-invoice', compact('bill') );
         return $pdf->stream();
+    }
+
+
+
+
+    public function viewNewUsers(){
+        return view('admin.crm.new-users');
+    }
+    public function getNewUsers(Request $request){
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        if($from_date == null){
+            $from_date = '2016-10-10';
+        }
+        if($to_date == null){
+            $to_date = '2050-10-10';
+        }
+        
+
+        $data = User::where('installation_date', '>=', $from_date)->where('installation_date', '<=', $to_date);
+        //$data = 
+        $data = $data->orderBy('installation_date', 'desc')->get();
+        return datatables($data)
+        ->addIndexColumn()
+        
+        ->make(true);
     }
     
     

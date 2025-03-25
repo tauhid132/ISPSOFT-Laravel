@@ -96,11 +96,22 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="location1">Service Area/Zone</label>
-                                                        <select class="custom-select form-control" name="service_area_id">
-                                                            <option selected>Choose Branch or Area</option>
-                                                            @foreach ($service_areas as $area )
-                                                            <option value="{{ $area->id  }}">{{ $area->area_name }}</option>
+                                                        <label for="location1">Zone</label>
+                                                        <select class="custom-select form-control" name="zone_id">
+                                                            <option selected>Choose Zone</option>
+                                                            @foreach ($zones as $zone )
+                                                            <option value="{{ $zone->id  }}">{{ $zone->zone_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="location1">Sub Zone</label>
+                                                        <select class="custom-select form-control" name="sub_zone_id">
+                                                            <option selected>Choose Sub Zone</option>
+                                                            @foreach ($subzones as $subzone )
+                                                            <option value="{{ $subzone->id  }}">{{ $subzone->sub_zone_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -111,12 +122,7 @@
                                                         <input class="form-control" type="text" name="nid_passport" >
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="lastName1">Sign Up</label>
-                                                        <input class="form-control" type="file" >
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             
                                         </div>
@@ -190,7 +196,12 @@
                                                 <div class="col-lg-3">
                                                     <div class="mb-3">
                                                         <label class="form-label">Distribution Point</label>
-                                                        <input type="text" class="form-control" name="distribution_point" >
+                                                        <select class="js-example-basic-single" name="distribution_point">
+                                                            <option selected>Choose Distribution Point</option>
+                                                            @foreach ($distribution_points as $point )
+                                                            <option value="{{ $point->distribution_point_name  }}">{{ $point->distribution_point_name }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>

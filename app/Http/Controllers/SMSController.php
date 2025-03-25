@@ -7,6 +7,8 @@ use App\Models\SystemLog;
 use App\Models\MonthlyBill;
 use App\Models\ServiceArea;
 use App\Models\SmsTemplate;
+use App\Models\Subzone;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RahulHaque\AdnSms\Facades\AdnSms;
@@ -16,19 +18,26 @@ class SMSController extends Controller
 {
     public function viewReminderSms(){
         return view('admin.sms.bill-reminder',[
-            'service_areas' => ServiceArea::all(),
+            'zones' => Zone::all(),
+            'subzones' => Subzone::all()
         ]);
     }
     public function fetchReminderSmsUsers(Request $request){
-        $area = request('selectedArea','all');
+        $zone = request('selected_zone','all');
+        $subzone = request('selected_subzone','all');
         $users = MonthlyBill::where('billing_month',date('F'))
         ->where('billing_year',date('Y'))->where('paid_monthly_bill', 0);
-        if($area != 'all'){
-            $users = $users->whereHas('user', function($query2) use ($area){
-                $query2->where('service_area_id',$area);
+        if($zone != 'all'){
+            $users = $users->whereHas('user', function($query2) use ($zone){
+                $query2->where('zone_id', $zone);
             });
         }
-        $users = $users->whereHas('user', function($query2) use ($area){
+        if($subzone != 'all'){
+            $users = $users->whereHas('user', function($query2) use ($subzone){
+                $query2->where('sub_zone_id', $subzone);
+            });
+        }
+        $users = $users->whereHas('user', function($query2) use ($zone){
             $query2->where('mobile_no', '!=', null)->orWhere('mobile_no', '!=', '');
         });
         $users = $users->get();
@@ -89,17 +98,22 @@ class SMSController extends Controller
 
     public function viewGroupSms(){
         return view('admin.sms.group-sms',[
-            'service_areas' => ServiceArea::all(),
+            'zones' => Zone::all(),
+            'subzones' => Subzone::all(),
             'templates' => SmsTemplate::all()
         ]);
     }
     public function fetchGroupSmsUsers(Request $request){
-        $area = request('selectedArea','all');
-        if($area != 'all'){
-            $users = User::where('service_area_id', $area)->where('mobile_no','!=',null)->get();
-        }else{
-            $users = User::where('mobile_no','!=',null)->get();
+        $zone = request('selected_zone','all');
+        $subzone = request('selected_subzone','all');
+        $users = User::where('mobile_no','!=',null)->where('status', '!=', 0);
+        if($zone != 'all'){
+            $users = $users->where('zone_id', $zone);
         }
+        if($subzone != 'all'){
+            $users = $users->where('sub_zone_id', $subzone);
+        }
+        $users = $users->get();
         return response()->json([
             'html' => view('admin.sms.fetch-group-sms-users',[
                 'users' => $users

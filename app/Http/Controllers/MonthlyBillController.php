@@ -8,6 +8,8 @@ use App\Models\Employee;
 use App\Models\SystemLog;
 use App\Models\MonthlyBill;
 use App\Models\ServiceArea;
+use App\Models\Subzone;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +19,8 @@ class MonthlyBillController extends Controller
 {
     public function viewMonthlyBill(){
         return view('admin.accounts.monthly-bill',[
-            'areas' => ServiceArea::all(),
+            'zones' => Zone::all(),
+            'subzones' => Subzone::all(),
             'employees' => Employee::all()
         ]);
     }
@@ -40,16 +43,22 @@ class MonthlyBillController extends Controller
         $year = request('year',date('Y'));
         $month = request('month',date('F'));
         $last_month = Carbon::parse($month)->subMonth(1)->format('F');
-        $area = request('area','all');
+        $zone = request('zone','all');
+        $subzone = request('subzone','all');
         $payment_status = request('payment_status','all');
         $payment_method = request('payment_method','all');
         
         $data = MonthlyBill::with('user')->where('billing_year', $year)
         ->where('billing_month',$month);
         
-        if($area != 'all'){
-            $data = $data->whereHas('user', function($query2) use ($area){
-                $query2->where('service_area_id',$area);
+        if($zone != 'all'){
+            $data = $data->whereHas('user', function($query2) use ($zone){
+                $query2->where('zone_id',$zone);
+            });
+        }
+        if($subzone != 'all'){
+            $data = $data->whereHas('user', function($query2) use ($subzone){
+                $query2->where('sub_zone_id', $subzone);
             });
         }
         if($payment_status != 'all'){

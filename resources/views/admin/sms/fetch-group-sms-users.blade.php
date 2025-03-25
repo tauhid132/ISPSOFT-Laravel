@@ -8,16 +8,40 @@
             </div>
         </div>
     </div>
-    <div class="card-body table-responsive mt-xl-0">
+    <div class="table-responsive ps-4">
+        <table class="table align-middle table-nowrap mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Mobile Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $u )
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <th scope="row"><input class="form-check-input link_checkbox" type="checkbox" name="link_checkbox[]" value="{{ $u->id }}"></th>
+                    <td>{{ $u->username }}</td>
+                    <td>{{ $u->customer_name }}</td>
+                    <td>{{ $u->mobile_no }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    {{-- <div class="card-body table-responsive mt-xl-0">
         <div class="hstack gap-2 flex-wrap">
             @foreach ($users as $u )
             <div class="form-check form-check-inline">
-                <input class="form-check-input link_checkbox" type="checkbox" 8name="link_checkbox[]" value="{{ $u->id }}">
-                <label class="form-check-label" for="inlineCheckbox6">{{ $u->username }}</label>
+                <input class="form-check-input link_checkbox" type="checkbox" name="link_checkbox[]" value="{{ $u->user->id }}">
+                <label class="form-check-label" for="inlineCheckbox6">{{ $u->user->username }}</label>
             </div>
             @endforeach
         </div>
-    </div>
+    </div> --}}
     <div class="card-footer">
         <button class="btn btn-primary float-end send_sms"><i class="fa fa-paper-plane me-1"></i>Send SMS</button>
     </div>

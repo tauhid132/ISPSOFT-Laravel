@@ -12,6 +12,11 @@ class LeftUser extends Model
         'left_date',
         'left_reason',
         'left_reason_details',
-        'user_id'
+        'user_id',
+        'is_equipment_recovered'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

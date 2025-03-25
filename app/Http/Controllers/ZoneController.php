@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Package;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 
-class PackageController extends Controller
+class ZoneController extends Controller
 {
-    public function viewPackages(){
-        return view('admin.settings.packages');
+    public function viewZones(){
+        return view('admin.settings.zones');
     }
-    public function getPackages(){
-        $data = Package::all();
+    public function getZones(){
+        $data = Zone::all();
         return datatables($data)
         ->addIndexColumn()
         ->addColumn('created_at' , function($row){
@@ -27,24 +27,22 @@ class PackageController extends Controller
         ->rawColumns(['action' => 'action'])
         ->make(true);
     }
-    public function addEditPackage(Request $request){
+    public function addEditZone(Request $request){
         if(empty($request->id)){
-            Package::create([
-                'package_name' => $request->package_name,
-                'bandwidth' => $request->bandwidth,
+            Zone::create([
+                'zone_name' => $request->zone_name,
             ]);
         }else{
-            $package = Package::find($request->id);
-            $package->update([
-                'package_name' => $request->package_name,
-                'bandwidth' => $request->bandwidth,
+            $zone = Zone::find($request->id);
+            $zone->update([
+                'zone_name' => $request->zone_name,
             ]);
         }
     }
-    public function fetchPackage(Request $request){
-        return response()->json(Package::find($request->id));
+    public function fetchZone(Request $request){
+        return response()->json(Zone::find($request->id));
     }
-    public function deletePackage(Request $request){
-        Package::find($request->id)->delete();
+    public function deleteZone(Request $request){
+        Zone::find($request->id)->delete();
     }
 }

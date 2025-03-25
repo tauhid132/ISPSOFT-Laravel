@@ -39,7 +39,7 @@
                                 @endforeach
                                 <form action="{{ route('login') }}" method="post">
                                     @csrf
-                                    <div class="mb-4">
+                                    <div class="mb-3">
                                         <div class="input-group">
                                             <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                                             <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Enter Username" required>
@@ -51,18 +51,19 @@
                                             <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" name="password" id="password-input">
                                         </div>
                                     </div>
-                                    <div class="form-check">
+                                    {{-- <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="auth-remember-check" name="remember">
                                         <label class="form-check-label" for="auth-remember-check">Remember me</label>
                                         <div class="float-end">
                                             <a href="" class="text-muted">Forgot password?</a>
                                         </div>
-                                    </div>
-                                    <div class="mt-4">
+                                    </div> --}}
+                                    <div class="mt-2">
                                         <button class="btn btn-primary w-100 fs-14" type="submit">LOGIN</button>
                                     </div>
                                 </form>
                             </div>
+                            <hr>
                             <div class="mt-2 fs-14"><center>Copyright © {{ date('Y') }} | <a href="http://atsbd.net" class="text-center">ATS Technology</a></center></div>
                         </div>
                     </div>

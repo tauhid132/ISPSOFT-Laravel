@@ -17,7 +17,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ Request::is('crm/*') ? 'active':''  }}" href="#crm" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="fa fa-user"></i> <span>CRM</span>
+                        <i class="fa fa-user"></i> <span>Customers</span>
                     </a>
                     <div class="collapse menu-dropdown" id="crm">
                         <ul class="nav nav-sm flex-column">
@@ -26,6 +26,9 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('viewLeftUsers') }}" class="nav-link"> Left Users </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('viewNewUsers') }}" class="nav-link"> New Users </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#sidebarResetPass" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarResetPass">
@@ -61,7 +64,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#inventory" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
-                        <i class="fa fa-briefcase"></i> <span>Inventory</span>
+                        <i class="fa fa-briefcase"></i> <span>Product Stocks</span>
                     </a>
                     <div class="collapse menu-dropdown" id="inventory">
                         <ul class="nav nav-sm flex-column">
@@ -71,9 +74,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('viewProducts') }}" class="nav-link">Products</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('viewPackages') }}" class="nav-link">Packages</a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </li>
@@ -230,8 +231,21 @@
                                 <a href="{{ route('viewManualGenerator') }}" class="nav-link">Manual Generator</a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('viewPackages') }}" class="nav-link">Packages</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('viewZones') }}" class="nav-link">Zones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('viewSubzones') }}" class="nav-link">Sub Zones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('viewTicketTypes') }}" class="nav-link">Ticket Types</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('viewSystemLogs') }}" class="nav-link">System Logs</a>
                             </li>
+                            
                         </ul>
                     </div>
                 </li>
